@@ -1,0 +1,391 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+---
+
+<Layout title="Front AI Drafter | Amber Gianvecchio">
+  <Header />
+  <main>
+    <article class="case-study">
+      <!-- Hero Section -->
+      <section class="case-hero">
+        <div class="container">
+          <a href="/" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Home
+          </a>
+          <h1>Front AI Drafter</h1>
+          <p class="case-subtitle">AI-powered customer support system that automatically categorizes messages and generates contextual email draft replies</p>
+          <div class="case-meta">
+            <div class="meta-item">
+              <span class="meta-label">Role</span>
+              <span class="meta-value">AI Developer & Operations</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Accuracy</span>
+              <span class="meta-value">98%+ categorization</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Scale</span>
+              <span class="meta-value">17,000+ messages/year</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Project Image -->
+      <section class="case-image-section">
+        <div class="container">
+          <img src="/images/front-ai-drafter.png" alt="Front AI Drafter interface" class="case-hero-image" />
+        </div>
+      </section>
+
+      <!-- Overview -->
+      <section class="case-content">
+        <div class="container">
+          <div class="content-grid">
+            <div class="content-main">
+              <h2>Overview</h2>
+              <p>
+                Built an AI-powered customer support system using OpenAI Agents SDK that automatically categorizes incoming messages and generates contextual email draft replies. The system achieved 98%+ categorization accuracy through iterative prompt engineering and comprehensive evaluation workflows.
+              </p>
+              <p>
+                This project demonstrates a complete AI development lifecycle: from initial concept through iterative improvement, testing, and deployment. The workflow integrated multiple tools including Cursor IDE for development, Git for version control, OpenAI Agent Builder for configuration, and Braintrust for evaluation and testing.
+              </p>
+
+              <h2>The Challenge</h2>
+              <p>
+                Managing customer communication at scale required a system that could accurately categorize incoming messages and generate appropriate draft responses. The challenge was building an AI agent system that could:
+              </p>
+              <ul>
+                <li>Accurately categorize diverse customer messages into appropriate categories</li>
+                <li>Generate contextually appropriate draft email replies</li>
+                <li>Maintain high accuracy through iterative improvement</li>
+                <li>Integrate seamlessly into existing customer support workflows</li>
+              </ul>
+
+              <h2>Development Workflow</h2>
+              <p>
+                The project followed a rigorous iterative development cycle that connected multiple tools in a continuous improvement loop:
+              </p>
+
+              <div class="workflow-step">
+                <h3>1. Development in Cursor IDE</h3>
+                <p>
+                  All code changes were made in Cursor IDE, focusing on agent definitions, prompts, and categorization logic. Local testing scripts allowed for rapid iteration before committing changes.
+                </p>
+                <img src="/images/cursor-development.png" alt="Development in Cursor IDE" class="workflow-image" />
+              </div>
+
+              <div class="workflow-step">
+                <h3>2. Version Control with Git</h3>
+                <p>
+                  Changes were committed and pushed through a structured Git workflow, with pull requests enabling code review and automated testing through GitHub Actions.
+                </p>
+              </div>
+
+              <div class="workflow-step">
+                <h3>3. Configuration in OpenAI Agent Builder</h3>
+                <p>
+                  Agent configurations were managed in OpenAI Agent Builder, allowing for easy adjustment of model settings, instructions, and guardrails without code changes.
+                </p>
+                <img src="/images/front-ai-drafter.png" alt="OpenAI Agent Builder interface" class="workflow-image" />
+              </div>
+
+              <div class="workflow-step">
+                <h3>4. Testing & Evaluation in Braintrust</h3>
+                <p>
+                  Comprehensive testing was conducted in Braintrust, where agents were evaluated against test datasets. Manual review of 100-300 traces per iteration ensured quality and accuracy improvements.
+                </p>
+                <img src="/images/braintrust-evaluation.png" alt="Braintrust evaluation results" class="workflow-image" />
+                <img src="/images/braintrust-testing.png" alt="Braintrust testing interface" class="workflow-image" />
+              </div>
+
+              <h2>Key Results</h2>
+              <div class="results-grid">
+                <div class="result-card">
+                  <div class="result-number">98%+</div>
+                  <div class="result-label">Categorization Accuracy</div>
+                  <p>Achieved through iterative prompt engineering and comprehensive testing</p>
+                </div>
+                <div class="result-card">
+                  <div class="result-number">17,000+</div>
+                  <div class="result-label">Messages Processed Annually</div>
+                  <p>Scalable system handling high-volume customer communication</p>
+                </div>
+                <div class="result-card">
+                  <div class="result-number">Continuous</div>
+                  <div class="result-label">Iterative Improvement</div>
+                  <p>Established workflow for ongoing refinement and optimization</p>
+                </div>
+              </div>
+
+              <h2>Technologies & Tools</h2>
+              <div class="tags-list">
+                <span class="tag">OpenAI Agents SDK</span>
+                <span class="tag">TypeScript</span>
+                <span class="tag">Braintrust</span>
+                <span class="tag">Git</span>
+                <span class="tag">Cursor IDE</span>
+                <span class="tag">OpenAI Agent Builder</span>
+                <span class="tag">GitHub Actions</span>
+                <span class="tag">Prompt Engineering</span>
+              </div>
+
+              <h2>Lessons Learned</h2>
+              <p>
+                This project highlighted the importance of a structured development workflow for AI systems. The iterative cycle of development → testing → evaluation → refinement proved essential for achieving high accuracy. Key learnings included:
+              </p>
+              <ul>
+                <li>The value of comprehensive testing infrastructure for AI systems</li>
+                <li>How iterative prompt engineering can dramatically improve accuracy</li>
+                <li>The importance of manual trace review in identifying edge cases</li>
+                <li>How tool integration enables efficient AI development workflows</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Navigation -->
+      <section class="case-navigation">
+        <div class="container">
+          <a href="/" class="nav-link">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Home
+          </a>
+        </div>
+      </section>
+    </article>
+  </main>
+</Layout>
+
+<style>
+  .case-study {
+    padding-top: 80px;
+  }
+
+  .case-hero {
+    padding: 60px 0 40px;
+    background-color: var(--bg-secondary);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    transition: color var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: var(--text-primary);
+  }
+
+  .case-hero h1 {
+    margin-bottom: 16px;
+    color: var(--text-primary);
+  }
+
+  .case-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+    max-width: 800px;
+  }
+
+  .case-meta {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .meta-value {
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  .case-image-section {
+    padding: 0;
+    background-color: var(--bg-primary);
+  }
+
+  .case-hero-image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--card-radius);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+
+  .case-content {
+    padding: 80px 0;
+  }
+
+  .content-main {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .content-main h2 {
+    margin-top: 48px;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+  }
+
+  .content-main h2:first-child {
+    margin-top: 0;
+  }
+
+  .content-main h3 {
+    margin-top: 32px;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+  }
+
+  .content-main p {
+    margin-bottom: 20px;
+    line-height: 1.7;
+  }
+
+  .content-main ul {
+    margin: 20px 0;
+    padding-left: 24px;
+    color: var(--text-secondary);
+  }
+
+  .content-main li {
+    margin-bottom: 12px;
+    line-height: 1.6;
+  }
+
+  .workflow-step {
+    margin: 40px 0;
+    padding: 32px;
+    background-color: var(--bg-card);
+    border-radius: var(--card-radius);
+    border: 1px solid var(--border);
+  }
+
+  .workflow-step h3 {
+    margin-top: 0;
+    color: var(--accent);
+  }
+
+  .workflow-image {
+    width: 100%;
+    margin-top: 24px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
+    margin: 40px 0;
+  }
+
+  .result-card {
+    padding: 32px;
+    background-color: var(--bg-card);
+    border-radius: var(--card-radius);
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .result-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-family: var(--font-display);
+  }
+
+  .result-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .result-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin: 24px 0;
+  }
+
+  .tag {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background-color: var(--bg-secondary);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+  }
+
+  .case-navigation {
+    padding: 60px 0;
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+  }
+
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent);
+    font-weight: 500;
+    transition: gap var(--transition-fast);
+  }
+
+  .nav-link:hover {
+    gap: 12px;
+  }
+
+  @media (max-width: 768px) {
+    .case-meta {
+      gap: 24px;
+    }
+
+    .workflow-step {
+      padding: 24px;
+    }
+
+    .results-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .case-subtitle {
+      font-size: 1.1rem;
+    }
+  }
+</style>
+
