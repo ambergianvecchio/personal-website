@@ -2,9 +2,21 @@
 
 ---
 
+---
+// If you have a logo image, add it to public/images/logo.svg or logo.png
+// and uncomment the line below, then update the img src
+// const logoImage = "/images/logo.svg";
+const logoImage = null; // Set to your logo path when ready
+---
+
 <header class="header">
   <nav class="nav container">
-    <a href="/" class="logo">AG</a>
+    <a href="/" class="logo">
+      {logoImage && (
+        <img src={logoImage} alt="Amber Gianvecchio" class="logo-image" />
+      )}
+      <span class="logo-text">AG</span>
+    </a>
     <ul class="nav-links">
       <li><a href="#work">Work</a></li>
       <li><a href="#about">About</a></li>
@@ -21,7 +33,9 @@
     right: 0;
     z-index: 100;
     padding: 20px 0;
-    background: linear-gradient(to bottom, var(--bg-primary) 0%, transparent 100%);
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   }
 
   .nav {
@@ -35,10 +49,23 @@
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
   }
 
   .logo:hover {
     color: var(--accent);
+  }
+
+  .logo-image {
+    height: 32px;
+    width: auto;
+  }
+
+  .logo-text {
+    display: inline-block;
   }
 
   .nav-links {

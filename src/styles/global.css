@@ -10,21 +10,21 @@
 
 /* CSS Variables */
 :root {
-  /* Colors */
-  --bg-primary: #0d0d0d;
-  --bg-secondary: #161616;
+  /* Colors - Inspired by modern portfolio sites */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #141414;
   --bg-card: #1a1a1a;
-  --bg-card-hover: #222222;
+  --bg-card-hover: #242424;
 
   --text-primary: #ffffff;
-  --text-secondary: #b8b8b8;
-  --text-muted: #86868b;
+  --text-secondary: #a8a8a8;
+  --text-muted: #6b6b6b;
 
-  --accent: #3636ff;
-  --accent-hover: #4d4dff;
+  --accent: #2d5016;
+  --accent-hover: #3a6b1f;
 
-  --border: #2a2a2a;
-  --border-light: #333333;
+  --border: #252525;
+  --border-light: #2f2f2f;
 
   /* Typography */
   --font-display: 'Manrope', sans-serif;
