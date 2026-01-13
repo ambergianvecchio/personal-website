@@ -1,0 +1,109 @@
+---
+
+---
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <p class="hero-eyebrow">Customer Success & AI Operations</p>
+      <h1 class="hero-title">
+        Hi, I'm <span class="text-accent">Amber</span>
+      </h1>
+      <p class="hero-description">
+        I build AI-powered systems and operational workflows that scale customer success.
+        Currently focused on building intelligent automation using OpenAI Agents SDK.
+      </p>
+      <div class="hero-cta">
+        <a href="#work" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding-top: 80px;
+  }
+
+  .hero-content {
+    max-width: 720px;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .hero-title {
+    margin-bottom: 24px;
+  }
+
+  .hero-description {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    max-width: 580px;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 14px 28px;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all var(--transition-base);
+  }
+
+  .btn-primary {
+    background-color: var(--accent);
+    color: var(--text-primary);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--accent-hover);
+    color: var(--text-primary);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background-color: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-light);
+  }
+
+  .btn-secondary:hover {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border-color: var(--text-muted);
+  }
+
+  @media (max-width: 640px) {
+    .hero-description {
+      font-size: 1.1rem;
+    }
+
+    .hero-cta {
+      flex-direction: column;
+    }
+
+    .btn {
+      justify-content: center;
+    }
+  }
+</style>

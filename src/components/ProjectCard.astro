@@ -1,0 +1,137 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  tags: string[];
+  image?: string;
+  link?: string;
+  featured?: boolean;
+}
+
+const { title, description, tags, image, link, featured = false } = Astro.props;
+---
+
+<article class:list={["project-card", { featured }]}>
+  {image && (
+    <div class="project-image">
+      <img src={image} alt={title} loading="lazy" />
+    </div>
+  )}
+  <div class="project-content">
+    <h3 class="project-title">{title}</h3>
+    <p class="project-description">{description}</p>
+    <div class="project-tags">
+      {tags.map((tag) => (
+        <span class="tag">{tag}</span>
+      ))}
+    </div>
+    {link && (
+      <a href={link} class="project-link">
+        View Case Study
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    )}
+  </div>
+</article>
+
+<style>
+  .project-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    transition: all var(--transition-base);
+  }
+
+  .project-card:hover {
+    background-color: var(--bg-card-hover);
+    border-color: var(--border-light);
+    transform: translateY(-4px);
+  }
+
+  .project-card.featured {
+    grid-column: 1 / -1;
+  }
+
+  .project-card.featured .project-image img {
+    max-height: 400px;
+  }
+
+  .project-image {
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--bg-secondary);
+  }
+
+  .project-image img {
+    width: 100%;
+    height: auto;
+    max-height: 280px;
+    object-fit: cover;
+    transition: transform var(--transition-base);
+  }
+
+  .project-card:hover .project-image img {
+    transform: scale(1.02);
+  }
+
+  .project-content {
+    padding: 28px;
+  }
+
+  .project-title {
+    margin-bottom: 12px;
+    color: var(--text-primary);
+  }
+
+  .project-description {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .tag {
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background-color: var(--bg-secondary);
+    border-radius: 20px;
+  }
+
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  .project-link:hover {
+    gap: 10px;
+  }
+
+  .project-link svg {
+    transition: transform var(--transition-fast);
+  }
+
+  .project-link:hover svg {
+    transform: translateX(2px);
+  }
+
+  @media (max-width: 640px) {
+    .project-content {
+      padding: 20px;
+    }
+  }
+</style>

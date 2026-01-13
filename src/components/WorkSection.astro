@@ -1,0 +1,67 @@
+---
+import ProjectCard from './ProjectCard.astro';
+---
+
+<section id="work" class="section work-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Selected Work</h2>
+      <p>Projects that showcase my experience in AI development, operations, and customer success.</p>
+    </div>
+
+    <div class="projects-grid">
+      <ProjectCard
+        title="Front AI Drafter"
+        description="Built an AI-powered customer support system using OpenAI Agents SDK that automatically categorizes incoming messages and generates contextual email draft replies. Achieved 98%+ categorization accuracy through iterative prompt engineering and evaluation workflows."
+        tags={["OpenAI Agents SDK", "TypeScript", "Braintrust", "Git", "Cursor IDE"]}
+        image="/images/front-ai-drafter.png"
+        link="/projects/front-ai-drafter"
+        featured={true}
+      />
+
+      <ProjectCard
+        title="Customer Operations at Scale"
+        description="Managed customer communication workflows handling 17,000+ messages annually. Built ticketing systems, documentation, and support processes that established a scalable foundation for client support."
+        tags={["Front", "Notion", "Process Design", "Documentation"]}
+        image="/images/operations-dashboard.png"
+      />
+
+      <ProjectCard
+        title="Advekit Notion Workspace"
+        description="Designed and built a comprehensive Notion workspace that enhanced transparency and refined operational processes, increasing sales revenue and strengthening client retention."
+        tags={["Notion", "Operations", "Process Design"]}
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .work-section {
+    background-color: var(--bg-secondary);
+  }
+
+  .section-header {
+    margin-bottom: 48px;
+  }
+
+  .section-header h2 {
+    margin-bottom: 12px;
+  }
+
+  .section-header p {
+    font-size: 1.1rem;
+    max-width: 560px;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
