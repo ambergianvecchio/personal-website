@@ -1,0 +1,194 @@
+---
+---
+
+<div class="hex-mesh-container">
+  <canvas id="hexMesh" class="hex-mesh-canvas"></canvas>
+</div>
+
+<script is:inline>
+  class HexagonalMesh {
+    constructor(canvas) {
+      this.canvas = canvas;
+      this.ctx = canvas.getContext('2d');
+      this.nodes = [];
+      this.mouse = { x: 0, y: 0 };
+      this.animationId = null;
+      
+      this.setupCanvas();
+      this.createNodes();
+      this.bindEvents();
+      this.animate();
+    }
+    
+    setupCanvas() {
+      const resize = () => {
+        this.canvas.width = this.canvas.offsetWidth;
+        this.canvas.height = this.canvas.offsetHeight;
+      };
+      resize();
+      window.addEventListener('resize', resize);
+    }
+    
+    createNodes() {
+      const cols = 8;
+      const rows = 6;
+      const spacingX = this.canvas.width / (cols + 1);
+      const spacingY = this.canvas.height / (rows + 1);
+      
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          const x = spacingX * (col + 1) + (row % 2 === 0 ? 0 : spacingX / 2);
+          const y = spacingY * (row + 1);
+          
+          this.nodes.push({
+            x,
+            y,
+            baseX: x,
+            baseY: y,
+            size: 4,
+            connections: []
+          });
+        }
+      }
+      
+      // Calculate connections (connect nearby nodes)
+      const maxDistance = Math.min(spacingX, spacingY) * 1.5;
+      this.nodes.forEach((node, i) => {
+        node.connections = [];
+        this.nodes.forEach((other, j) => {
+          if (i !== j) {
+            const dx = node.x - other.x;
+            const dy = node.y - other.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+            if (distance < maxDistance) {
+              node.connections.push(j);
+            }
+          }
+        });
+      });
+    }
+    
+    bindEvents() {
+      this.canvas.addEventListener('mousemove', (e) => {
+        const rect = this.canvas.getBoundingClientRect();
+        this.mouse.x = e.clientX - rect.left;
+        this.mouse.y = e.clientY - rect.top;
+      });
+      
+      this.canvas.addEventListener('mouseleave', () => {
+        this.mouse.x = -1000;
+        this.mouse.y = -1000;
+      });
+    }
+    
+    update() {
+      const mouseInfluence = 150;
+      
+      this.nodes.forEach(node => {
+        const dx = this.mouse.x - node.baseX;
+        const dy = this.mouse.y - node.baseY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < mouseInfluence) {
+          const force = (mouseInfluence - distance) / mouseInfluence;
+          const angle = Math.atan2(dy, dx);
+          const pushDistance = force * 20;
+          
+          node.x = node.baseX + Math.cos(angle) * pushDistance;
+          node.y = node.baseY + Math.sin(angle) * pushDistance;
+        } else {
+          // Spring back to base position
+          node.x += (node.baseX - node.x) * 0.1;
+          node.y += (node.baseY - node.y) * 0.1;
+        }
+      });
+    }
+    
+    draw() {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      
+      // Draw connections
+      this.ctx.strokeStyle = 'rgba(45, 80, 22, 0.15)';
+      this.ctx.lineWidth = 1;
+      
+      this.nodes.forEach(node => {
+        node.connections.forEach(connIndex => {
+          const connected = this.nodes[connIndex];
+          this.ctx.beginPath();
+          this.ctx.moveTo(node.x, node.y);
+          this.ctx.lineTo(connected.x, connected.y);
+          this.ctx.stroke();
+        });
+      });
+      
+      // Draw hexagonal nodes
+      this.ctx.fillStyle = 'rgba(45, 80, 22, 0.3)';
+      this.ctx.strokeStyle = 'rgba(45, 80, 22, 0.5)';
+      this.ctx.lineWidth = 1.5;
+      
+      this.nodes.forEach(node => {
+        this.drawHexagon(node.x, node.y, node.size);
+      });
+    }
+    
+    drawHexagon(x, y, size) {
+      this.ctx.beginPath();
+      for (let i = 0; i < 6; i++) {
+        const angle = (Math.PI / 3) * i;
+        const hx = x + size * Math.cos(angle);
+        const hy = y + size * Math.sin(angle);
+        if (i === 0) {
+          this.ctx.moveTo(hx, hy);
+        } else {
+          this.ctx.lineTo(hx, hy);
+        }
+      }
+      this.ctx.closePath();
+      this.ctx.fill();
+      this.ctx.stroke();
+    }
+    
+    animate() {
+      this.update();
+      this.draw();
+      this.animationId = requestAnimationFrame(() => this.animate());
+    }
+    
+    destroy() {
+      if (this.animationId) {
+        cancelAnimationFrame(this.animationId);
+      }
+    }
+  }
+  
+  // Initialize when DOM is ready
+  document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('hexMesh');
+    if (canvas) {
+      new HexagonalMesh(canvas);
+    }
+  });
+</script>
+
+<style>
+  .hex-mesh-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  
+  .hex-mesh-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: auto;
+  }
+</style>
+
