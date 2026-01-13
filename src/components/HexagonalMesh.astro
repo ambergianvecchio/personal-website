@@ -127,7 +127,7 @@
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       
       // Draw connections
-      this.ctx.strokeStyle = 'rgba(45, 80, 22, 0.15)';
+      this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
       this.ctx.lineWidth = 1;
       
       this.nodes.forEach(node => {
@@ -141,8 +141,8 @@
       });
       
       // Draw hexagonal nodes
-      this.ctx.fillStyle = 'rgba(45, 80, 22, 0.3)';
-      this.ctx.strokeStyle = 'rgba(45, 80, 22, 0.5)';
+      this.ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+      this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
       this.ctx.lineWidth = 1.5;
       
       this.nodes.forEach(node => {
