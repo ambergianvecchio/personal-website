@@ -13,6 +13,8 @@
       this.nodes = [];
       this.mouse = { x: 0, y: 0 };
       this.animationId = null;
+      this.time = 0;
+      this.rotationSpeed = 0.0003; // Slow rotation speed
       
       this.setupCanvas();
       this.createNodes();
@@ -82,11 +84,28 @@
     }
     
     update() {
+      this.time += this.rotationSpeed;
       const mouseInfluence = 150;
+      const centerX = this.canvas.width / 2;
+      const centerY = this.canvas.height / 2;
       
-      this.nodes.forEach(node => {
-        const dx = this.mouse.x - node.baseX;
-        const dy = this.mouse.y - node.baseY;
+      this.nodes.forEach((node, index) => {
+        // Calculate distance from center
+        const dxFromCenter = node.baseX - centerX;
+        const dyFromCenter = node.baseY - centerY;
+        const distanceFromCenter = Math.sqrt(dxFromCenter * dxFromCenter + dyFromCenter * dyFromCenter);
+        
+        // Slow circular rotation around center
+        const baseAngle = Math.atan2(dyFromCenter, dxFromCenter);
+        const rotationRadius = distanceFromCenter * 0.15; // Subtle rotation
+        const rotationAngle = baseAngle + this.time + (index * 0.1); // Each node rotates slightly offset
+        
+        const rotatedX = centerX + Math.cos(rotationAngle) * distanceFromCenter;
+        const rotatedY = centerY + Math.sin(rotationAngle) * distanceFromCenter;
+        
+        // Mouse interaction
+        const dx = this.mouse.x - rotatedX;
+        const dy = this.mouse.y - rotatedY;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
         if (distance < mouseInfluence) {
@@ -94,12 +113,12 @@
           const angle = Math.atan2(dy, dx);
           const pushDistance = force * 20;
           
-          node.x = node.baseX + Math.cos(angle) * pushDistance;
-          node.y = node.baseY + Math.sin(angle) * pushDistance;
+          node.x = rotatedX + Math.cos(angle) * pushDistance;
+          node.y = rotatedY + Math.sin(angle) * pushDistance;
         } else {
-          // Spring back to base position
-          node.x += (node.baseX - node.x) * 0.1;
-          node.y += (node.baseY - node.y) * 0.1;
+          // Use rotated position as base
+          node.x = rotatedX;
+          node.y = rotatedY;
         }
       });
     }
