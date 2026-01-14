@@ -1111,17 +1111,33 @@ const BASE_URL = import.meta.env.BASE_URL;
   }
 
   @media (max-width: 768px) {
+    .workflow-cycle-container {
+      margin: 40px 0;
+    }
+
+    .workflow-cycle-container.workflow-cycle-top {
+      margin: 20px 0 40px;
+    }
+
     .workflow-cycle {
-      width: 300px;
-      height: 300px;
+      width: 280px;
+      height: 280px;
+      margin: 60px auto 80px; /* Extra space for labels positioned outside */
     }
 
     .workflow-step-label {
-      font-size: 0.75rem;
+      font-size: 0.7rem;
+      padding: 2px 4px;
+    }
+
+    .workflow-step-dot {
+      width: 10px;
+      height: 10px;
     }
 
     .workflow-cycle-svg {
-      transform: scale(0.75);
+      transform: scale(0.7);
+      transform-origin: center;
     }
   }
 
