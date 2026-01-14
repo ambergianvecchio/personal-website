@@ -27,20 +27,13 @@ const BASE_URL = import.meta.env.BASE_URL;
             </div>
             <div class="meta-item">
               <span class="meta-label">Accuracy</span>
-              <span class="meta-value">98%+ categorization</span>
+              <span class="meta-value">98%+ accuracy (categorizer, rejection response, initial agents)</span>
             </div>
             <div class="meta-item">
               <span class="meta-label">Scale</span>
               <span class="meta-value">17,000+ messages/year</span>
             </div>
           </div>
-        </div>
-      </section>
-
-      <!-- Project Image -->
-      <section class="case-image-section">
-        <div class="device-mockup">
-          <img src={`${BASE_URL}images/front-ai-drafter.png`} alt="Front AI Drafter interface" class="case-hero-image" />
         </div>
       </section>
 
@@ -51,7 +44,7 @@ const BASE_URL = import.meta.env.BASE_URL;
             <div class="content-main">
               <h2>Overview</h2>
               <p>
-                Built an AI-powered customer support system using OpenAI Agents SDK that automatically categorizes incoming messages and generates contextual email draft replies. The system achieved 98%+ categorization accuracy through iterative prompt engineering and comprehensive evaluation workflows.
+                Built an AI-powered customer support system using OpenAI Agents SDK that automatically categorizes incoming messages and generates contextual email draft replies. The system achieved 98%+ accuracy across the categorizer, rejection response agent, and other initial agents through iterative prompt engineering and comprehensive evaluation workflows.
               </p>
               <p>
                 This project demonstrates a complete AI development lifecycle: from initial concept through iterative improvement, testing, and deployment. The workflow integrated multiple tools including Cursor IDE for development, Git for version control, OpenAI Agent Builder for configuration, and Braintrust for evaluation and testing.
@@ -191,8 +184,8 @@ const BASE_URL = import.meta.env.BASE_URL;
               <div class="results-grid">
                 <div class="result-card">
                   <div class="result-number">98%+</div>
-                  <div class="result-label">Categorization Accuracy</div>
-                  <p>Achieved through iterative prompt engineering and comprehensive testing</p>
+                  <div class="result-label">Agent Accuracy</div>
+                  <p>Achieved across categorizer, rejection response agent, and initial agents through iterative prompt engineering and comprehensive testing</p>
                 </div>
                 <div class="result-card">
                   <div class="result-number">17,000+</div>
@@ -363,6 +356,7 @@ const BASE_URL = import.meta.env.BASE_URL;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 
                 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+    overflow: hidden; /* Prevent content from spilling out */
   }
 
   .device-mockup::before {
@@ -380,6 +374,8 @@ const BASE_URL = import.meta.env.BASE_URL;
   .case-hero-image {
     width: 100%;
     height: auto;
+    max-height: 600px; /* Limit height to prevent giant images */
+    object-fit: contain; /* Ensure image fits without distortion */
     border-radius: 12px;
     display: block;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
@@ -475,6 +471,9 @@ const BASE_URL = import.meta.env.BASE_URL;
     background-color: var(--bg-secondary);
     border-radius: var(--card-radius);
     border-left: 3px solid var(--accent);
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .cycle-step strong {
@@ -496,16 +495,23 @@ const BASE_URL = import.meta.env.BASE_URL;
     border-radius: var(--card-radius);
     border: 1px solid var(--border);
     overflow: hidden; /* Prevent content from overflowing */
+    word-wrap: break-word; /* Break long words */
+    overflow-wrap: break-word; /* Additional word breaking */
   }
 
   .workflow-step h3 {
     margin-top: 0;
     margin-bottom: 16px; /* Add spacing */
     color: var(--accent);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .workflow-step p {
     margin-bottom: 24px; /* Ensure spacing before images */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto; /* Add hyphenation for better text wrapping */
   }
 
   .workflow-image {
