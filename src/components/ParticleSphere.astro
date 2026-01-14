@@ -262,9 +262,9 @@
       this.globalOpacity = 1 - Math.pow(1 - progress, 3);
 
       // Draw connecting lines first (behind particles)
-      // Mobile: larger distance threshold since fewer particles, reduced opacity
+      // Mobile: larger distance threshold since fewer particles
       const maxLineDistance = this.isMobile ? 50 : 35;
-      const lineOpacityMultiplier = this.isMobile ? 0.4 : 1;
+      const lineOpacityMultiplier = this.isMobile ? 0.7 : 1;
       this.ctx.lineWidth = 0.5;
 
       for (let i = 0; i < this.particles.length; i++) {
