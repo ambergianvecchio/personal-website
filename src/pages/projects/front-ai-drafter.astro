@@ -383,19 +383,14 @@ const BASE_URL = import.meta.env.BASE_URL;
 
   <!-- Floating Scroll Arrows (Right Side) -->
   <div class="scroll-arrows">
-    <button class="scroll-arrow scroll-arrow-up" aria-label="Scroll to previous section" style="display: none;">
+    <button class="scroll-arrow scroll-arrow-up" aria-label="Scroll to previous section or top" style="display: none;">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M10 5 L5 10 M10 5 L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
-    <button class="scroll-arrow scroll-arrow-down" aria-label="Scroll to next section">
+    <button class="scroll-arrow scroll-arrow-down" aria-label="Scroll to next section or bottom">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M5 10L10 15L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-    <button class="scroll-arrow scroll-arrow-bottom" aria-label="Scroll to bottom">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M5 16L10 11L15 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
   </div>
@@ -429,7 +424,6 @@ const BASE_URL = import.meta.env.BASE_URL;
     const navDots = document.querySelectorAll('.nav-dot');
     const scrollUpBtn = document.querySelector('.scroll-arrow-up');
     const scrollDownBtn = document.querySelector('.scroll-arrow-down');
-    const scrollBottomBtn = document.querySelector('.scroll-arrow-bottom');
     let currentSectionIndex = 0;
 
     // Smooth scroll to section
@@ -463,10 +457,13 @@ const BASE_URL = import.meta.env.BASE_URL;
     // Update arrow visibility
     const updateArrowVisibility = () => {
       if (scrollUpBtn) {
-        scrollUpBtn.style.display = currentSectionIndex > 0 ? 'flex' : 'none';
+        // Show up arrow if not at top of page
+        const isAtTop = window.pageYOffset < 100;
+        scrollUpBtn.style.display = isAtTop ? 'none' : 'flex';
       }
       if (scrollDownBtn) {
-        scrollDownBtn.style.display = currentSectionIndex < sections.length - 1 ? 'flex' : 'none';
+        // Always show down arrow (it will scroll to next section or bottom)
+        scrollDownBtn.style.display = 'flex';
       }
     };
 
@@ -500,7 +497,14 @@ const BASE_URL = import.meta.env.BASE_URL;
     if (scrollUpBtn) {
       scrollUpBtn.addEventListener('click', () => {
         if (currentSectionIndex > 0) {
+          // Scroll to previous section
           scrollToSection(currentSectionIndex - 1);
+        } else {
+          // At first section, scroll to top of page
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
         }
       });
     }
@@ -508,18 +512,15 @@ const BASE_URL = import.meta.env.BASE_URL;
     if (scrollDownBtn) {
       scrollDownBtn.addEventListener('click', () => {
         if (currentSectionIndex < sections.length - 1) {
+          // Scroll to next section
           scrollToSection(currentSectionIndex + 1);
+        } else {
+          // At last section, scroll to bottom of page
+          window.scrollTo({
+            top: document.documentElement.scrollHeight,
+            behavior: 'smooth'
+          });
         }
-      });
-    }
-
-    // Click handler for scroll to bottom
-    if (scrollBottomBtn) {
-      scrollBottomBtn.addEventListener('click', () => {
-        window.scrollTo({
-          top: document.documentElement.scrollHeight,
-          behavior: 'smooth'
-        });
       });
     }
 
