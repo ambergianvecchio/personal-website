@@ -6,9 +6,12 @@ interface Props {
   image?: string;
   link?: string;
   featured?: boolean;
+  logo?: string;
+  logoAlt?: string;
+  logoWidth?: number;
 }
 
-const { title, description, tags, image, link, featured = false } = Astro.props;
+const { title, description, tags, image, link, featured = false, logo, logoAlt, logoWidth } = Astro.props;
 ---
 
 <article class:list={["project-card", { featured }]}>
@@ -18,7 +21,14 @@ const { title, description, tags, image, link, featured = false } = Astro.props;
     </div>
   )}
   <div class="project-content">
-    <h3 class="project-title">{title}</h3>
+    <div class="project-header">
+      {logo && (
+        <div class="project-logo" style={logoWidth ? `width: ${logoWidth}px;` : ''}>
+          <img src={logo} alt={logoAlt || 'Company logo'} />
+        </div>
+      )}
+      <h3 class="project-title">{title}</h3>
+    </div>
     <p class="project-description">{description}</p>
     <div class="project-tags">
       {tags.map((tag) => (
@@ -81,9 +91,43 @@ const { title, description, tags, image, link, featured = false } = Astro.props;
     padding: 28px;
   }
 
-  .project-title {
+  .project-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
     margin-bottom: 12px;
+  }
+
+  .project-logo {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .project-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    /* Apply warm silver filter to match Diary Edition color scheme */
+    filter: grayscale(100%) brightness(1.2) sepia(15%);
+    opacity: 0.85;
+    transition: opacity var(--transition-fast);
+  }
+
+  .project-card:hover .project-logo img {
+    opacity: 1;
+  }
+
+  .project-title {
+    margin-bottom: 0;
     color: var(--text-primary);
+  }
+
+  .project-header:not(:has(.project-logo)) .project-title {
+    margin-bottom: 12px;
   }
 
   .project-description {
