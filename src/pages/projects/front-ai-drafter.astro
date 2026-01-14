@@ -74,21 +74,31 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <p>
                   Common edits include updating agent instructions/prompts, adding few-shot examples to improve agent behavior, adjusting model settings (reasoning effort, temperature, etc.), and updating guardrails configuration (PII detection, moderation, etc.). Before committing, I test changes using local test scripts like <code>replay-test-messages.ts</code> or <code>test-categorizer-failures.ts</code> to verify the agent behaves as expected with sample inputs.
                 </p>
-                <div class="workflow-image-gallery" data-count="5">
+                <div class="workflow-image-gallery" data-count="5" data-tool="Cursor IDE">
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">Cursor IDE</span>
                     <img src={`${BASE_URL}images/cursor-dev-1.png`} alt="Cursor IDE workspace showing project structure" />
+                    <span class="image-caption">Project structure overview</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">Cursor IDE</span>
                     <img src={`${BASE_URL}images/cursor-dev-2.png`} alt="Agent definitions file structure" />
+                    <span class="image-caption">Agent definitions file</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">Cursor IDE</span>
                     <img src={`${BASE_URL}images/cursor-dev-3.png`} alt="Editing agent instructions" />
+                    <span class="image-caption">Editing agent instructions</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">Cursor IDE</span>
                     <img src={`${BASE_URL}images/cursor-dev-4.png`} alt="Local test script execution" />
+                    <span class="image-caption">Running local tests</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">Cursor IDE</span>
                     <img src={`${BASE_URL}images/cursor-dev-5.png`} alt="Categorizer test execution" />
+                    <span class="image-caption">Categorizer test results</span>
                   </div>
                 </div>
               </div>
@@ -101,15 +111,21 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <p>
                   When creating a pull request, Cursor IDE can generate a web link, title, and description to streamline the PR creation process. After review and approval, merging the PR triggers automated deployment via GitHub Actions.
                 </p>
-                <div class="workflow-image-gallery" data-count="3">
+                <div class="workflow-image-gallery" data-count="3" data-tool="GitHub">
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">GitHub</span>
                     <img src={`${BASE_URL}images/git-1.png`} alt="Git workflow and commits" />
+                    <span class="image-caption">Commit history</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">GitHub</span>
                     <img src={`${BASE_URL}images/git-2.png`} alt="Pull request and code review" />
+                    <span class="image-caption">Pull request review</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">Cursor IDE</span>
                     <img src={`${BASE_URL}images/git-3.png`} alt="GitHub Actions automated testing" />
+                    <span class="image-caption">Automated CI/CD</span>
                   </div>
                 </div>
               </div>
@@ -119,21 +135,31 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <p>
                   Agent configurations are managed in OpenAI Agent Builder, allowing for easy adjustment of model settings, instructions, and guardrails. If changes were made in Agent Builder, I export updated agents or verify that code changes are reflected correctly. This ensures configuration matches for Braintrust testing and maintains consistency across the development workflow.
                 </p>
-                <div class="workflow-image-gallery" data-count="5">
+                <div class="workflow-image-gallery" data-count="5" data-tool="OpenAI">
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">OpenAI</span>
                     <img src={`${BASE_URL}images/openai-builder-1.png`} alt="OpenAI Agent Builder dashboard" />
+                    <span class="image-caption">Agent Builder dashboard</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">OpenAI</span>
                     <img src={`${BASE_URL}images/openai-builder-2.png`} alt="Agent configuration settings" />
+                    <span class="image-caption">Configuration settings</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">OpenAI</span>
                     <img src={`${BASE_URL}images/openai-builder-3.png`} alt="Model settings and guardrails" />
+                    <span class="image-caption">Model settings</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">OpenAI</span>
                     <img src={`${BASE_URL}images/openai-builder-4.png`} alt="Agent instructions configuration" />
+                    <span class="image-caption">Agent instructions</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">OpenAI</span>
                     <img src={`${BASE_URL}images/openai-builder-5.png`} alt="Guardrails and safety settings" />
+                    <span class="image-caption">Guardrails setup</span>
                   </div>
                 </div>
               </div>
@@ -149,36 +175,56 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <p>
                   Based on traces, logs, and playground testing, I identify what needs improvement, determine which few-shot examples to add, refine agent instructions, and adjust categorization logic—documenting insights for the next iteration in Cursor.
                 </p>
-                <div class="workflow-image-gallery" data-count="10">
+                <div class="workflow-image-gallery" data-count="10" data-tool="Braintrust">
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">Braintrust</span>
                     <img src={`${BASE_URL}images/braintrust-1.png`} alt="Braintrust monitoring logs" />
+                    <span class="image-caption">Monitoring logs</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">Braintrust</span>
                     <img src={`${BASE_URL}images/braintrust-2.png`} alt="Categorization test results" />
+                    <span class="image-caption">Test results</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">Braintrust</span>
                     <img src={`${BASE_URL}images/braintrust-3.png`} alt="Braintrust dashboard" />
+                    <span class="image-caption">Dashboard overview</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">Braintrust</span>
                     <img src={`${BASE_URL}images/braintrust-4.png`} alt="Project lab overview" />
+                    <span class="image-caption">Project lab</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">Braintrust</span>
                     <img src={`${BASE_URL}images/braintrust-5.png`} alt="Playground interface for testing prompts" />
+                    <span class="image-caption">Playground testing</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">Braintrust</span>
                     <img src={`${BASE_URL}images/braintrust-6.png`} alt="Trace view showing agent reasoning" />
+                    <span class="image-caption">Trace view</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">Braintrust</span>
                     <img src={`${BASE_URL}images/braintrust-7.png`} alt="Detailed trace analysis" />
+                    <span class="image-caption">Trace analysis</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">Braintrust</span>
                     <img src={`${BASE_URL}images/braintrust-8.png`} alt="Batch trace review interface" />
+                    <span class="image-caption">Batch review</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">Braintrust</span>
                     <img src={`${BASE_URL}images/braintrust-9.png`} alt="Multiple traces for accuracy verification" />
+                    <span class="image-caption">Accuracy verification</span>
                   </div>
                   <div class="workflow-image-card">
+                    <span class="image-tool-badge">Braintrust</span>
                     <img src={`${BASE_URL}images/braintrust-10.png`} alt="Draft output quality review" />
+                    <span class="image-caption">Output review</span>
                   </div>
                 </div>
               </div>
@@ -723,7 +769,7 @@ const BASE_URL = import.meta.env.BASE_URL;
     overflow: hidden;
     background-color: var(--bg-secondary);
     border: 1px solid var(--border);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     aspect-ratio: 16 / 10; /* Consistent aspect ratio */
     display: flex;
@@ -734,7 +780,13 @@ const BASE_URL = import.meta.env.BASE_URL;
 
   .workflow-image-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.1);
+    border-color: var(--accent);
+  }
+
+  .workflow-image-card:hover .image-caption {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .workflow-image-card img {
@@ -745,6 +797,46 @@ const BASE_URL = import.meta.env.BASE_URL;
     border: none;
     margin: 0;
     padding: 8px; /* Add padding so images don't touch edges */
+    transition: transform 0.3s ease;
+  }
+
+  .workflow-image-card:hover img {
+    transform: scale(1.02);
+  }
+
+  /* Tool badge - top left corner */
+  .image-tool-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-primary);
+    background-color: rgba(10, 10, 10, 0.85);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    z-index: 3;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Caption - bottom of card, shown on hover */
+  .image-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px 14px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    background: linear-gradient(transparent, rgba(10, 10, 10, 0.95));
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
 
   .case-content {
@@ -1023,6 +1115,19 @@ const BASE_URL = import.meta.env.BASE_URL;
     .device-mockup::before {
       width: 40px;
       height: 3px;
+    }
+
+    /* Show captions on mobile since hover isn't available */
+    .image-caption {
+      opacity: 1;
+      transform: translateY(0);
+      padding: 10px 12px;
+      font-size: 0.8rem;
+    }
+
+    .image-tool-badge {
+      font-size: 0.65rem;
+      padding: 3px 8px;
     }
   }
 
