@@ -169,15 +169,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   @media (max-width: 768px) {
     .resume-lightbox {
-      padding: 0;
-      align-items: flex-start;
+      padding: 10px;
     }
 
     .resume-lightbox-content {
-      height: 100vh;
-      width: 100%;
-      max-width: 100%;
-      border-radius: 0;
+      height: auto;
+      max-height: 95vh;
+      width: auto;
+      max-width: 95vw;
+      aspect-ratio: 8.5 / 11;
     }
 
     .resume-lightbox-header {
@@ -201,16 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
       height: 36px;
       font-size: 24px;
       z-index: 10;
-    }
-
-    .resume-viewer {
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-
-    .resume-viewer object {
-      min-height: 100%;
-      width: 100%;
     }
   }
 </style>
