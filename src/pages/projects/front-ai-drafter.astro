@@ -51,7 +51,6 @@ const BASE_URL = import.meta.env.BASE_URL;
                   <a href="#workflow" class="sidebar-link" data-section="workflow">Development Workflow</a>
                   <a href="#results" class="sidebar-link" data-section="results">Key Results</a>
                   <a href="#technologies" class="sidebar-link" data-section="technologies">Technologies</a>
-                  <a href="#cycle" class="sidebar-link" data-section="cycle">The Complete Cycle</a>
                   <a href="#lessons" class="sidebar-link" data-section="lessons">Lessons Learned</a>
                 </nav>
                 <div class="sidebar-actions">
@@ -95,6 +94,86 @@ const BASE_URL = import.meta.env.BASE_URL;
               <p>
                 The project followed a rigorous iterative development cycle that connected multiple tools in a continuous improvement loop. Each step in the workflow builds upon the previous, creating a seamless pipeline from development to deployment.
               </p>
+
+              <!-- Animated Cycle Diagram -->
+              <div class="workflow-cycle-container workflow-cycle-top">
+                <div class="workflow-cycle" id="workflowCycle">
+                  <svg class="workflow-cycle-svg" viewBox="0 0 400 400">
+                    <defs>
+                      <!-- Gradient for glowing trail -->
+                      <linearGradient id="trailGradient" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="var(--accent)" stop-opacity="0" />
+                        <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.8" />
+                      </linearGradient>
+                      <!-- Glow filter -->
+                      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                        <feMerge>
+                          <feMergeNode in="coloredBlur"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                    </defs>
+
+                    <!-- Base circular path -->
+                    <circle class="workflow-path" cx="200" cy="200" r="150" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="2" />
+
+                    <!-- Animated glowing trail -->
+                    <circle class="workflow-trail" cx="200" cy="200" r="150" fill="none" stroke="url(#trailGradient)" stroke-width="3" stroke-linecap="round" stroke-dasharray="120 824" filter="url(#glow)">
+                      <animateTransform
+                        attributeName="transform"
+                        type="rotate"
+                        values="0 200 200;360 200 200"
+                        dur="8s"
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+
+                    <!-- Animated indicator dot with glow -->
+                    <circle class="workflow-indicator" cx="200" cy="50" r="8" fill="var(--accent)" filter="url(#glow)">
+                      <animateTransform
+                        attributeName="transform"
+                        type="rotate"
+                        values="0 200 200;360 200 200"
+                        dur="8s"
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+
+                  </svg>
+
+                  <!-- Workflow steps positioned around circle (6 steps evenly spaced at 60 degree intervals) -->
+                  <div class="workflow-step-item" data-step="1" style="top: 0; left: 50%; transform: translate(-50%, -100%);">
+                    <div class="workflow-step-dot"></div>
+                    <div class="workflow-step-label">Identify Issue</div>
+                  </div>
+
+                  <div class="workflow-step-item" data-step="2" style="top: 25%; right: 0; transform: translate(50%, -50%);">
+                    <div class="workflow-step-dot"></div>
+                    <div class="workflow-step-label">Edit in Cursor</div>
+                  </div>
+
+                  <div class="workflow-step-item" data-step="3" style="bottom: 25%; right: 0; transform: translate(50%, 50%);">
+                    <div class="workflow-step-dot"></div>
+                    <div class="workflow-step-label">Git Workflow</div>
+                  </div>
+
+                  <div class="workflow-step-item" data-step="4" style="bottom: 0; left: 50%; transform: translate(-50%, 100%);">
+                    <div class="workflow-step-dot"></div>
+                    <div class="workflow-step-label">Agent Builder Sync</div>
+                  </div>
+
+                  <div class="workflow-step-item" data-step="5" style="bottom: 25%; left: 0; transform: translate(-50%, 50%);">
+                    <div class="workflow-step-dot"></div>
+                    <div class="workflow-step-label">Test in Braintrust</div>
+                  </div>
+
+                  <div class="workflow-step-item" data-step="6" style="top: 25%; left: 0; transform: translate(-50%, -50%);">
+                    <div class="workflow-step-dot"></div>
+                    <div class="workflow-step-label">Review Results</div>
+                  </div>
+                </div>
+              </div>
 
               <div class="workflow-step">
                 <h3>1. Development in Cursor IDE</h3>
@@ -259,6 +338,37 @@ const BASE_URL = import.meta.env.BASE_URL;
                 </div>
               </div>
 
+              <h3>Putting It All Together</h3>
+              <p>
+                Each iteration follows the same pattern, creating a continuous improvement loop:
+              </p>
+              <div class="cycle-steps">
+                <div class="cycle-step">
+                  <strong>1. Identify Need for Improvement</strong>
+                  <p>Trigger points include Braintrust traces showing issues, manual review revealing patterns, playground testing showing unexpected behavior, or monitoring logs indicating trends.</p>
+                </div>
+                <div class="cycle-step">
+                  <strong>2. Edit in Cursor</strong>
+                  <p>Make code changes, update agent definitions, modify instructions/prompts, add few-shot examples, and test locally using test scripts.</p>
+                </div>
+                <div class="cycle-step">
+                  <strong>3. Commit and Push (Git Workflow)</strong>
+                  <p>Pull latest from main, install dependencies, build and verify locally, commit changes, push to remote, and create pull request. GitHub Actions automatically runs tests and deploys.</p>
+                </div>
+                <div class="cycle-step">
+                  <strong>4. Sync with Agent Builder</strong>
+                  <p>Export updated agents from Agent Builder if changes were made there, or verify in Agent Builder that code changes are reflected correctly. Review agent settings to ensure configuration matches for Braintrust testing.</p>
+                </div>
+                <div class="cycle-step">
+                  <strong>5. Test in Braintrust</strong>
+                  <p>Configure playground with settings from Agent Builder, test agents interactively with sample messages, run test batches to generate traces, and review 100-300 traces manually for accuracy.</p>
+                </div>
+                <div class="cycle-step">
+                  <strong>6. Review Results and Iterate</strong>
+                  <p>Analyze Braintrust results, compare before/after performance, and decide: if results are good, mark complete and move to next improvement; if results need work, go back to Step 2 to iterate further.</p>
+                </div>
+              </div>
+
               <h2 id="results">Key Results</h2>
               <div class="results-grid">
                 <div class="result-card">
@@ -291,119 +401,6 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <span class="tag">GitHub Actions</span>
                 <span class="tag">Prompt Engineering</span>
               </div>
-
-              <h2 id="cycle">The Complete Cycle</h2>
-              <p>
-                The complete iterative workflow connects all tools in a continuous improvement loop. From identifying needs through editing, testing, and validation, each iteration refines agent performance before deployment.
-              </p>
-              <div class="cycle-steps">
-                <div class="cycle-step">
-                  <strong>1. Identify Need for Improvement</strong>
-                  <p>Trigger points include Braintrust traces showing issues, manual review revealing patterns, playground testing showing unexpected behavior, or monitoring logs indicating trends.</p>
-                </div>
-                <div class="cycle-step">
-                  <strong>2. Edit in Cursor</strong>
-                  <p>Make code changes, update agent definitions, modify instructions/prompts, add few-shot examples, and test locally using test scripts.</p>
-                </div>
-                <div class="cycle-step">
-                  <strong>3. Commit and Push (Git Workflow)</strong>
-                  <p>Pull latest from main, install dependencies, build and verify locally, commit changes, push to remote, and create pull request. GitHub Actions automatically runs tests and deploys.</p>
-                </div>
-                <div class="cycle-step">
-                  <strong>4. Sync with Agent Builder</strong>
-                  <p>Export updated agents from Agent Builder if changes were made there, or verify in Agent Builder that code changes are reflected correctly. Review agent settings to ensure configuration matches for Braintrust testing.</p>
-                </div>
-                <div class="cycle-step">
-                  <strong>5. Test in Braintrust</strong>
-                  <p>Configure playground with settings from Agent Builder, test agents interactively with sample messages, run test batches to generate traces, and review 100-300 traces manually for accuracy.</p>
-                </div>
-                <div class="cycle-step">
-                  <strong>6. Review Results and Iterate</strong>
-                  <p>Analyze Braintrust results, compare before/after performance, and decide: if results are good → mark complete, ready for next improvement; if results need work → go back to Step 2 to iterate further.</p>
-                </div>
-              </div>
-              <div class="workflow-cycle-container">
-                <div class="workflow-cycle" id="workflowCycle">
-                  <svg class="workflow-cycle-svg" viewBox="0 0 400 400">
-                    <defs>
-                      <!-- Gradient for glowing trail -->
-                      <linearGradient id="trailGradient" gradientUnits="userSpaceOnUse">
-                        <stop offset="0%" stop-color="var(--accent)" stop-opacity="0" />
-                        <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.8" />
-                      </linearGradient>
-                      <!-- Glow filter -->
-                      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                        <feMerge>
-                          <feMergeNode in="coloredBlur"/>
-                          <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                      </filter>
-                    </defs>
-
-                    <!-- Base circular path -->
-                    <circle class="workflow-path" cx="200" cy="200" r="150" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="2" />
-
-                    <!-- Animated glowing trail -->
-                    <circle class="workflow-trail" cx="200" cy="200" r="150" fill="none" stroke="url(#trailGradient)" stroke-width="3" stroke-linecap="round" stroke-dasharray="120 824" filter="url(#glow)">
-                      <animateTransform
-                        attributeName="transform"
-                        type="rotate"
-                        values="0 200 200;360 200 200"
-                        dur="8s"
-                        repeatCount="indefinite"
-                      />
-                    </circle>
-
-                    <!-- Animated indicator dot with glow -->
-                    <circle class="workflow-indicator" cx="200" cy="50" r="8" fill="var(--accent)" filter="url(#glow)">
-                      <animateTransform
-                        attributeName="transform"
-                        type="rotate"
-                        values="0 200 200;360 200 200"
-                        dur="8s"
-                        repeatCount="indefinite"
-                      />
-                    </circle>
-
-                  </svg>
-                  
-                  <!-- Workflow steps positioned around circle (6 steps evenly spaced at 60 degree intervals) -->
-                  <div class="workflow-step-item" data-step="1" style="top: 0; left: 50%; transform: translate(-50%, -100%);">
-                    <div class="workflow-step-dot"></div>
-                    <div class="workflow-step-label">Identify Issue</div>
-                  </div>
-                  
-                  <div class="workflow-step-item" data-step="2" style="top: 25%; right: 0; transform: translate(50%, -50%);">
-                    <div class="workflow-step-dot"></div>
-                    <div class="workflow-step-label">Edit in Cursor</div>
-                  </div>
-                  
-                  <div class="workflow-step-item" data-step="3" style="bottom: 25%; right: 0; transform: translate(50%, 50%);">
-                    <div class="workflow-step-dot"></div>
-                    <div class="workflow-step-label">Git Workflow</div>
-                  </div>
-                  
-                  <div class="workflow-step-item" data-step="4" style="bottom: 0; left: 50%; transform: translate(-50%, 100%);">
-                    <div class="workflow-step-dot"></div>
-                    <div class="workflow-step-label">Agent Builder Sync</div>
-                  </div>
-                  
-                  <div class="workflow-step-item" data-step="5" style="bottom: 25%; left: 0; transform: translate(-50%, 50%);">
-                    <div class="workflow-step-dot"></div>
-                    <div class="workflow-step-label">Test in Braintrust</div>
-                  </div>
-                  
-                  <div class="workflow-step-item" data-step="6" style="top: 25%; left: 0; transform: translate(-50%, -50%);">
-                    <div class="workflow-step-dot"></div>
-                    <div class="workflow-step-label">Review Results</div>
-                  </div>
-                </div>
-              </div>
-              
-              <p class="workflow-cycle-description">
-                The workflow repeats as needed. Each iteration improves agent quality and performance, building toward production readiness.
-              </p>
 
               <h2 id="lessons">Lessons Learned</h2>
               <p>
@@ -450,44 +447,38 @@ const BASE_URL = import.meta.env.BASE_URL;
     const trail = document.querySelector('.workflow-trail');
     const stepItems = document.querySelectorAll('.workflow-step-item');
 
+    if (!workflowCycle || !indicator || stepItems.length === 0) return;
+
     // Get all animateTransform elements
-    const indicatorAnim = indicator?.querySelector('animateTransform');
+    const indicatorAnim = indicator.querySelector('animateTransform');
     const trailAnim = trail?.querySelector('animateTransform');
-
-    // Pause on hover
-    if (workflowCycle) {
-      workflowCycle.addEventListener('mouseenter', () => {
-        if (indicatorAnim) indicatorAnim.setAttribute('dur', '999999s');
-        if (trailAnim) trailAnim.setAttribute('dur', '999999s');
-      });
-
-      workflowCycle.addEventListener('mouseleave', () => {
-        if (indicatorAnim) indicatorAnim.setAttribute('dur', '8s');
-        if (trailAnim) trailAnim.setAttribute('dur', '8s');
-      });
-    }
 
     // Pulse nodes as indicator passes
     // Step positions in degrees (starting from top, going clockwise)
     const stepAngles = [0, 60, 120, 180, 240, 300]; // 6 steps at 60° intervals
     const animDuration = 8000; // 8 seconds per rotation
-    let startTime = Date.now();
+    let startTime = performance.now();
     let isPaused = false;
     let pausedAngle = 0;
 
-    workflowCycle?.addEventListener('mouseenter', () => {
-      pausedAngle = ((Date.now() - startTime) / animDuration * 360) % 360;
+    // Pause on hover
+    workflowCycle.addEventListener('mouseenter', () => {
+      if (indicatorAnim) indicatorAnim.setAttribute('dur', '999999s');
+      if (trailAnim) trailAnim.setAttribute('dur', '999999s');
+      pausedAngle = ((performance.now() - startTime) / animDuration * 360) % 360;
       isPaused = true;
     });
 
-    workflowCycle?.addEventListener('mouseleave', () => {
-      startTime = Date.now() - (pausedAngle / 360 * animDuration);
+    workflowCycle.addEventListener('mouseleave', () => {
+      if (indicatorAnim) indicatorAnim.setAttribute('dur', '8s');
+      if (trailAnim) trailAnim.setAttribute('dur', '8s');
+      startTime = performance.now() - (pausedAngle / 360 * animDuration);
       isPaused = false;
     });
 
     function updatePulsingNodes() {
       if (!isPaused) {
-        const elapsed = Date.now() - startTime;
+        const elapsed = performance.now() - startTime;
         const currentAngle = (elapsed / animDuration * 360) % 360;
 
         stepItems.forEach((item, index) => {
@@ -498,6 +489,9 @@ const BASE_URL = import.meta.env.BASE_URL;
 
           const dot = item.querySelector('.workflow-step-dot');
           const label = item.querySelector('.workflow-step-label');
+
+          if (!dot || !label) return;
+
           if (angleDiff < 30) {
             // Pulse intensity based on proximity
             const intensity = 1 - (angleDiff / 30);
@@ -522,14 +516,12 @@ const BASE_URL = import.meta.env.BASE_URL;
       requestAnimationFrame(updatePulsingNodes);
     }
 
-    if (stepItems.length > 0) {
-      updatePulsingNodes();
-    }
+    updatePulsingNodes();
   });
 
   // Sidebar Navigation
   document.addEventListener('DOMContentLoaded', () => {
-    const sections = ['overview', 'challenge', 'workflow', 'results', 'technologies', 'cycle', 'lessons'];
+    const sections = ['overview', 'challenge', 'workflow', 'results', 'technologies', 'lessons'];
     const sidebarLinks = document.querySelectorAll('.sidebar-link');
     const scrollToTopBtn = document.getElementById('scrollToTop');
     const scrollToBottomBtn = document.getElementById('scrollToBottom');
@@ -1021,6 +1013,10 @@ const BASE_URL = import.meta.env.BASE_URL;
   .workflow-cycle-container {
     margin: 80px 0 80px;
     text-align: center;
+  }
+
+  .workflow-cycle-container.workflow-cycle-top {
+    margin: 40px 0 60px;
   }
 
   .workflow-cycle {
