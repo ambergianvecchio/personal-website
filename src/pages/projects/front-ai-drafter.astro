@@ -98,6 +98,9 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <p>
                   After testing locally, changes move through a structured Git workflow. I pull the latest from the main branch, install dependencies, build and verify locally, then commit changes with descriptive messages. Pull requests enable code review and automated testing through GitHub Actions, ensuring code quality before merging.
                 </p>
+                <p>
+                  When creating a pull request, Cursor IDE can generate a web link, title, and description to streamline the PR creation process. After review and approval, merging the PR triggers automated deployment via GitHub Actions.
+                </p>
                 <div class="workflow-image-gallery" data-count="3">
                   <div class="workflow-image-card">
                     <img src={`${BASE_URL}images/git-1.png`} alt="Git workflow and commits" />
