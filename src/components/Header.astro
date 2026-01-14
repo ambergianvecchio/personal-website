@@ -32,6 +32,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
   }
 
   .logo-group {
@@ -85,8 +86,12 @@
   }
 
   @media (max-width: 640px) {
+    .nav {
+      padding: 0 16px;
+    }
+
     .nav-links {
-      gap: 20px;
+      gap: 16px;
     }
 
     .logo-group {
