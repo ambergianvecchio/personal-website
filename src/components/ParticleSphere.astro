@@ -261,29 +261,36 @@
       const progress = Math.min(elapsed / this.fadeInDuration, 1);
       this.globalOpacity = 1 - Math.pow(1 - progress, 3);
 
-      // Draw connecting lines first (behind particles)
-      // Mobile: larger distance threshold since fewer particles
-      const maxLineDistance = this.isMobile ? 50 : 35;
-      const lineOpacityMultiplier = this.isMobile ? 0.7 : 1;
-      this.ctx.lineWidth = 0.5;
+      // Sort by depth (back to front)
+      const sorted = [...this.particles].sort((a, b) => b.depth - a.depth);
 
-      for (let i = 0; i < this.particles.length; i++) {
-        const p1 = this.particles[i];
-        for (let j = i + 1; j < this.particles.length; j++) {
-          const p2 = this.particles[j];
+      // Draw lines and particles together, depth-sorted
+      // This ensures lines never appear on top of particles in front of them
+      const maxLineDistance = this.isMobile ? 50 : 35;
+      const lineOpacityMultiplier = this.isMobile ? 1.2 : 1.5; // More visible lines
+      this.ctx.lineWidth = this.isMobile ? 0.8 : 1;
+
+      // First pass: draw all lines (they'll be behind particles drawn in second pass)
+      for (let i = 0; i < sorted.length; i++) {
+        const p1 = sorted[i];
+        for (let j = i + 1; j < sorted.length; j++) {
+          const p2 = sorted[j];
           const dx = p1.x - p2.x;
           const dy = p1.y - p2.y;
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < maxLineDistance) {
-            // Opacity based on distance and depth of both particles
+            // Only draw lines between particles that are both in the back half
+            // This prevents lines from showing through front particles
+            const bothInBack = p1.depth > 0 && p2.depth > 0;
+            if (!bothInBack) continue;
+
             const depthNorm1 = (p1.depth + this.sphereRadius) / (this.sphereRadius * 2);
             const depthNorm2 = (p2.depth + this.sphereRadius) / (this.sphereRadius * 2);
             const avgDepth = (depthNorm1 + depthNorm2) / 2;
             const distanceOpacity = 1 - (distance / maxLineDistance);
-            const opacity = distanceOpacity * avgDepth * 0.3 * this.globalOpacity * lineOpacityMultiplier;
+            const opacity = distanceOpacity * avgDepth * 0.4 * this.globalOpacity * lineOpacityMultiplier;
 
-            // Warm silver tone matching Diary Edition
             this.ctx.strokeStyle = `rgba(212, 205, 196, ${opacity})`;
             this.ctx.beginPath();
             this.ctx.moveTo(p1.x, p1.y);
@@ -293,21 +300,16 @@
         }
       }
 
-      // Sort by depth (back to front)
-      const sorted = [...this.particles].sort((a, b) => b.depth - a.depth);
-
+      // Second pass: draw all particles on top
       sorted.forEach(p => {
-        // Depth-based opacity (0.2 to 0.8) - reduced on mobile to be more subtle
         const depthNorm = (p.depth + this.sphereRadius) / (this.sphereRadius * 2);
-        const mobileOpacityMultiplier = this.isMobile ? 0.4 : 1;
-        const opacity = (0.15 + depthNorm * 0.5) * this.globalOpacity * mobileOpacityMultiplier;
+        const mobileOpacityMultiplier = this.isMobile ? 0.5 : 1;
+        const opacity = (0.2 + depthNorm * 0.6) * this.globalOpacity * mobileOpacityMultiplier;
 
-        // Size based on depth and scale
         const size = p.size * p.scale * (0.5 + depthNorm * 0.5);
 
-        // Warm silver tone matching Diary Edition
+        // Draw particle with solid fill to cover any lines
         this.ctx.fillStyle = `rgba(212, 205, 196, ${opacity})`;
-
         this.drawParticle(p.x, p.y, size);
         this.ctx.fill();
       });
