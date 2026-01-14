@@ -41,9 +41,10 @@
     
     createSphere() {
       this.nodes = [];
-      const radius = Math.min(this.canvas.width, this.canvas.height) * 0.4;
-      const centerX = this.canvas.width / 2;
-      const centerY = this.canvas.height / 2;
+      const dpr = window.devicePixelRatio || 1;
+      const radius = Math.min(this.canvas.offsetWidth, this.canvas.offsetHeight) * 0.25;
+      const centerX = this.canvas.offsetWidth / 2;
+      const centerY = this.canvas.offsetHeight / 2;
       
       // Create nodes on a sphere surface
       const segments = 20;
@@ -134,7 +135,7 @@
     
     project3D(x, y, z, centerX, centerY) {
       const dpr = window.devicePixelRatio || 1;
-      const perspective = 800;
+      const perspective = 1000;
       const scale = perspective / (perspective + z);
       return {
         x2d: centerX + x * scale,
@@ -179,10 +180,10 @@
         const centerProximity = 1 - Math.min(distanceFromCenter / maxDistanceScaled, 1);
         
         // Adjust influence based on center proximity - stronger in center
-        const baseInfluence = 400 * dpr;
-        const mouseInfluence = baseInfluence * (0.6 + centerProximity * 0.4); // 240-400px range
-        const baseRepelStrength = 100 * dpr;
-        const mouseRepelStrength = baseRepelStrength * (0.7 + centerProximity * 0.3); // 70-100 range
+        const baseInfluence = 500 * dpr;
+        const mouseInfluence = baseInfluence * (0.6 + centerProximity * 0.4); // 300-500px range
+        const baseRepelStrength = 120 * dpr;
+        const mouseRepelStrength = baseRepelStrength * (0.7 + centerProximity * 0.3); // 84-120 range
         
         if (distance < mouseInfluence && distance > 0) {
           const force = Math.pow((mouseInfluence - distance) / mouseInfluence, 2);
@@ -193,13 +194,13 @@
           targetY -= Math.sin(angle) * repelDistance;
         }
         
-        // Smooth interpolation
-        node.vx += (targetX - node.x) * 0.12;
-        node.vy += (targetY - node.y) * 0.12;
+        // Smooth interpolation - more responsive
+        node.vx += (targetX - node.x) * 0.2;
+        node.vy += (targetY - node.y) * 0.2;
         
         // Apply velocity with less damping for more responsiveness
-        node.vx *= 0.75;
-        node.vy *= 0.75;
+        node.vx *= 0.8;
+        node.vy *= 0.8;
         
         node.x += node.vx;
         node.y += node.vy;
