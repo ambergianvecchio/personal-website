@@ -73,6 +73,9 @@
             size: 2.5 + Math.random() * 1.5,
             angle: Math.random() * Math.PI * 2,
             rotationSpeed: 0.001 + Math.random() * 0.002,
+            // Individual response characteristics for independent molding
+            responseSpeed: 0.06 + Math.random() * 0.04, // 0.06-0.10 range
+            dampingFactor: 0.94 + Math.random() * 0.02, // 0.94-0.96 range
             connections: []
           });
         }
@@ -163,15 +166,16 @@
         // Project to 2D
         const projected = this.project3D(rotated.x, rotated.y, rotated.z, centerX, centerY);
         
+        // Each node's base position (independent)
         let targetX = projected.x2d * dpr;
         let targetY = projected.y2d * dpr;
         
-        // Mouse interaction - strong and visible like botronics
+        // Each node independently calculates its response to cursor
         const dx = this.mouse.x - targetX;
         const dy = this.mouse.y - targetY;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        // Calculate distance from sphere center for proximity-based interaction
+        // Each node's distance from sphere center (independent calculation)
         const centerXScaled = centerX * dpr;
         const centerYScaled = centerY * dpr;
         const dxFromCenter = targetX - centerXScaled;
@@ -180,40 +184,41 @@
         const maxSphereRadius = Math.min(this.canvas.offsetWidth, this.canvas.offsetHeight) * 0.35 * dpr;
         const centerProximity = 1 - Math.min(distanceFromCenter / maxSphereRadius, 1);
         
-        // Strong interaction - larger influence radius and stronger repulsion
+        // Each node has independent influence radius and repel strength
         const baseInfluenceRadius = 450 * dpr;
         const influenceRadius = baseInfluenceRadius * (0.7 + centerProximity * 0.3);
         const baseRepelStrength = 250 * dpr;
         const repelStrength = baseRepelStrength * (0.8 + centerProximity * 0.2);
         
+        // Each node independently responds to cursor - creating molding effect
         if (distance < influenceRadius && distance > 0) {
-          // Smooth force calculation - gradual push like water displacement
+          // Smooth force calculation - each node calculates its own displacement
           const normalizedDistance = distance / influenceRadius;
           const force = Math.pow(1 - normalizedDistance, 2.5);
           const angle = Math.atan2(dy, dx);
           const repelDistance = force * repelStrength;
           
-          // Push nodes away from cursor - smooth water-like displacement
+          // Each node independently moves away from cursor - molds around it
           targetX -= Math.cos(angle) * repelDistance;
           targetY -= Math.sin(angle) * repelDistance;
         }
         
-        // Smooth, fluid motion like water - no bounce
-        const spring = 0.08;
-        const damping = 0.95;
+        // Each node has independent physics - unique response for organic molding
+        const spring = node.responseSpeed || 0.08;
+        const damping = node.dampingFactor || 0.95;
         
-        // Apply force directly to velocity for smoother motion
+        // Independent velocity calculation for each node - creates varied response
         const fx = (targetX - node.x) * spring;
         const fy = (targetY - node.y) * spring;
         
         node.vx += fx;
         node.vy += fy;
         
-        // Strong damping to prevent bounce - water-like resistance
+        // Independent damping for each node - water-like resistance with variation
         node.vx *= damping;
         node.vy *= damping;
         
-        // Apply velocity
+        // Each node moves independently
         node.x += node.vx;
         node.y += node.vy;
         
@@ -221,7 +226,7 @@
         node.depth = projected.z;
         node.scale = projected.scale;
         
-        // Rotate hexagon
+        // Rotate hexagon independently
         node.angle += node.rotationSpeed;
       });
     }
