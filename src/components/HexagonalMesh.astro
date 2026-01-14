@@ -41,8 +41,7 @@
     
     createSphere() {
       this.nodes = [];
-      const dpr = window.devicePixelRatio || 1;
-      const radius = Math.min(this.canvas.offsetWidth, this.canvas.offsetHeight) * 0.25;
+      const radius = Math.min(this.canvas.offsetWidth, this.canvas.offsetHeight) * 0.3;
       const centerX = this.canvas.offsetWidth / 2;
       const centerY = this.canvas.offsetHeight / 2;
       
@@ -104,6 +103,7 @@
       this.canvas.addEventListener('mousemove', (e) => {
         const rect = this.canvas.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
+        // Store mouse position in canvas coordinate space (scaled by DPR)
         this.mouse.x = (e.clientX - rect.left) * dpr;
         this.mouse.y = (e.clientY - rect.top) * dpr;
       });
@@ -179,11 +179,11 @@
         const maxDistanceScaled = maxDistance * dpr;
         const centerProximity = 1 - Math.min(distanceFromCenter / maxDistanceScaled, 1);
         
-        // Adjust influence based on center proximity - stronger in center
-        const baseInfluence = 500 * dpr;
-        const mouseInfluence = baseInfluence * (0.6 + centerProximity * 0.4); // 300-500px range
-        const baseRepelStrength = 120 * dpr;
-        const mouseRepelStrength = baseRepelStrength * (0.7 + centerProximity * 0.3); // 84-120 range
+        // Adjust influence based on center proximity - stronger in center, more visible interaction
+        const baseInfluence = 600 * dpr;
+        const mouseInfluence = baseInfluence * (0.7 + centerProximity * 0.3); // 420-600px range
+        const baseRepelStrength = 150 * dpr;
+        const mouseRepelStrength = baseRepelStrength * (0.8 + centerProximity * 0.2); // 120-150 range
         
         if (distance < mouseInfluence && distance > 0) {
           const force = Math.pow((mouseInfluence - distance) / mouseInfluence, 2);
@@ -194,13 +194,13 @@
           targetY -= Math.sin(angle) * repelDistance;
         }
         
-        // Smooth interpolation - more responsive
-        node.vx += (targetX - node.x) * 0.2;
-        node.vy += (targetY - node.y) * 0.2;
+        // Smooth interpolation - very responsive
+        node.vx += (targetX - node.x) * 0.3;
+        node.vy += (targetY - node.y) * 0.3;
         
-        // Apply velocity with less damping for more responsiveness
-        node.vx *= 0.8;
-        node.vy *= 0.8;
+        // Apply velocity with less damping for immediate response
+        node.vx *= 0.85;
+        node.vy *= 0.85;
         
         node.x += node.vx;
         node.y += node.vy;
@@ -221,9 +221,9 @@
       // Sort nodes by depth (back to front)
       const sortedNodes = [...this.nodes].sort((a, b) => (b.depth || 0) - (a.depth || 0));
       
-      // Draw connections first (behind nodes)
-      this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
-      this.ctx.lineWidth = 0.5 * dpr;
+      // Draw connections first (behind nodes) - more visible
+      this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+      this.ctx.lineWidth = 0.8 * dpr;
       
       sortedNodes.forEach(node => {
         node.connections.forEach(connIndex => {
@@ -234,7 +234,7 @@
           );
           
           if (distance < 150 * dpr) {
-            const opacity = Math.max(0, 0.08 * (1 - distance / (150 * dpr)));
+            const opacity = Math.max(0, 0.15 * (1 - distance / (150 * dpr)));
             this.ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
             
             this.ctx.beginPath();
@@ -245,11 +245,11 @@
         });
       });
       
-      // Draw hexagonal nodes with depth effect - crisp rendering
+      // Draw hexagonal nodes with depth effect - crisp rendering, more visible
       sortedNodes.forEach((node) => {
         const depth = (node.depth + 400) / 800; // Normalize depth
         const size = node.size * node.scale * (0.5 + depth * 0.5) * dpr;
-        const opacity = 0.15 + depth * 0.5;
+        const opacity = 0.3 + depth * 0.5; // Increased from 0.15 for better visibility
         
         this.ctx.save();
         this.ctx.translate(node.x, node.y);
