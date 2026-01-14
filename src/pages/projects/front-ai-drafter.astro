@@ -1117,7 +1117,7 @@ const BASE_URL = import.meta.env.BASE_URL;
   .section-nav-dots::before {
     content: '';
     position: absolute;
-    left: 5px;
+    left: 6px;
     top: 0;
     bottom: 0;
     width: 2px;
@@ -1138,15 +1138,17 @@ const BASE_URL = import.meta.env.BASE_URL;
   }
 
   .nav-dot .dot {
-    width: 12px;
-    height: 12px;
-    background-color: rgba(255, 255, 255, 0.4);
-    border: 2px solid rgba(255, 255, 255, 0.6);
+    width: 10px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     transition: all 0.3s ease;
     position: relative;
     z-index: 2;
     flex-shrink: 0;
     clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    box-sizing: border-box;
+    -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
   }
 
   .nav-dot .nav-label {
@@ -1159,10 +1161,11 @@ const BASE_URL = import.meta.env.BASE_URL;
 
   .nav-dot:hover .dot,
   .nav-dot.active .dot {
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     background-color: var(--accent);
     border-color: var(--accent);
+    border-width: 2px;
     box-shadow: 0 0 8px var(--accent);
   }
 
