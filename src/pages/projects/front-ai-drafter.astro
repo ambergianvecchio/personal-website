@@ -263,24 +263,24 @@ const BASE_URL = import.meta.env.BASE_URL;
                     <!-- Arrows connecting steps -->
                     <defs>
                       <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-                        <polygon points="0 0, 10 3, 0 6" fill="rgba(255, 255, 255, 0.7)" />
+                        <polygon points="0 0, 10 3, 0 6" fill="rgba(255, 255, 255, 0.9)" />
                       </marker>
                     </defs>
                     
                     <!-- Connection lines between steps - properly centered on circle -->
-                    <!-- Connection lines between 6 steps (60 degree intervals, properly centered) -->
-                    <!-- Step 1 (top) to Step 2 (top-right) -->
-                    <path class="workflow-arrow" d="M 200 50 A 150 150 0 0 1 329.9 125" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2.5" marker-end="url(#arrowhead)" />
-                    <!-- Step 2 to Step 3 (bottom-right) -->
-                    <path class="workflow-arrow" d="M 329.9 125 A 150 150 0 0 1 329.9 275" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2.5" marker-end="url(#arrowhead)" />
-                    <!-- Step 3 to Step 4 (bottom) -->
-                    <path class="workflow-arrow" d="M 329.9 275 A 150 150 0 0 1 200 350" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2.5" marker-end="url(#arrowhead)" />
-                    <!-- Step 4 to Step 5 (bottom-left) -->
-                    <path class="workflow-arrow" d="M 200 350 A 150 150 0 0 1 70.1 275" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2.5" marker-end="url(#arrowhead)" />
-                    <!-- Step 5 to Step 6 (top-left) -->
-                    <path class="workflow-arrow" d="M 70.1 275 A 150 150 0 0 1 70.1 125" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2.5" marker-end="url(#arrowhead)" />
-                    <!-- Step 6 back to Step 1 (completing the loop) -->
-                    <path class="workflow-arrow" d="M 70.1 125 A 150 150 0 0 1 200 50" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2.5" marker-end="url(#arrowhead)" />
+                    <!-- Connection lines between 6 steps - arcs that hug the circle exactly -->
+                    <!-- Step 1 (top) to Step 2 (top-right) - 60 degree arc -->
+                    <path class="workflow-arrow" d="M 200 50 A 150 150 0 0 1 329.9 125" fill="none" stroke="rgba(255, 255, 255, 0.85)" stroke-width="2.5" marker-end="url(#arrowhead)" />
+                    <!-- Step 2 to Step 3 (bottom-right) - 60 degree arc -->
+                    <path class="workflow-arrow" d="M 329.9 125 A 150 150 0 0 1 329.9 275" fill="none" stroke="rgba(255, 255, 255, 0.85)" stroke-width="2.5" marker-end="url(#arrowhead)" />
+                    <!-- Step 3 to Step 4 (bottom) - 60 degree arc -->
+                    <path class="workflow-arrow" d="M 329.9 275 A 150 150 0 0 1 200 350" fill="none" stroke="rgba(255, 255, 255, 0.85)" stroke-width="2.5" marker-end="url(#arrowhead)" />
+                    <!-- Step 4 to Step 5 (bottom-left) - 60 degree arc -->
+                    <path class="workflow-arrow" d="M 200 350 A 150 150 0 0 1 70.1 275" fill="none" stroke="rgba(255, 255, 255, 0.85)" stroke-width="2.5" marker-end="url(#arrowhead)" />
+                    <!-- Step 5 to Step 6 (top-left) - 60 degree arc -->
+                    <path class="workflow-arrow" d="M 70.1 275 A 150 150 0 0 1 70.1 125" fill="none" stroke="rgba(255, 255, 255, 0.85)" stroke-width="2.5" marker-end="url(#arrowhead)" />
+                    <!-- Step 6 back to Step 1 (completing the loop) - 60 degree arc -->
+                    <path class="workflow-arrow" d="M 70.1 125 A 150 150 0 0 1 200 50" fill="none" stroke="rgba(255, 255, 255, 0.85)" stroke-width="2.5" marker-end="url(#arrowhead)" />
                   </svg>
                   
                   <!-- Workflow steps positioned around circle (6 steps evenly spaced at 60 degree intervals) -->
@@ -314,11 +314,11 @@ const BASE_URL = import.meta.env.BASE_URL;
                     <div class="workflow-step-label">Review Results</div>
                   </div>
                 </div>
-                
-                <p class="workflow-cycle-description">
-                  The workflow repeats as needed. Each iteration improves agent quality and performance, building toward production readiness.
-                </p>
               </div>
+              
+              <p class="workflow-cycle-description">
+                The workflow repeats as needed. Each iteration improves agent quality and performance, building toward production readiness.
+              </p>
 
               <h2>Lessons Learned</h2>
               <p>
@@ -588,7 +588,7 @@ const BASE_URL = import.meta.env.BASE_URL;
 
   /* Interactive Workflow Cycle */
   .workflow-cycle-container {
-    margin: 60px 0;
+    margin: 60px 0 20px;
     text-align: center;
   }
 
@@ -665,8 +665,9 @@ const BASE_URL = import.meta.env.BASE_URL;
     color: var(--text-secondary);
     font-size: 0.95rem;
     max-width: 600px;
-    margin: 0 auto;
+    margin: 120px auto 0;
     line-height: 1.6;
+    padding-top: 20px;
   }
 
   /* Pause animation on hover */
