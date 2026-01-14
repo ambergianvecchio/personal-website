@@ -294,9 +294,10 @@
       const sorted = [...this.particles].sort((a, b) => b.depth - a.depth);
 
       sorted.forEach(p => {
-        // Depth-based opacity (0.2 to 0.8)
+        // Depth-based opacity (0.2 to 0.8) - reduced on mobile to be more subtle
         const depthNorm = (p.depth + this.sphereRadius) / (this.sphereRadius * 2);
-        const opacity = (0.15 + depthNorm * 0.5) * this.globalOpacity;
+        const mobileOpacityMultiplier = this.isMobile ? 0.4 : 1;
+        const opacity = (0.15 + depthNorm * 0.5) * this.globalOpacity * mobileOpacityMultiplier;
 
         // Size based on depth and scale
         const size = p.size * p.scale * (0.5 + depthNorm * 0.5);
