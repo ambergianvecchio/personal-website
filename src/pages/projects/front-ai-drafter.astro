@@ -1228,17 +1228,18 @@ const BASE_URL = import.meta.env.BASE_URL;
       height: 3px;
     }
 
+    /* On mobile, hide the tool badge to avoid overlap */
+    .image-tool-badge {
+      display: none;
+    }
+
     /* Show captions on mobile since hover isn't available */
     .image-caption {
       opacity: 1;
       transform: translateY(0);
       padding: 10px 12px;
-      font-size: 0.8rem;
-    }
-
-    .image-tool-badge {
-      font-size: 0.65rem;
-      padding: 3px 8px;
+      font-size: 0.85rem;
+      background: linear-gradient(transparent, rgba(10, 10, 10, 0.95));
     }
   }
 
