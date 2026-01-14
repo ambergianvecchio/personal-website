@@ -160,7 +160,10 @@
       const perspective = 800;
       const scale = perspective / (perspective + z);
       const centerX = this.width / 2;
-      const centerY = this.height / 2;
+      // On mobile, shift sphere up to sit higher above profile image
+      const centerY = this.isMobile
+        ? this.height / 2 - this.sphereRadius * 0.3
+        : this.height / 2;
 
       return {
         x: centerX + x * scale,
