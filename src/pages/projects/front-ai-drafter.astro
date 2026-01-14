@@ -193,7 +193,7 @@ const BASE_URL = import.meta.env.BASE_URL;
                   <p>Scalable system handling high-volume customer communication</p>
                 </div>
                 <div class="result-card">
-                  <div class="result-number result-number-continuous">Continuous</div>
+                  <div class="result-number">Continuous</div>
                   <div class="result-label">Iterative Improvement</div>
                   <p>Established workflow for ongoing refinement and optimization</p>
                 </div>
@@ -573,17 +573,12 @@ const BASE_URL = import.meta.env.BASE_URL;
   }
 
   .result-number {
-    font-size: 2.5rem;
+    font-size: 2rem; /* Reduced from 2.5rem to fit "Continuous" */
     font-weight: 800;
     color: var(--accent);
     margin-bottom: 8px;
     font-family: var(--font-display);
     white-space: nowrap; /* Keep text on one line */
-  }
-
-  /* Smaller font for "Continuous" to fit on one line */
-  .result-number-continuous {
-    font-size: 2rem; /* Slightly smaller for "Continuous" */
   }
 
   .result-label {
