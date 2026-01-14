@@ -4,7 +4,11 @@
 
 <header class="header">
   <nav class="nav container">
-    <a href="/" class="logo">GIANVECCHIO</a>
+    <div class="logo-group">
+      <a href="/" class="logo">GIANVECCHIO</a>
+      <span class="logo-separator">|</span>
+      <a href="#" class="logo-resume" data-resume-trigger>Resume</a>
+    </div>
     <ul class="nav-links">
       <li><a href="#work">Work</a></li>
       <li><a href="#about">About</a></li>
@@ -30,6 +34,12 @@
     align-items: center;
   }
 
+  .logo-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
   .logo {
     font-family: var(--font-display);
     font-size: 1.25rem;
@@ -39,6 +49,22 @@
 
   .logo:hover {
     color: var(--accent);
+  }
+
+  .logo-separator {
+    color: var(--text-muted);
+    font-weight: 300;
+  }
+
+  .logo-resume {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color var(--transition-fast);
+  }
+
+  .logo-resume:hover {
+    color: var(--text-primary);
   }
 
   .nav-links {
@@ -60,7 +86,30 @@
 
   @media (max-width: 640px) {
     .nav-links {
-      gap: 20px;
+      gap: 16px;
+    }
+
+    .logo-group {
+      gap: 8px;
+    }
+
+    .logo {
+      font-size: 1.1rem;
+    }
+
+    .logo-resume {
+      font-size: 0.8rem;
+    }
+
+    .nav-links a {
+      font-size: 0.8rem;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .logo-separator,
+    .logo-resume {
+      display: none;
     }
   }
 </style>
