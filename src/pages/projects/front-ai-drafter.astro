@@ -353,24 +353,31 @@ const BASE_URL = import.meta.env.BASE_URL;
   <nav class="section-nav-dots" aria-label="Section navigation">
     <a href="#overview" class="nav-dot" data-section="overview" aria-label="Overview">
       <span class="dot"></span>
+      <span class="nav-label">Overview</span>
     </a>
     <a href="#challenge" class="nav-dot" data-section="challenge" aria-label="The Challenge">
       <span class="dot"></span>
+      <span class="nav-label">Challenge</span>
     </a>
     <a href="#workflow" class="nav-dot" data-section="workflow" aria-label="Development Workflow">
       <span class="dot"></span>
+      <span class="nav-label">Workflow</span>
     </a>
     <a href="#results" class="nav-dot" data-section="results" aria-label="Key Results">
       <span class="dot"></span>
+      <span class="nav-label">Results</span>
     </a>
     <a href="#technologies" class="nav-dot" data-section="technologies" aria-label="Technologies & Tools">
       <span class="dot"></span>
+      <span class="nav-label">Technologies</span>
     </a>
     <a href="#cycle" class="nav-dot" data-section="cycle" aria-label="The Complete Cycle">
       <span class="dot"></span>
+      <span class="nav-label">Cycle</span>
     </a>
     <a href="#lessons" class="nav-dot" data-section="lessons" aria-label="Lessons Learned">
       <span class="dot"></span>
+      <span class="nav-label">Lessons</span>
     </a>
   </nav>
 
@@ -378,12 +385,12 @@ const BASE_URL = import.meta.env.BASE_URL;
   <div class="scroll-arrows">
     <button class="scroll-arrow scroll-arrow-up" aria-label="Scroll to previous section" style="display: none;">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 15L5 10L10 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M10 5L5 10L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
     <button class="scroll-arrow scroll-arrow-down" aria-label="Scroll to next section">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 5L15 10L10 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M5 10L10 15L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
     </button>
   </div>
@@ -1037,14 +1044,16 @@ const BASE_URL = import.meta.env.BASE_URL;
     position: relative;
     display: flex;
     align-items: center;
+    gap: 12px;
     text-decoration: none;
-    color: transparent;
+    color: var(--text-secondary);
+    transition: all 0.3s ease;
   }
 
   .nav-dot::before {
     content: '';
     position: absolute;
-    left: 0;
+    left: 4px;
     width: 2px;
     height: 24px;
     background-color: rgba(255, 255, 255, 0.2);
@@ -1064,6 +1073,15 @@ const BASE_URL = import.meta.env.BASE_URL;
     transition: all 0.3s ease;
     position: relative;
     z-index: 1;
+    flex-shrink: 0;
+  }
+
+  .nav-dot .nav-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    opacity: 0.6;
+    transition: opacity 0.3s ease, color 0.3s ease;
+    white-space: nowrap;
   }
 
   .nav-dot:hover .dot,
@@ -1073,6 +1091,12 @@ const BASE_URL = import.meta.env.BASE_URL;
     background-color: var(--accent);
     border-color: var(--accent);
     box-shadow: 0 0 8px var(--accent);
+  }
+
+  .nav-dot:hover .nav-label,
+  .nav-dot.active .nav-label {
+    opacity: 1;
+    color: var(--accent);
   }
 
   .nav-dot.active::before {
@@ -1143,6 +1167,14 @@ const BASE_URL = import.meta.env.BASE_URL;
     .section-nav-dots {
       left: 12px;
       gap: 12px;
+    }
+
+    .nav-dot {
+      gap: 8px;
+    }
+
+    .nav-dot .nav-label {
+      font-size: 0.75rem;
     }
 
     .scroll-arrows {
