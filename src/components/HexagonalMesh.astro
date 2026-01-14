@@ -134,8 +134,17 @@
     }
     
     update() {
-      this.rotationX += 0.0008;
-      this.rotationY += 0.0012;
+      // Only rotate when mouse is not interacting
+      const hasMouseInteraction = this.mouse.x > -5000 && this.mouse.y > -5000;
+      
+      if (!hasMouseInteraction) {
+        this.rotationX += 0.0008;
+        this.rotationY += 0.0012;
+      } else {
+        // Slow rotation when mouse is present
+        this.rotationX += 0.0003;
+        this.rotationY += 0.0005;
+      }
       
       const dpr = window.devicePixelRatio || 1;
       const centerX = this.canvas.offsetWidth / 2;
@@ -151,7 +160,7 @@
         let targetX = projected.x2d * dpr;
         let targetY = projected.y2d * dpr;
         
-        // Mouse interaction - smooth and responsive like botronics
+        // Mouse interaction - continuous and responsive
         const dx = this.mouse.x - targetX;
         const dy = this.mouse.y - targetY;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -164,27 +173,28 @@
         const distanceFromCenter = Math.sqrt(dxFromCenter * dxFromCenter + dyFromCenter * dyFromCenter);
         
         // Mouse influence radius - larger for better interaction
-        const mouseInfluenceRadius = 400 * dpr;
-        const maxSphereRadius = Math.min(this.canvas.offsetWidth, this.canvas.offsetHeight) * 0.4 * dpr;
+        const mouseInfluenceRadius = 350 * dpr;
+        const maxSphereRadius = Math.min(this.canvas.offsetWidth, this.canvas.offsetHeight) * 0.35 * dpr;
         const centerProximity = 1 - Math.min(distanceFromCenter / maxSphereRadius, 1);
         
         // Stronger interaction in center, more natural feel
-        const influenceRadius = mouseInfluenceRadius * (0.6 + centerProximity * 0.4);
-        const repelStrength = 200 * dpr * (0.7 + centerProximity * 0.3);
+        const influenceRadius = mouseInfluenceRadius * (0.7 + centerProximity * 0.3);
+        const repelStrength = 180 * dpr * (0.8 + centerProximity * 0.2);
         
         if (distance < influenceRadius && distance > 0) {
-          // Smooth force calculation
-          const force = Math.pow(1 - distance / influenceRadius, 1.5);
+          // Smooth force calculation - stronger for closer nodes
+          const force = Math.pow(1 - distance / influenceRadius, 2);
           const angle = Math.atan2(dy, dx);
           const repelDistance = force * repelStrength;
           
+          // Push nodes away from cursor
           targetX -= Math.cos(angle) * repelDistance;
           targetY -= Math.sin(angle) * repelDistance;
         }
         
-        // Very smooth interpolation - immediate response
-        const spring = 0.15;
-        const damping = 0.88;
+        // Very responsive interpolation - immediate reaction
+        const spring = 0.2;
+        const damping = 0.9;
         
         node.vx += (targetX - node.x) * spring;
         node.vy += (targetY - node.y) * spring;
