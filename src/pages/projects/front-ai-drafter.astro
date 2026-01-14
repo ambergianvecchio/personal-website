@@ -247,13 +247,29 @@ const BASE_URL = import.meta.env.BASE_URL;
                 </div>
               </div>
               <div class="workflow-cycle-container">
-                <div class="workflow-cycle">
+                <div class="workflow-cycle" id="workflowCycle">
                   <svg class="workflow-cycle-svg" viewBox="0 0 400 400">
-                    <!-- Circular path for animation -->
-                    <circle class="workflow-path" cx="200" cy="200" r="150" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="2" />
-                    
-                    <!-- Animated indicator dot -->
-                    <circle class="workflow-indicator" cx="200" cy="50" r="6" fill="var(--accent)">
+                    <defs>
+                      <!-- Gradient for glowing trail -->
+                      <linearGradient id="trailGradient" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="var(--accent)" stop-opacity="0" />
+                        <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.8" />
+                      </linearGradient>
+                      <!-- Glow filter -->
+                      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                        <feMerge>
+                          <feMergeNode in="coloredBlur"/>
+                          <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                      </filter>
+                    </defs>
+
+                    <!-- Base circular path -->
+                    <circle class="workflow-path" cx="200" cy="200" r="150" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="2" />
+
+                    <!-- Animated glowing trail -->
+                    <circle class="workflow-trail" cx="200" cy="200" r="150" fill="none" stroke="url(#trailGradient)" stroke-width="3" stroke-linecap="round" stroke-dasharray="120 824" filter="url(#glow)">
                       <animateTransform
                         attributeName="transform"
                         type="rotate"
@@ -262,7 +278,18 @@ const BASE_URL = import.meta.env.BASE_URL;
                         repeatCount="indefinite"
                       />
                     </circle>
-                    
+
+                    <!-- Animated indicator dot with glow -->
+                    <circle class="workflow-indicator" cx="200" cy="50" r="8" fill="var(--accent)" filter="url(#glow)">
+                      <animateTransform
+                        attributeName="transform"
+                        type="rotate"
+                        values="0 200 200;360 200 200"
+                        dur="8s"
+                        repeatCount="indefinite"
+                      />
+                    </circle>
+
                   </svg>
                   
                   <!-- Workflow steps positioned around circle (6 steps evenly spaced at 60 degree intervals) -->
@@ -353,24 +380,78 @@ const BASE_URL = import.meta.env.BASE_URL;
 </Layout>
 
 <script>
-  // Pause animation on hover for better interaction
+  // Workflow cycle animation with pulsing nodes
   document.addEventListener('DOMContentLoaded', () => {
     const workflowCycle = document.querySelector('.workflow-cycle');
     const indicator = document.querySelector('.workflow-indicator');
-    const animateTransform = indicator?.querySelector('animateTransform');
-    
-    if (workflowCycle && indicator) {
+    const trail = document.querySelector('.workflow-trail');
+    const stepItems = document.querySelectorAll('.workflow-step-item');
+
+    // Get all animateTransform elements
+    const indicatorAnim = indicator?.querySelector('animateTransform');
+    const trailAnim = trail?.querySelector('animateTransform');
+
+    // Pause on hover
+    if (workflowCycle) {
       workflowCycle.addEventListener('mouseenter', () => {
-        if (animateTransform) {
-          animateTransform.setAttribute('dur', '999999s'); // Effectively pause
-        }
+        if (indicatorAnim) indicatorAnim.setAttribute('dur', '999999s');
+        if (trailAnim) trailAnim.setAttribute('dur', '999999s');
       });
-      
+
       workflowCycle.addEventListener('mouseleave', () => {
-        if (animateTransform) {
-          animateTransform.setAttribute('dur', '8s'); // Resume
-        }
+        if (indicatorAnim) indicatorAnim.setAttribute('dur', '8s');
+        if (trailAnim) trailAnim.setAttribute('dur', '8s');
       });
+    }
+
+    // Pulse nodes as indicator passes
+    // Step positions in degrees (starting from top, going clockwise)
+    const stepAngles = [0, 60, 120, 180, 240, 300]; // 6 steps at 60° intervals
+    const animDuration = 8000; // 8 seconds per rotation
+    let startTime = Date.now();
+    let isPaused = false;
+    let pausedAngle = 0;
+
+    workflowCycle?.addEventListener('mouseenter', () => {
+      pausedAngle = ((Date.now() - startTime) / animDuration * 360) % 360;
+      isPaused = true;
+    });
+
+    workflowCycle?.addEventListener('mouseleave', () => {
+      startTime = Date.now() - (pausedAngle / 360 * animDuration);
+      isPaused = false;
+    });
+
+    function updatePulsingNodes() {
+      if (!isPaused) {
+        const elapsed = Date.now() - startTime;
+        const currentAngle = (elapsed / animDuration * 360) % 360;
+
+        stepItems.forEach((item, index) => {
+          const stepAngle = stepAngles[index];
+          // Check if indicator is near this step (within 30 degrees)
+          let angleDiff = Math.abs(currentAngle - stepAngle);
+          if (angleDiff > 180) angleDiff = 360 - angleDiff;
+
+          const dot = item.querySelector('.workflow-step-dot');
+          if (angleDiff < 30) {
+            // Pulse intensity based on proximity
+            const intensity = 1 - (angleDiff / 30);
+            dot.style.backgroundColor = `rgba(255, 255, 255, ${0.4 + intensity * 0.6})`;
+            dot.style.boxShadow = `0 0 ${intensity * 20}px rgba(255, 255, 255, ${intensity * 0.8})`;
+            dot.style.transform = `scale(${1 + intensity * 0.4})`;
+          } else {
+            dot.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
+            dot.style.boxShadow = 'none';
+            dot.style.transform = 'scale(1)';
+          }
+        });
+      }
+      requestAnimationFrame(updatePulsingNodes);
+    }
+
+    if (stepItems.length > 0) {
+      updatePulsingNodes();
     }
   });
 
@@ -761,7 +842,11 @@ const BASE_URL = import.meta.env.BASE_URL;
   }
 
   .workflow-indicator {
-    filter: drop-shadow(0 0 4px var(--accent));
+    filter: drop-shadow(0 0 8px var(--accent)) drop-shadow(0 0 16px var(--accent));
+  }
+
+  .workflow-trail {
+    opacity: 0.9;
   }
 
   .workflow-step-item {
@@ -790,12 +875,12 @@ const BASE_URL = import.meta.env.BASE_URL;
   }
 
   .workflow-step-dot {
-    width: 12px;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.4);
     border: 2px solid rgba(255, 255, 255, 0.6);
-    transition: all 0.3s ease;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
     margin-bottom: 8px;
   }
 
