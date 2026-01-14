@@ -11,11 +11,12 @@
       this.canvas = canvas;
       this.ctx = canvas.getContext('2d');
       this.nodes = [];
-      this.mouse = { x: 0, y: 0 };
+      // Initialize mouse off-screen to prevent initial bounce
+      this.mouse = { x: -10000, y: -10000 };
       this.animationId = null;
       this.rotationX = 0;
       this.rotationY = 0;
-      this.rotationSpeed = 0.001;
+      this.rotationSpeed = 0.0008;
       
       this.setupCanvas();
       this.createSphere();
@@ -41,10 +42,8 @@
     createSphere() {
       this.nodes = [];
       const radius = Math.min(this.canvas.offsetWidth, this.canvas.offsetHeight) * 0.25;
-      const centerX = this.canvas.offsetWidth / 2;
-      const centerY = this.canvas.offsetHeight / 2;
       
-      // Create nodes on a sphere surface - more nodes for smoother appearance
+      // Create nodes on a sphere surface
       const segments = 24;
       const rings = 18;
       
@@ -98,13 +97,28 @@
     }
     
     bindEvents() {
-      this.canvas.addEventListener('mousemove', (e) => {
+      // Track mouse over entire hero section (parent container)
+      const heroSection = this.canvas.closest('.hero');
+      const container = heroSection || this.canvas.parentElement;
+      
+      const updateMouse = (e) => {
         const rect = this.canvas.getBoundingClientRect();
         const dpr = window.devicePixelRatio || 1;
         this.mouse.x = (e.clientX - rect.left) * dpr;
         this.mouse.y = (e.clientY - rect.top) * dpr;
-      });
+      };
       
+      // Track mouse over container
+      if (container) {
+        container.addEventListener('mousemove', updateMouse);
+        container.addEventListener('mouseleave', () => {
+          this.mouse.x = -10000;
+          this.mouse.y = -10000;
+        });
+      }
+      
+      // Also track on canvas as fallback
+      this.canvas.addEventListener('mousemove', updateMouse);
       this.canvas.addEventListener('mouseleave', () => {
         this.mouse.x = -10000;
         this.mouse.y = -10000;
@@ -134,17 +148,9 @@
     }
     
     update() {
-      // Only rotate when mouse is not interacting
-      const hasMouseInteraction = this.mouse.x > -5000 && this.mouse.y > -5000;
-      
-      if (!hasMouseInteraction) {
-        this.rotationX += 0.0008;
-        this.rotationY += 0.0012;
-      } else {
-        // Slow rotation when mouse is present
-        this.rotationX += 0.0003;
-        this.rotationY += 0.0005;
-      }
+      // Continuous rotation at all times (like botronics)
+      this.rotationX += 0.0008;
+      this.rotationY += 0.0012;
       
       const dpr = window.devicePixelRatio || 1;
       const centerX = this.canvas.offsetWidth / 2;
@@ -160,41 +166,40 @@
         let targetX = projected.x2d * dpr;
         let targetY = projected.y2d * dpr;
         
-        // Mouse interaction - continuous and responsive
+        // Mouse interaction - strong and visible like botronics
         const dx = this.mouse.x - targetX;
         const dy = this.mouse.y - targetY;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        // Calculate distance from sphere center
+        // Calculate distance from sphere center for proximity-based interaction
         const centerXScaled = centerX * dpr;
         const centerYScaled = centerY * dpr;
         const dxFromCenter = targetX - centerXScaled;
         const dyFromCenter = targetY - centerYScaled;
         const distanceFromCenter = Math.sqrt(dxFromCenter * dxFromCenter + dyFromCenter * dyFromCenter);
-        
-        // Mouse influence radius - larger for better interaction
-        const mouseInfluenceRadius = 350 * dpr;
         const maxSphereRadius = Math.min(this.canvas.offsetWidth, this.canvas.offsetHeight) * 0.35 * dpr;
         const centerProximity = 1 - Math.min(distanceFromCenter / maxSphereRadius, 1);
         
-        // Stronger interaction in center, more natural feel
-        const influenceRadius = mouseInfluenceRadius * (0.7 + centerProximity * 0.3);
-        const repelStrength = 180 * dpr * (0.8 + centerProximity * 0.2);
+        // Strong interaction - larger influence radius and stronger repulsion
+        const baseInfluenceRadius = 450 * dpr;
+        const influenceRadius = baseInfluenceRadius * (0.7 + centerProximity * 0.3);
+        const baseRepelStrength = 250 * dpr;
+        const repelStrength = baseRepelStrength * (0.8 + centerProximity * 0.2);
         
         if (distance < influenceRadius && distance > 0) {
-          // Smooth force calculation - stronger for closer nodes
-          const force = Math.pow(1 - distance / influenceRadius, 2);
+          // Strong force calculation - very visible push-away
+          const force = Math.pow(1 - distance / influenceRadius, 1.8);
           const angle = Math.atan2(dy, dx);
           const repelDistance = force * repelStrength;
           
-          // Push nodes away from cursor
+          // Push nodes away from cursor - make space for cursor
           targetX -= Math.cos(angle) * repelDistance;
           targetY -= Math.sin(angle) * repelDistance;
         }
         
-        // Very responsive interpolation - immediate reaction
-        const spring = 0.2;
-        const damping = 0.9;
+        // Very responsive physics - immediate reaction like botronics
+        const spring = 0.25;
+        const damping = 0.92;
         
         node.vx += (targetX - node.x) * spring;
         node.vy += (targetY - node.y) * spring;
@@ -221,7 +226,7 @@
       // Sort nodes by depth (back to front)
       const sortedNodes = [...this.nodes].sort((a, b) => (b.depth || 0) - (a.depth || 0));
       
-      // Draw connections - more visible like botronics
+      // Draw connections first
       this.ctx.lineWidth = 1 * dpr;
       
       sortedNodes.forEach(node => {
@@ -245,7 +250,7 @@
         });
       });
       
-      // Draw hexagonal nodes - crisp and visible
+      // Draw hexagonal nodes
       sortedNodes.forEach((node) => {
         const depth = (node.depth + 400) / 800;
         const size = node.size * node.scale * (0.6 + depth * 0.4) * dpr;
