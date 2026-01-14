@@ -349,6 +349,12 @@ const BASE_URL = import.meta.env.BASE_URL;
     </article>
   </main>
 
+  <!-- Image Lightbox Modal -->
+  <div class="image-lightbox" id="imageLightbox" style="display: none;">
+    <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+    <img class="lightbox-image" src="" alt="" />
+  </div>
+
   <!-- Section Navigation Dots (Left Side) -->
   <nav class="section-nav-dots" aria-label="Section navigation">
     <a href="#overview" class="nav-dot" data-section="overview" aria-label="Overview">
@@ -535,6 +541,55 @@ const BASE_URL = import.meta.env.BASE_URL;
     detectCurrentSection();
     updateArrowVisibility();
   });
+
+  // Image Lightbox
+  document.addEventListener('DOMContentLoaded', () => {
+    const lightbox = document.getElementById('imageLightbox');
+    const lightboxImage = lightbox?.querySelector('.lightbox-image');
+    const lightboxClose = lightbox?.querySelector('.lightbox-close');
+    const imageCards = document.querySelectorAll('.workflow-image-card img');
+
+    if (!lightbox || !lightboxImage) return;
+
+    // Open lightbox when clicking on an image
+    imageCards.forEach((img) => {
+      img.addEventListener('click', (e) => {
+        e.stopPropagation();
+        lightboxImage.src = img.src;
+        lightboxImage.alt = img.alt || 'Screenshot';
+        lightbox.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+      });
+    });
+
+    // Close lightbox functions
+    const closeLightbox = () => {
+      lightbox.style.display = 'none';
+      document.body.style.overflow = ''; // Restore scrolling
+    };
+
+    // Close on button click
+    if (lightboxClose) {
+      lightboxClose.addEventListener('click', (e) => {
+        e.stopPropagation();
+        closeLightbox();
+      });
+    }
+
+    // Close on background click
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    // Close on ESC key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.style.display === 'flex') {
+        closeLightbox();
+      }
+    });
+  });
 </script>
 
 <style>
@@ -656,6 +711,7 @@ const BASE_URL = import.meta.env.BASE_URL;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
   }
 
   .workflow-image-card:hover {
@@ -1164,6 +1220,80 @@ const BASE_URL = import.meta.env.BASE_URL;
     height: 20px;
   }
 
+  /* Image Lightbox Modal */
+  .image-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    cursor: pointer;
+    animation: fadeIn 0.3s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1001;
+    backdrop-filter: blur(10px);
+  }
+
+  .lightbox-close:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: scale(1.1);
+  }
+
+  .lightbox-image {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    animation: zoomIn 0.3s ease;
+  }
+
+  @keyframes zoomIn {
+    from {
+      transform: scale(0.9);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
   @media (max-width: 768px) {
     .case-meta {
       gap: 24px;
@@ -1202,6 +1332,23 @@ const BASE_URL = import.meta.env.BASE_URL;
     .scroll-arrow {
       width: 40px;
       height: 40px;
+    }
+
+    .image-lightbox {
+      padding: 20px;
+    }
+
+    .lightbox-close {
+      top: 10px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      font-size: 24px;
+    }
+
+    .lightbox-image {
+      max-width: 95%;
+      max-height: 95%;
     }
   }
 </style>
