@@ -1,0 +1,294 @@
+---
+---
+
+<div class="particle-sphere-container">
+  <canvas id="particleSphere"></canvas>
+</div>
+
+<script is:inline>
+(function() {
+  class ParticleSphere {
+    constructor(canvas) {
+      this.canvas = canvas;
+      this.ctx = canvas.getContext('2d');
+      this.particles = [];
+      this.mouse = { x: -10000, y: -10000 };
+      this.animationId = null;
+      this.rotationX = 0;
+      this.rotationY = 0;
+
+      // Check for mobile - disable animation on small screens
+      if (window.innerWidth < 768) {
+        return;
+      }
+
+      this.init();
+    }
+
+    init() {
+      this.setupCanvas();
+      this.createParticles();
+      this.bindEvents();
+      this.animate();
+    }
+
+    setupCanvas() {
+      const resize = () => {
+        const dpr = window.devicePixelRatio || 1;
+        const rect = this.canvas.parentElement.getBoundingClientRect();
+        this.canvas.width = rect.width * dpr;
+        this.canvas.height = rect.height * dpr;
+        this.ctx.scale(dpr, dpr);
+        this.width = rect.width;
+        this.height = rect.height;
+      };
+      resize();
+      window.addEventListener('resize', () => {
+        resize();
+        this.createParticles();
+      });
+    }
+
+    createParticles() {
+      this.particles = [];
+
+      // Sphere radius based on viewport
+      const radius = Math.min(this.width, this.height) * 0.42;
+
+      // Fibonacci sphere distribution for even particle placement
+      const numParticles = 600;
+      const goldenRatio = (1 + Math.sqrt(5)) / 2;
+
+      for (let i = 0; i < numParticles; i++) {
+        const theta = 2 * Math.PI * i / goldenRatio;
+        const phi = Math.acos(1 - 2 * (i + 0.5) / numParticles);
+
+        const x = radius * Math.sin(phi) * Math.cos(theta);
+        const y = radius * Math.sin(phi) * Math.sin(theta);
+        const z = radius * Math.cos(phi);
+
+        this.particles.push({
+          // 3D base position
+          baseX: x,
+          baseY: y,
+          baseZ: z,
+          // Current 3D position (for rotation)
+          x3d: x,
+          y3d: y,
+          z3d: z,
+          // 2D screen position
+          x: 0,
+          y: 0,
+          // Velocity for spring physics
+          vx: 0,
+          vy: 0,
+          // Target position
+          targetX: 0,
+          targetY: 0,
+          // Individual physics properties
+          responseSpeed: 0.04 + Math.random() * 0.03,
+          damping: 0.92 + Math.random() * 0.04,
+          // Visual properties - larger hexagons
+          size: 3 + Math.random() * 2,
+          depth: 0,
+          scale: 1
+        });
+      }
+
+      this.sphereRadius = radius;
+    }
+
+    bindEvents() {
+      const heroSection = this.canvas.closest('.hero');
+
+      const updateMouse = (e) => {
+        const rect = this.canvas.getBoundingClientRect();
+        this.mouse.x = e.clientX - rect.left;
+        this.mouse.y = e.clientY - rect.top;
+      };
+
+      if (heroSection) {
+        heroSection.addEventListener('mousemove', updateMouse);
+        heroSection.addEventListener('mouseleave', () => {
+          this.mouse.x = -10000;
+          this.mouse.y = -10000;
+        });
+      }
+
+      this.canvas.addEventListener('mousemove', updateMouse);
+    }
+
+    rotate3D(x, y, z) {
+      // Rotate around Y axis
+      let x1 = x * Math.cos(this.rotationY) - z * Math.sin(this.rotationY);
+      let z1 = x * Math.sin(this.rotationY) + z * Math.cos(this.rotationY);
+
+      // Rotate around X axis
+      let y1 = y * Math.cos(this.rotationX) - z1 * Math.sin(this.rotationX);
+      let z2 = y * Math.sin(this.rotationX) + z1 * Math.cos(this.rotationX);
+
+      return { x: x1, y: y1, z: z2 };
+    }
+
+    project(x, y, z) {
+      const perspective = 800;
+      const scale = perspective / (perspective + z);
+      const centerX = this.width / 2;
+      const centerY = this.height / 2;
+
+      return {
+        x: centerX + x * scale,
+        y: centerY + y * scale,
+        scale: scale,
+        depth: z
+      };
+    }
+
+    update() {
+      // Continuous rotation
+      this.rotationY += 0.002;
+      this.rotationX += 0.001;
+
+      const centerX = this.width / 2;
+      const centerY = this.height / 2;
+      const influenceRadius = 120;
+      const repelStrength = 60;
+
+      this.particles.forEach(p => {
+        // Rotate the base 3D position
+        const rotated = this.rotate3D(p.baseX, p.baseY, p.baseZ);
+        p.x3d = rotated.x;
+        p.y3d = rotated.y;
+        p.z3d = rotated.z;
+
+        // Project to 2D
+        const projected = this.project(p.x3d, p.y3d, p.z3d);
+        p.targetX = projected.x;
+        p.targetY = projected.y;
+        p.scale = projected.scale;
+        p.depth = projected.depth;
+
+        // Mouse repulsion
+        const dx = this.mouse.x - p.targetX;
+        const dy = this.mouse.y - p.targetY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < influenceRadius && distance > 0) {
+          const normalizedDist = distance / influenceRadius;
+          const force = Math.pow(1 - normalizedDist, 2);
+          const angle = Math.atan2(dy, dx);
+
+          p.targetX -= Math.cos(angle) * force * repelStrength;
+          p.targetY -= Math.sin(angle) * force * repelStrength;
+        }
+
+        // Spring physics
+        const fx = (p.targetX - p.x) * p.responseSpeed;
+        const fy = (p.targetY - p.y) * p.responseSpeed;
+
+        p.vx += fx;
+        p.vy += fy;
+        p.vx *= p.damping;
+        p.vy *= p.damping;
+
+        p.x += p.vx;
+        p.y += p.vy;
+      });
+    }
+
+    drawParticle(x, y, size) {
+      this.ctx.beginPath();
+      this.ctx.arc(x, y, size, 0, Math.PI * 2);
+      this.ctx.closePath();
+    }
+
+    draw() {
+      this.ctx.clearRect(0, 0, this.width, this.height);
+
+      // Draw connecting lines first (behind particles)
+      const maxLineDistance = 35;
+      this.ctx.lineWidth = 0.5;
+
+      for (let i = 0; i < this.particles.length; i++) {
+        const p1 = this.particles[i];
+        for (let j = i + 1; j < this.particles.length; j++) {
+          const p2 = this.particles[j];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < maxLineDistance) {
+            // Opacity based on distance and depth of both particles
+            const depthNorm1 = (p1.depth + this.sphereRadius) / (this.sphereRadius * 2);
+            const depthNorm2 = (p2.depth + this.sphereRadius) / (this.sphereRadius * 2);
+            const avgDepth = (depthNorm1 + depthNorm2) / 2;
+            const distanceOpacity = 1 - (distance / maxLineDistance);
+            const opacity = distanceOpacity * avgDepth * 0.3;
+
+            this.ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+            this.ctx.beginPath();
+            this.ctx.moveTo(p1.x, p1.y);
+            this.ctx.lineTo(p2.x, p2.y);
+            this.ctx.stroke();
+          }
+        }
+      }
+
+      // Sort by depth (back to front)
+      const sorted = [...this.particles].sort((a, b) => b.depth - a.depth);
+
+      sorted.forEach(p => {
+        // Depth-based opacity (0.2 to 0.8)
+        const depthNorm = (p.depth + this.sphereRadius) / (this.sphereRadius * 2);
+        const opacity = 0.15 + depthNorm * 0.5;
+
+        // Size based on depth and scale
+        const size = p.size * p.scale * (0.5 + depthNorm * 0.5);
+
+        this.ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+
+        this.drawParticle(p.x, p.y, size);
+        this.ctx.fill();
+      });
+    }
+
+    animate() {
+      this.update();
+      this.draw();
+      this.animationId = requestAnimationFrame(() => this.animate());
+    }
+
+    destroy() {
+      if (this.animationId) {
+        cancelAnimationFrame(this.animationId);
+      }
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('particleSphere');
+    if (canvas) {
+      new ParticleSphere(canvas);
+    }
+  });
+})();
+</script>
+
+<style>
+  .particle-sphere-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  #particleSphere {
+    width: 100%;
+    height: 100%;
+    display: block;
+    pointer-events: auto;
+  }
+</style>
