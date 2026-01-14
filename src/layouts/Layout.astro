@@ -2,10 +2,21 @@
 interface Props {
   title: string;
   description?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
 }
 
-const { title, description = "Portfolio of Amber Gianvecchio - Customer Success & AI Operations" } = Astro.props;
+const {
+  title,
+  description = "Building smarter systems with AI",
+  ogTitle = "Amber Gianvecchio",
+  ogDescription = "Building smarter systems with AI",
+  ogImage
+} = Astro.props;
 const BASE_URL = import.meta.env.BASE_URL;
+const siteUrl = "https://ambergianvecchio.github.io/personal-website";
+const defaultOgImage = `${siteUrl}/images/profile.jpg`;
 ---
 
 <!DOCTYPE html>
@@ -14,6 +25,21 @@ const BASE_URL = import.meta.env.BASE_URL;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={siteUrl} />
+    <meta property="og:title" content={ogTitle} />
+    <meta property="og:description" content={ogDescription} />
+    <meta property="og:image" content={ogImage || defaultOgImage} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:url" content={siteUrl} />
+    <meta property="twitter:title" content={ogTitle} />
+    <meta property="twitter:description" content={ogDescription} />
+    <meta property="twitter:image" content={ogImage || defaultOgImage} />
+
     <link rel="icon" type="image/svg+xml" href={`${BASE_URL}favicon.svg`} />
     <title>{title}</title>
   </head>
