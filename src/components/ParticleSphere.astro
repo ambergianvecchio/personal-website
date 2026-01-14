@@ -261,34 +261,34 @@
       const progress = Math.min(elapsed / this.fadeInDuration, 1);
       this.globalOpacity = 1 - Math.pow(1 - progress, 3);
 
-      // Draw connecting lines first (behind particles) - skip on mobile for performance
-      if (!this.isMobile) {
-        const maxLineDistance = 35;
-        this.ctx.lineWidth = 0.5;
+      // Draw connecting lines first (behind particles)
+      // Mobile: larger distance threshold since fewer particles, reduced opacity
+      const maxLineDistance = this.isMobile ? 50 : 35;
+      const lineOpacityMultiplier = this.isMobile ? 0.4 : 1;
+      this.ctx.lineWidth = 0.5;
 
-        for (let i = 0; i < this.particles.length; i++) {
-          const p1 = this.particles[i];
-          for (let j = i + 1; j < this.particles.length; j++) {
-            const p2 = this.particles[j];
-            const dx = p1.x - p2.x;
-            const dy = p1.y - p2.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
+      for (let i = 0; i < this.particles.length; i++) {
+        const p1 = this.particles[i];
+        for (let j = i + 1; j < this.particles.length; j++) {
+          const p2 = this.particles[j];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
 
-            if (distance < maxLineDistance) {
-              // Opacity based on distance and depth of both particles
-              const depthNorm1 = (p1.depth + this.sphereRadius) / (this.sphereRadius * 2);
-              const depthNorm2 = (p2.depth + this.sphereRadius) / (this.sphereRadius * 2);
-              const avgDepth = (depthNorm1 + depthNorm2) / 2;
-              const distanceOpacity = 1 - (distance / maxLineDistance);
-              const opacity = distanceOpacity * avgDepth * 0.3 * this.globalOpacity;
+          if (distance < maxLineDistance) {
+            // Opacity based on distance and depth of both particles
+            const depthNorm1 = (p1.depth + this.sphereRadius) / (this.sphereRadius * 2);
+            const depthNorm2 = (p2.depth + this.sphereRadius) / (this.sphereRadius * 2);
+            const avgDepth = (depthNorm1 + depthNorm2) / 2;
+            const distanceOpacity = 1 - (distance / maxLineDistance);
+            const opacity = distanceOpacity * avgDepth * 0.3 * this.globalOpacity * lineOpacityMultiplier;
 
-              // Warm silver tone matching Diary Edition
-              this.ctx.strokeStyle = `rgba(212, 205, 196, ${opacity})`;
-              this.ctx.beginPath();
-              this.ctx.moveTo(p1.x, p1.y);
-              this.ctx.lineTo(p2.x, p2.y);
-              this.ctx.stroke();
-            }
+            // Warm silver tone matching Diary Edition
+            this.ctx.strokeStyle = `rgba(212, 205, 196, ${opacity})`;
+            this.ctx.beginPath();
+            this.ctx.moveTo(p1.x, p1.y);
+            this.ctx.lineTo(p2.x, p2.y);
+            this.ctx.stroke();
           }
         }
       }
