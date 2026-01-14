@@ -1,5 +1,7 @@
 ---
 import ProjectCard from './ProjectCard.astro';
+
+const BASE_URL = import.meta.env.BASE_URL;
 ---
 
 <section id="work" class="section work-section">
@@ -14,7 +16,7 @@ import ProjectCard from './ProjectCard.astro';
         title="Front AI Drafter"
         description="Built an AI-powered customer support system using OpenAI Agents SDK that automatically categorizes incoming messages and generates contextual email draft replies. Achieved 98%+ categorization accuracy through iterative prompt engineering and evaluation workflows."
         tags={["OpenAI Agents SDK", "TypeScript", "Braintrust", "Git", "Cursor IDE"]}
-        link="/projects/front-ai-drafter"
+        link={`${BASE_URL}projects/front-ai-drafter`}
         featured={true}
       />
 
