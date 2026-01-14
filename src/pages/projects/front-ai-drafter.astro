@@ -564,8 +564,14 @@ const BASE_URL = import.meta.env.BASE_URL;
   }
 
   .results-grid-single {
-    justify-items: center;
-    grid-template-columns: minmax(280px, 400px); /* Center with max width */
+    display: flex;
+    justify-content: center;
+    grid-template-columns: none;
+  }
+
+  .results-grid-single .result-card {
+    max-width: 400px;
+    width: 100%;
   }
 
   .result-card {
