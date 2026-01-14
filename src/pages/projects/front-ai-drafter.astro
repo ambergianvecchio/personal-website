@@ -42,7 +42,7 @@ const BASE_URL = import.meta.env.BASE_URL;
         <div class="container">
           <div class="content-grid">
             <div class="content-main">
-              <h2>Overview</h2>
+              <h2 id="overview">Overview</h2>
               <p>
                 Built an AI-powered customer support system using OpenAI Agents SDK that automatically categorizes incoming messages and generates contextual email draft replies. The system achieved 98%+ accuracy across the categorizer, rejection response agent, and other initial agents through iterative prompt engineering and comprehensive evaluation workflows.
               </p>
@@ -50,7 +50,7 @@ const BASE_URL = import.meta.env.BASE_URL;
                 This project demonstrates a complete AI development lifecycle: from initial concept through iterative improvement, testing, and deployment. The workflow integrated multiple tools including Cursor IDE for development, Git for version control, OpenAI Agent Builder for configuration, and Braintrust for evaluation and testing.
               </p>
 
-              <h2>The Challenge</h2>
+              <h2 id="challenge">The Challenge</h2>
               <p>
                 Managing customer communication at scale required a system that could accurately categorize incoming messages and generate appropriate draft responses. The challenge was building an AI agent system that could:
               </p>
@@ -61,7 +61,7 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <li>Integrate seamlessly into existing customer support workflows</li>
               </ul>
 
-              <h2>Development Workflow</h2>
+              <h2 id="workflow">Development Workflow</h2>
               <p>
                 The project followed a rigorous iterative development cycle that connected multiple tools in a continuous improvement loop. Each step in the workflow builds upon the previous, creating a seamless pipeline from development to deployment.
               </p>
@@ -180,7 +180,7 @@ const BASE_URL = import.meta.env.BASE_URL;
                 </div>
               </div>
 
-              <h2>Key Results</h2>
+              <h2 id="results">Key Results</h2>
               <div class="results-grid">
                 <div class="result-card">
                   <div class="result-number">98%+</div>
@@ -201,7 +201,7 @@ const BASE_URL = import.meta.env.BASE_URL;
                 </div>
               </div>
 
-              <h2>Technologies & Tools</h2>
+              <h2 id="technologies">Technologies & Tools</h2>
               <div class="tags-list">
                 <span class="tag">OpenAI Agents SDK</span>
                 <span class="tag">TypeScript</span>
@@ -213,7 +213,7 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <span class="tag">Prompt Engineering</span>
               </div>
 
-              <h2>The Complete Cycle</h2>
+              <h2 id="cycle">The Complete Cycle</h2>
               <p>
                 The complete iterative workflow connects all tools in a continuous improvement loop. From identifying needs through editing, testing, and validation, each iteration refines agent performance before deployment.
               </p>
@@ -320,7 +320,7 @@ const BASE_URL = import.meta.env.BASE_URL;
                 The workflow repeats as needed. Each iteration improves agent quality and performance, building toward production readiness.
               </p>
 
-              <h2>Lessons Learned</h2>
+              <h2 id="lessons">Lessons Learned</h2>
               <p>
                 This project highlighted the importance of a structured development workflow for AI systems. The iterative cycle of development → testing → evaluation → refinement proved essential for achieving high accuracy. Key learnings included:
               </p>
@@ -348,6 +348,45 @@ const BASE_URL = import.meta.env.BASE_URL;
       </section>
     </article>
   </main>
+
+  <!-- Section Navigation Dots (Left Side) -->
+  <nav class="section-nav-dots" aria-label="Section navigation">
+    <a href="#overview" class="nav-dot" data-section="overview" aria-label="Overview">
+      <span class="dot"></span>
+    </a>
+    <a href="#challenge" class="nav-dot" data-section="challenge" aria-label="The Challenge">
+      <span class="dot"></span>
+    </a>
+    <a href="#workflow" class="nav-dot" data-section="workflow" aria-label="Development Workflow">
+      <span class="dot"></span>
+    </a>
+    <a href="#results" class="nav-dot" data-section="results" aria-label="Key Results">
+      <span class="dot"></span>
+    </a>
+    <a href="#technologies" class="nav-dot" data-section="technologies" aria-label="Technologies & Tools">
+      <span class="dot"></span>
+    </a>
+    <a href="#cycle" class="nav-dot" data-section="cycle" aria-label="The Complete Cycle">
+      <span class="dot"></span>
+    </a>
+    <a href="#lessons" class="nav-dot" data-section="lessons" aria-label="Lessons Learned">
+      <span class="dot"></span>
+    </a>
+  </nav>
+
+  <!-- Floating Scroll Arrows (Right Side) -->
+  <div class="scroll-arrows">
+    <button class="scroll-arrow scroll-arrow-up" aria-label="Scroll to previous section" style="display: none;">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 15L5 10L10 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <button class="scroll-arrow scroll-arrow-down" aria-label="Scroll to next section">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 5L15 10L10 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
 </Layout>
 
 <script>
@@ -370,6 +409,107 @@ const BASE_URL = import.meta.env.BASE_URL;
         }
       });
     }
+  });
+
+  // Section Navigation
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = ['overview', 'challenge', 'workflow', 'results', 'technologies', 'cycle', 'lessons'];
+    const navDots = document.querySelectorAll('.nav-dot');
+    const scrollUpBtn = document.querySelector('.scroll-arrow-up');
+    const scrollDownBtn = document.querySelector('.scroll-arrow-down');
+    let currentSectionIndex = 0;
+
+    // Smooth scroll to section
+    const scrollToSection = (index) => {
+      const sectionId = sections[index];
+      const section = document.getElementById(sectionId);
+      if (section) {
+        const offset = 100; // Offset for fixed header
+        const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({
+          top: sectionPosition,
+          behavior: 'smooth'
+        });
+        currentSectionIndex = index;
+        updateActiveDot();
+        updateArrowVisibility();
+      }
+    };
+
+    // Update active dot based on scroll position
+    const updateActiveDot = () => {
+      navDots.forEach((dot, index) => {
+        if (index === currentSectionIndex) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    };
+
+    // Update arrow visibility
+    const updateArrowVisibility = () => {
+      if (scrollUpBtn) {
+        scrollUpBtn.style.display = currentSectionIndex > 0 ? 'flex' : 'none';
+      }
+      if (scrollDownBtn) {
+        scrollDownBtn.style.display = currentSectionIndex < sections.length - 1 ? 'flex' : 'none';
+      }
+    };
+
+    // Detect current section on scroll
+    const detectCurrentSection = () => {
+      const scrollPosition = window.pageYOffset + window.innerHeight / 3;
+      
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section) {
+          const sectionTop = section.offsetTop;
+          if (scrollPosition >= sectionTop) {
+            currentSectionIndex = i;
+            updateActiveDot();
+            updateArrowVisibility();
+            break;
+          }
+        }
+      }
+    };
+
+    // Click handlers for navigation dots
+    navDots.forEach((dot, index) => {
+      dot.addEventListener('click', (e) => {
+        e.preventDefault();
+        scrollToSection(index);
+      });
+    });
+
+    // Click handlers for scroll arrows
+    if (scrollUpBtn) {
+      scrollUpBtn.addEventListener('click', () => {
+        if (currentSectionIndex > 0) {
+          scrollToSection(currentSectionIndex - 1);
+        }
+      });
+    }
+
+    if (scrollDownBtn) {
+      scrollDownBtn.addEventListener('click', () => {
+        if (currentSectionIndex < sections.length - 1) {
+          scrollToSection(currentSectionIndex + 1);
+        }
+      });
+    }
+
+    // Update on scroll
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(detectCurrentSection, 100);
+    });
+
+    // Initial setup
+    detectCurrentSection();
+    updateArrowVisibility();
   });
 </script>
 
@@ -875,6 +1015,114 @@ const BASE_URL = import.meta.env.BASE_URL;
     gap: 12px;
   }
 
+  /* Section Navigation Dots (Left Side) */
+  .section-nav-dots {
+    position: fixed;
+    left: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 50;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+  }
+
+  .section-nav-dots:hover {
+    opacity: 1;
+  }
+
+  .nav-dot {
+    position: relative;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: transparent;
+  }
+
+  .nav-dot::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 2px;
+    height: 24px;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: background-color 0.3s ease;
+  }
+
+  .section-nav-dots .nav-dot:first-child::before {
+    display: none;
+  }
+
+  .nav-dot .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+  }
+
+  .nav-dot:hover .dot,
+  .nav-dot.active .dot {
+    width: 12px;
+    height: 12px;
+    background-color: var(--accent);
+    border-color: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  .nav-dot.active::before {
+    background-color: var(--accent);
+    opacity: 0.5;
+  }
+
+  /* Floating Scroll Arrows (Right Side) */
+  .scroll-arrows {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    z-index: 50;
+  }
+
+  .scroll-arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+  }
+
+  .scroll-arrow:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: scale(1.1);
+  }
+
+  .scroll-arrow:active {
+    transform: scale(0.95);
+  }
+
+  .scroll-arrow svg {
+    width: 20px;
+    height: 20px;
+  }
+
   @media (max-width: 768px) {
     .case-meta {
       gap: 24px;
@@ -890,6 +1138,21 @@ const BASE_URL = import.meta.env.BASE_URL;
 
     .case-subtitle {
       font-size: 1.1rem;
+    }
+
+    .section-nav-dots {
+      left: 12px;
+      gap: 12px;
+    }
+
+    .scroll-arrows {
+      right: 12px;
+      gap: 12px;
+    }
+
+    .scroll-arrow {
+      width: 40px;
+      height: 40px;
     }
   }
 </style>
