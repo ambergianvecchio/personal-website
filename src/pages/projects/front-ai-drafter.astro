@@ -41,6 +41,36 @@ const BASE_URL = import.meta.env.BASE_URL;
       <section class="case-content">
         <div class="container">
           <div class="content-grid">
+            <!-- Sticky Sidebar Navigation -->
+            <aside class="sidebar-nav" id="sidebarNav">
+              <div class="sidebar-nav-inner">
+                <div class="sidebar-title">On This Page</div>
+                <nav class="sidebar-links">
+                  <a href="#overview" class="sidebar-link active" data-section="overview">Overview</a>
+                  <a href="#challenge" class="sidebar-link" data-section="challenge">The Challenge</a>
+                  <a href="#workflow" class="sidebar-link" data-section="workflow">Development Workflow</a>
+                  <a href="#results" class="sidebar-link" data-section="results">Key Results</a>
+                  <a href="#technologies" class="sidebar-link" data-section="technologies">Technologies</a>
+                  <a href="#cycle" class="sidebar-link" data-section="cycle">The Complete Cycle</a>
+                  <a href="#lessons" class="sidebar-link" data-section="lessons">Lessons Learned</a>
+                </nav>
+                <div class="sidebar-actions">
+                  <button class="sidebar-action" id="scrollToTop" aria-label="Scroll to top">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 3L3 8M8 3L13 8M8 3V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Top</span>
+                  </button>
+                  <button class="sidebar-action" id="scrollToBottom" aria-label="Scroll to bottom">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 13L3 8M8 13L13 8M8 13V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Bottom</span>
+                  </button>
+                </div>
+              </div>
+            </aside>
+
             <div class="content-main">
               <h2 id="overview">Overview</h2>
               <p>
@@ -410,19 +440,6 @@ const BASE_URL = import.meta.env.BASE_URL;
     <img class="lightbox-image" src="" alt="" />
   </div>
 
-  <!-- Floating Scroll Arrows (Right Side) -->
-  <div class="scroll-arrows">
-    <button class="scroll-arrow scroll-arrow-up" aria-label="Scroll to previous section or top" style="display: none;">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10 5 L5 10 M10 5 L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-    <button class="scroll-arrow scroll-arrow-down" aria-label="Scroll to next section or bottom">
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M5 10L10 15L15 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-  </div>
 </Layout>
 
 <script>
@@ -510,16 +527,16 @@ const BASE_URL = import.meta.env.BASE_URL;
     }
   });
 
-  // Section Navigation
+  // Sidebar Navigation
   document.addEventListener('DOMContentLoaded', () => {
     const sections = ['overview', 'challenge', 'workflow', 'results', 'technologies', 'cycle', 'lessons'];
-    const scrollUpBtn = document.querySelector('.scroll-arrow-up');
-    const scrollDownBtn = document.querySelector('.scroll-arrow-down');
+    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+    const scrollToBottomBtn = document.getElementById('scrollToBottom');
     let currentSectionIndex = 0;
 
     // Smooth scroll to section
-    const scrollToSection = (index) => {
-      const sectionId = sections[index];
+    const scrollToSection = (sectionId) => {
       const section = document.getElementById(sectionId);
       if (section) {
         const offset = 100; // Offset for fixed header
@@ -528,69 +545,63 @@ const BASE_URL = import.meta.env.BASE_URL;
           top: sectionPosition,
           behavior: 'smooth'
         });
-        currentSectionIndex = index;
-        updateArrowVisibility();
       }
     };
 
-    // Update arrow visibility
-    const updateArrowVisibility = () => {
-      if (scrollUpBtn) {
-        // Show up arrow if not at top of page
-        const isAtTop = window.pageYOffset < 100;
-        scrollUpBtn.style.display = isAtTop ? 'none' : 'flex';
-      }
-      if (scrollDownBtn) {
-        // Always show down arrow (it will scroll to next section or bottom)
-        scrollDownBtn.style.display = 'flex';
-      }
+    // Update active sidebar link
+    const updateActiveLink = (sectionId) => {
+      sidebarLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.dataset.section === sectionId) {
+          link.classList.add('active');
+        }
+      });
     };
 
     // Detect current section on scroll
     const detectCurrentSection = () => {
       const scrollPosition = window.pageYOffset + window.innerHeight / 3;
-      
+
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = document.getElementById(sections[i]);
         if (section) {
           const sectionTop = section.offsetTop;
           if (scrollPosition >= sectionTop) {
             currentSectionIndex = i;
-            updateArrowVisibility();
+            updateActiveLink(sections[i]);
             break;
           }
         }
       }
     };
 
-    // Click handlers for scroll arrows
-    if (scrollUpBtn) {
-      scrollUpBtn.addEventListener('click', () => {
-        if (currentSectionIndex > 0) {
-          // Scroll to previous section
-          scrollToSection(currentSectionIndex - 1);
-        } else {
-          // At first section, scroll to top of page
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-          });
-        }
+    // Click handlers for sidebar links
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const sectionId = link.dataset.section;
+        scrollToSection(sectionId);
+        updateActiveLink(sectionId);
+      });
+    });
+
+    // Scroll to top button
+    if (scrollToTopBtn) {
+      scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
       });
     }
 
-    if (scrollDownBtn) {
-      scrollDownBtn.addEventListener('click', () => {
-        if (currentSectionIndex < sections.length - 1) {
-          // Scroll to next section
-          scrollToSection(currentSectionIndex + 1);
-        } else {
-          // At last section, scroll to bottom of page
-          window.scrollTo({
-            top: document.documentElement.scrollHeight,
-            behavior: 'smooth'
-          });
-        }
+    // Scroll to bottom button
+    if (scrollToBottomBtn) {
+      scrollToBottomBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth'
+        });
       });
     }
 
@@ -598,12 +609,11 @@ const BASE_URL = import.meta.env.BASE_URL;
     let scrollTimeout;
     window.addEventListener('scroll', () => {
       clearTimeout(scrollTimeout);
-      scrollTimeout = setTimeout(detectCurrentSection, 100);
+      scrollTimeout = setTimeout(detectCurrentSection, 50);
     });
 
     // Initial setup
     detectCurrentSection();
-    updateArrowVisibility();
   });
 
   // Image Lightbox
@@ -843,9 +853,98 @@ const BASE_URL = import.meta.env.BASE_URL;
     padding: 80px 0;
   }
 
+  .content-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Sticky Sidebar Navigation */
+  .sidebar-nav {
+    position: relative;
+  }
+
+  .sidebar-nav-inner {
+    position: sticky;
+    top: 100px;
+    padding: 20px 0;
+  }
+
+  .sidebar-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    padding-left: 12px;
+  }
+
+  .sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sidebar-link {
+    display: block;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    border-left: 2px solid transparent;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .sidebar-link:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+
+  .sidebar-link.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background-color: rgba(255, 255, 255, 0.05);
+    font-weight: 500;
+  }
+
+  .sidebar-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 24px;
+    padding-left: 12px;
+  }
+
+  .sidebar-action {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .sidebar-action:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent);
+  }
+
+  .sidebar-action svg {
+    width: 14px;
+    height: 14px;
+  }
+
   .content-main {
     max-width: 800px;
-    margin: 0 auto;
   }
 
   .content-main h2 {
@@ -1222,49 +1321,6 @@ const BASE_URL = import.meta.env.BASE_URL;
     gap: 12px;
   }
 
-  /* Floating Scroll Arrows (Right Side) */
-  .scroll-arrows {
-    position: fixed;
-    right: 24px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    z-index: 50;
-  }
-
-  .scroll-arrow {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--text-primary);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-  }
-
-  .scroll-arrow:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    border-color: var(--accent);
-    color: var(--accent);
-    transform: scale(1.1);
-  }
-
-  .scroll-arrow:active {
-    transform: scale(0.95);
-  }
-
-  .scroll-arrow svg {
-    width: 20px;
-    height: 20px;
-  }
-
   /* Image Lightbox Modal */
   .image-lightbox {
     position: fixed;
@@ -1339,7 +1395,39 @@ const BASE_URL = import.meta.env.BASE_URL;
     }
   }
 
+  /* Tablet breakpoint - sidebar becomes narrower */
+  @media (max-width: 1024px) {
+    .content-grid {
+      grid-template-columns: 180px 1fr;
+      gap: 40px;
+    }
+
+    .sidebar-link {
+      font-size: 0.85rem;
+      padding: 6px 10px;
+    }
+
+    .sidebar-action {
+      padding: 6px 10px;
+      font-size: 0.75rem;
+    }
+
+    .sidebar-action span {
+      display: none;
+    }
+  }
+
   @media (max-width: 768px) {
+    /* Hide sidebar on mobile */
+    .content-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .sidebar-nav {
+      display: none;
+    }
+
     .case-meta {
       gap: 24px;
     }
@@ -1354,16 +1442,6 @@ const BASE_URL = import.meta.env.BASE_URL;
 
     .case-subtitle {
       font-size: 1.1rem;
-    }
-
-    .scroll-arrows {
-      right: 12px;
-      gap: 12px;
-    }
-
-    .scroll-arrow {
-      width: 40px;
-      height: 40px;
     }
 
     .image-lightbox {
