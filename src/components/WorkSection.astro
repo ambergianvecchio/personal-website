@@ -1,5 +1,7 @@
 ---
 import ProjectCard from './ProjectCard.astro';
+
+const BASE_URL = import.meta.env.BASE_URL;
 ---
 
 <section id="work" class="section work-section">
@@ -14,8 +16,9 @@ import ProjectCard from './ProjectCard.astro';
         title="Front AI Drafter"
         description="Built an AI-powered customer support system using OpenAI Agents SDK that automatically categorizes incoming messages and generates contextual email draft replies. Achieved 98%+ categorization accuracy through iterative prompt engineering and evaluation workflows."
         tags={["OpenAI Agents SDK", "TypeScript", "Braintrust", "Git", "Cursor IDE"]}
-        image="/images/front-ai-drafter.png"
-        link="/projects/front-ai-drafter"
+        image={`${BASE_URL}images/front-ai-drafter.png`}
+        logo={`${BASE_URL}images/AllUp-Logo-Gold (1).png`}
+        link={`${BASE_URL}projects/front-ai-drafter`}
         featured={true}
       />
 
@@ -23,13 +26,15 @@ import ProjectCard from './ProjectCard.astro';
         title="Customer Operations at Scale"
         description="Managed customer communication workflows handling 17,000+ messages annually. Built ticketing systems, documentation, and support processes that established a scalable foundation for client support."
         tags={["Front", "Notion", "Process Design", "Documentation"]}
-        image="/images/operations-dashboard.png"
+        image={`${BASE_URL}images/operations-dashboard.png`}
+        logo={`${BASE_URL}images/AllUp-Logo-Gold (1).png`}
       />
 
       <ProjectCard
         title="The Connector Hub"
         description="Built The Connector Hub, a comprehensive Notion workspace at Advekit to solve communication bottlenecks in our remote company. Customer success was getting held up by lack of inter-department communication, so I created this centralized Notion hub where all client information was documented and accessible to every department on their own time. This eliminated waiting dependencies, boosted operational efficiency, and improved team collaboration, driving improvements in client retention and sales revenue."
         tags={["Notion", "Operations", "Process Design"]}
+        logo={`${BASE_URL}images/Advekit-white-44beff2c8bd0f825adee71312c06f5d1cada4fb2b2a7d3e1a4bdae244adc1b70 (1).svg`}
       />
     </div>
   </div>
