@@ -225,7 +225,8 @@
             const distanceOpacity = 1 - (distance / maxLineDistance);
             const opacity = distanceOpacity * avgDepth * 0.3;
 
-            this.ctx.strokeStyle = `rgba(255, 255, 255, ${opacity})`;
+            // Warm silver tone matching Diary Edition
+            this.ctx.strokeStyle = `rgba(212, 205, 196, ${opacity})`;
             this.ctx.beginPath();
             this.ctx.moveTo(p1.x, p1.y);
             this.ctx.lineTo(p2.x, p2.y);
@@ -245,7 +246,8 @@
         // Size based on depth and scale
         const size = p.size * p.scale * (0.5 + depthNorm * 0.5);
 
-        this.ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+        // Warm silver tone matching Diary Edition
+        this.ctx.fillStyle = `rgba(212, 205, 196, ${opacity})`;
 
         this.drawParticle(p.x, p.y, size);
         this.ctx.fill();

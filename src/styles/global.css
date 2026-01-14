@@ -10,21 +10,27 @@
 
 /* CSS Variables */
 :root {
-  /* Colors - Inspired by modern portfolio sites */
-  --bg-primary: #0a0a0a;
-  --bg-secondary: #141414;
-  --bg-card: #1a1a1a;
-  --bg-card-hover: #242424;
+  /* Colors - Inspired by Ricoh GR III Diary Edition */
+  /* Warm metallic grays with brown/sepia undertones */
+  --bg-primary: #0d0c0b;
+  --bg-secondary: #16140f;
+  --bg-card: #1e1b17;
+  --bg-card-hover: #28241e;
 
-  --text-primary: #ffffff;
-  --text-secondary: #a8a8a8;
-  --text-muted: #6b6b6b;
+  --text-primary: #f5f0e8;
+  --text-secondary: #b8b0a4;
+  --text-muted: #7a7368;
 
-  --accent: #ffffff;
-  --accent-hover: #e0e0e0;
+  /* Warm silver accent - like the natural silver ring */
+  --accent: #d4cdc4;
+  --accent-hover: #e8e2da;
 
-  --border: #252525;
-  --border-light: #2f2f2f;
+  /* Dark brown accent - like the grip */
+  --accent-warm: #8b7355;
+  --accent-warm-hover: #a68b6a;
+
+  --border: #2a2520;
+  --border-light: #383028;
 
   /* Typography */
   --font-display: 'Manrope', sans-serif;
@@ -113,7 +119,7 @@ a:hover {
 
 /* Selection */
 ::selection {
-  background-color: var(--accent);
+  background-color: var(--accent-warm);
   color: var(--text-primary);
 }
 
