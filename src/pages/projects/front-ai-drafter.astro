@@ -263,27 +263,6 @@ const BASE_URL = import.meta.env.BASE_URL;
                       />
                     </circle>
                     
-                    <!-- Arrows connecting steps -->
-                    <defs>
-                      <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-                        <path d="M 0 0 Q 5 1.5 10 3 Q 5 4.5 0 6 Z" fill="rgba(255, 255, 255, 0.1)" />
-                      </marker>
-                    </defs>
-                    
-                    <!-- Connection lines between steps - properly centered on circle -->
-                    <!-- Connection lines between 6 steps - arcs that hug the circle exactly -->
-                    <!-- Step 1 (top) to Step 2 (top-right) - 60 degree arc -->
-                    <path class="workflow-arrow" d="M 200 50 A 150 150 0 0 1 329.9 125" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="2.5" marker-end="url(#arrowhead)" />
-                    <!-- Step 2 to Step 3 (bottom-right) - 60 degree arc -->
-                    <path class="workflow-arrow" d="M 329.9 125 A 150 150 0 0 1 329.9 275" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="2.5" marker-end="url(#arrowhead)" />
-                    <!-- Step 3 to Step 4 (bottom) - 60 degree arc -->
-                    <path class="workflow-arrow" d="M 329.9 275 A 150 150 0 0 1 200 350" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="2.5" marker-end="url(#arrowhead)" />
-                    <!-- Step 4 to Step 5 (bottom-left) - 60 degree arc -->
-                    <path class="workflow-arrow" d="M 200 350 A 150 150 0 0 1 70.1 275" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="2.5" marker-end="url(#arrowhead)" />
-                    <!-- Step 5 to Step 6 (top-left) - 60 degree arc -->
-                    <path class="workflow-arrow" d="M 70.1 275 A 150 150 0 0 1 70.1 125" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="2.5" marker-end="url(#arrowhead)" />
-                    <!-- Step 6 back to Step 1 (completing the loop) - 60 degree arc -->
-                    <path class="workflow-arrow" d="M 70.1 125 A 150 150 0 0 1 200 50" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="2.5" marker-end="url(#arrowhead)" />
                   </svg>
                   
                   <!-- Workflow steps positioned around circle (6 steps evenly spaced at 60 degree intervals) -->
