@@ -187,26 +187,33 @@
         const repelStrength = baseRepelStrength * (0.8 + centerProximity * 0.2);
         
         if (distance < influenceRadius && distance > 0) {
-          // Strong force calculation - very visible push-away
-          const force = Math.pow(1 - distance / influenceRadius, 1.8);
+          // Smooth force calculation - gradual push like water displacement
+          const normalizedDistance = distance / influenceRadius;
+          const force = Math.pow(1 - normalizedDistance, 2.5);
           const angle = Math.atan2(dy, dx);
           const repelDistance = force * repelStrength;
           
-          // Push nodes away from cursor - make space for cursor
+          // Push nodes away from cursor - smooth water-like displacement
           targetX -= Math.cos(angle) * repelDistance;
           targetY -= Math.sin(angle) * repelDistance;
         }
         
-        // Very responsive physics - immediate reaction like botronics
-        const spring = 0.25;
-        const damping = 0.92;
+        // Smooth, fluid motion like water - no bounce
+        const spring = 0.08;
+        const damping = 0.95;
         
-        node.vx += (targetX - node.x) * spring;
-        node.vy += (targetY - node.y) * spring;
+        // Apply force directly to velocity for smoother motion
+        const fx = (targetX - node.x) * spring;
+        const fy = (targetY - node.y) * spring;
         
+        node.vx += fx;
+        node.vy += fy;
+        
+        // Strong damping to prevent bounce - water-like resistance
         node.vx *= damping;
         node.vy *= damping;
         
+        // Apply velocity
         node.x += node.vx;
         node.y += node.vy;
         
