@@ -617,14 +617,19 @@ const BASE_URL = import.meta.env.BASE_URL;
 
     if (!lightbox || !lightboxImage) return;
 
-    // Open lightbox when clicking on an image
-    imageCards.forEach((img) => {
-      img.addEventListener('click', (e) => {
+    // Open lightbox when clicking on an image card (works for both desktop and mobile)
+    const imageCardContainers = document.querySelectorAll('.workflow-image-card');
+    imageCardContainers.forEach((card) => {
+      card.addEventListener('click', (e) => {
+        e.preventDefault();
         e.stopPropagation();
-        lightboxImage.src = img.src;
-        lightboxImage.alt = img.alt || 'Screenshot';
-        lightbox.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        const img = card.querySelector('img');
+        if (img) {
+          lightboxImage.src = img.src;
+          lightboxImage.alt = img.alt || 'Screenshot';
+          lightbox.style.display = 'flex';
+          document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
       });
     });
 
@@ -1214,9 +1219,33 @@ const BASE_URL = import.meta.env.BASE_URL;
   }
 
   @media (max-width: 768px) {
+    /* Horizontal scroll gallery on mobile */
     .workflow-image-gallery {
-      grid-template-columns: 1fr;
-      gap: 16px;
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      gap: 12px;
+      padding-bottom: 12px;
+      margin-left: -20px;
+      margin-right: -20px;
+      padding-left: 20px;
+      padding-right: 20px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Hide scrollbar but keep functionality */
+    .workflow-image-gallery::-webkit-scrollbar {
+      display: none;
+    }
+    .workflow-image-gallery {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .workflow-image-gallery .workflow-image-card {
+      flex: 0 0 200px;
+      scroll-snap-align: start;
+      aspect-ratio: 4 / 3;
     }
 
     .device-mockup {
@@ -1237,8 +1266,8 @@ const BASE_URL = import.meta.env.BASE_URL;
     .image-caption {
       opacity: 1;
       transform: translateY(0);
-      padding: 10px 12px;
-      font-size: 0.85rem;
+      padding: 8px 10px;
+      font-size: 0.75rem;
       background: linear-gradient(transparent, rgba(10, 10, 10, 0.95));
     }
   }
