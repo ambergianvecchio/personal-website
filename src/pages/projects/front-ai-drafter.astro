@@ -434,16 +434,25 @@ const BASE_URL = import.meta.env.BASE_URL;
           if (angleDiff > 180) angleDiff = 360 - angleDiff;
 
           const dot = item.querySelector('.workflow-step-dot');
+          const label = item.querySelector('.workflow-step-label');
           if (angleDiff < 30) {
             // Pulse intensity based on proximity
             const intensity = 1 - (angleDiff / 30);
             dot.style.backgroundColor = `rgba(255, 255, 255, ${0.4 + intensity * 0.6})`;
             dot.style.boxShadow = `0 0 ${intensity * 20}px rgba(255, 255, 255, ${intensity * 0.8})`;
             dot.style.transform = `scale(${1 + intensity * 0.4})`;
+            // Light up the label too
+            label.style.color = `rgba(255, 255, 255, ${0.6 + intensity * 0.4})`;
+            label.style.textShadow = `0 0 ${intensity * 12}px rgba(255, 255, 255, ${intensity * 0.6})`;
+            label.style.fontWeight = intensity > 0.5 ? '600' : '500';
           } else {
             dot.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
             dot.style.boxShadow = 'none';
             dot.style.transform = 'scale(1)';
+            // Reset label
+            label.style.color = '';
+            label.style.textShadow = 'none';
+            label.style.fontWeight = '';
           }
         });
       }
@@ -888,7 +897,7 @@ const BASE_URL = import.meta.env.BASE_URL;
     font-size: 0.85rem;
     color: var(--text-secondary);
     white-space: nowrap;
-    transition: all 0.3s ease;
+    transition: color 0.15s ease, text-shadow 0.15s ease, font-weight 0.15s ease;
     font-weight: 500;
     background-color: rgba(10, 10, 10, 0.8);
     padding: 2px 6px;
