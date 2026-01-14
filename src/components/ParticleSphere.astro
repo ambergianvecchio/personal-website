@@ -311,13 +311,11 @@
 
         const size = p.size * p.scale * (0.5 + depthNorm * 0.5);
 
-        // On mobile, draw an opaque background circle first to fully cover lines
-        if (this.isMobile) {
-          // Draw opaque background matching page color (#0a0a0a)
-          this.ctx.fillStyle = '#0a0a0a';
-          this.drawParticle(p.x, p.y, size + 1); // Slightly larger to fully cover
-          this.ctx.fill();
-        }
+        // Draw opaque background circle first to fully cover lines
+        // Uses page background color (#0a0a0a)
+        this.ctx.fillStyle = '#0a0a0a';
+        this.drawParticle(p.x, p.y, size + 1); // Slightly larger to fully cover
+        this.ctx.fill();
 
         // Draw particle with visible fill
         this.ctx.fillStyle = `rgba(212, 205, 196, ${opacity})`;
