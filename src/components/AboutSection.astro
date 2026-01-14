@@ -7,22 +7,30 @@
     <div class="about-grid">
       <div class="about-content">
         <h2>About Me</h2>
-        <p>
-          I'm a Customer Success Lead who loves figuring out how to make things run better.
-          Lately I've been focused on AI automation—training agents, building testing
-          infrastructure, and figuring out how to actually make these tools useful
-          for real business problems.
-        </p>
-        <p>
-          At allUP, I owned the customer success function end-to-end, from building
-          support processes to collaborating with engineering on AI-powered solutions.
-          I've handled 17,000+ customer messages annually while developing the tools
-          to make that work more efficient and effective.
-        </p>
-        <p>
-          I'm currently looking for opportunities where I can combine my operational
-          expertise with my growing technical skills in AI development.
-        </p>
+        <div class="about-text-image">
+          <div class="about-text">
+            <p>
+              I build systems that work and fix things that don't. Most recently: AI agents
+              for customer support, with 98%+ accuracy through iterative testing and a lot
+              of "what if we tried this?"
+            </p>
+            <p>
+              At allUP, I ran customer success end-to-end—17,000+ messages a year, documentation,
+              tooling, and hands-on collaboration with engineering. I like roles where I can
+              see the impact of my work.
+            </p>
+            <p>
+              Looking for my next challenge in AI operations or development.
+            </p>
+            <p>
+              When I'm not working: good food, new places, time with friends—or a cozy night
+              in with my cat Tuna <span class="tuna-arrow">→</span>
+            </p>
+          </div>
+          <div class="about-image">
+            <img src="/personal-website/images/tuna.jpg" alt="Tuna the cat wrapped in a cozy blanket" />
+          </div>
+        </div>
 
         <div class="skills-section">
           <h3>Technical Skills</h3>
@@ -70,10 +78,44 @@
     margin-bottom: 24px;
   }
 
-  .about-content p {
+  .about-text-image {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .about-text p {
     font-size: 1.05rem;
     margin-bottom: 20px;
     max-width: 640px;
+  }
+
+  .about-text p:last-child {
+    margin-bottom: 0;
+  }
+
+  .tuna-arrow {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 1.2em;
+    position: relative;
+    top: 3px;
+  }
+
+  .about-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .about-image img {
+    max-width: 100%;
+    height: auto;
+    max-height: 280px;
+    object-fit: cover;
+    border-radius: 8px;
+    filter: grayscale(100%);
   }
 
   .skills-section {
@@ -111,6 +153,19 @@
   }
 
   @media (max-width: 768px) {
+    .about-text-image {
+      grid-template-columns: 1fr;
+    }
+
+    .about-image {
+      order: -1;
+      margin-bottom: 24px;
+    }
+
+    .about-image img {
+      max-height: 300px;
+    }
+
     .skills-grid {
       grid-template-columns: repeat(2, 1fr);
     }

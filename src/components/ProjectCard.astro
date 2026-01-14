@@ -12,6 +12,7 @@ interface Props {
 }
 
 const { title, description, tags, image, link, featured = false, logo, logoAlt, logoWidth } = Astro.props;
+const paragraphs = description.split('\n\n');
 ---
 
 <article class:list={["project-card", { featured }]}>
@@ -29,7 +30,11 @@ const { title, description, tags, image, link, featured = false, logo, logoAlt, 
       )}
       <h3 class="project-title">{title}</h3>
     </div>
-    <p class="project-description">{description}</p>
+    <div class="project-description">
+      {paragraphs.map((p) => (
+        <p>{p}</p>
+      ))}
+    </div>
     <div class="project-tags">
       {tags.map((tag) => (
         <span class="tag">{tag}</span>
@@ -134,6 +139,14 @@ const { title, description, tags, image, link, featured = false, logo, logoAlt, 
     font-size: 0.95rem;
     margin-bottom: 20px;
     line-height: 1.6;
+  }
+
+  .project-description p {
+    margin-bottom: 12px;
+  }
+
+  .project-description p:last-child {
+    margin-bottom: 0;
   }
 
   .project-tags {
