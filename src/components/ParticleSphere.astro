@@ -20,10 +20,8 @@
       this.fadeInStart = null;
       this.fadeInDuration = 1500; // 1.5 second fade in
 
-      // Check for mobile - disable animation on small screens
-      if (window.innerWidth < 768) {
-        return;
-      }
+      // Check for mobile - use simplified version
+      this.isMobile = window.innerWidth < 768;
 
       this.init();
     }
@@ -32,7 +30,9 @@
       this.setupCanvas();
       this.createParticles();
       this.initializePositions(); // Set initial positions to avoid bounce
-      this.bindEvents();
+      if (!this.isMobile) {
+        this.bindEvents();
+      }
       this.animate();
     }
 
@@ -75,11 +75,14 @@
     createParticles() {
       this.particles = [];
 
-      // Sphere radius based on viewport
-      const radius = Math.min(this.width, this.height) * 0.42;
+      // Sphere radius based on viewport - smaller on mobile
+      const radius = this.isMobile
+        ? Math.min(this.width, this.height) * 0.35
+        : Math.min(this.width, this.height) * 0.42;
 
       // Fibonacci sphere distribution for even particle placement
-      const numParticles = 600;
+      // Fewer particles on mobile for performance
+      const numParticles = this.isMobile ? 200 : 600;
       const goldenRatio = (1 + Math.sqrt(5)) / 2;
 
       for (let i = 0; i < numParticles; i++) {
@@ -172,8 +175,24 @@
       this.rotationY += 0.0008;
       this.rotationX += 0.0004;
 
-      const centerX = this.width / 2;
-      const centerY = this.height / 2;
+      // Mobile: simple rotation only, no mouse interaction
+      if (this.isMobile) {
+        this.particles.forEach(p => {
+          const rotated = this.rotate3D(p.baseX, p.baseY, p.baseZ);
+          p.x3d = rotated.x;
+          p.y3d = rotated.y;
+          p.z3d = rotated.z;
+
+          const projected = this.project(p.x3d, p.y3d, p.z3d);
+          p.x = projected.x;
+          p.y = projected.y;
+          p.scale = projected.scale;
+          p.depth = projected.depth;
+        });
+        return;
+      }
+
+      // Desktop: full physics with mouse interaction
       const influenceRadius = 150;
       const repelStrength = 80;
 
@@ -239,32 +258,34 @@
       const progress = Math.min(elapsed / this.fadeInDuration, 1);
       this.globalOpacity = 1 - Math.pow(1 - progress, 3);
 
-      // Draw connecting lines first (behind particles)
-      const maxLineDistance = 35;
-      this.ctx.lineWidth = 0.5;
+      // Draw connecting lines first (behind particles) - skip on mobile for performance
+      if (!this.isMobile) {
+        const maxLineDistance = 35;
+        this.ctx.lineWidth = 0.5;
 
-      for (let i = 0; i < this.particles.length; i++) {
-        const p1 = this.particles[i];
-        for (let j = i + 1; j < this.particles.length; j++) {
-          const p2 = this.particles[j];
-          const dx = p1.x - p2.x;
-          const dy = p1.y - p2.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
+        for (let i = 0; i < this.particles.length; i++) {
+          const p1 = this.particles[i];
+          for (let j = i + 1; j < this.particles.length; j++) {
+            const p2 = this.particles[j];
+            const dx = p1.x - p2.x;
+            const dy = p1.y - p2.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
 
-          if (distance < maxLineDistance) {
-            // Opacity based on distance and depth of both particles
-            const depthNorm1 = (p1.depth + this.sphereRadius) / (this.sphereRadius * 2);
-            const depthNorm2 = (p2.depth + this.sphereRadius) / (this.sphereRadius * 2);
-            const avgDepth = (depthNorm1 + depthNorm2) / 2;
-            const distanceOpacity = 1 - (distance / maxLineDistance);
-            const opacity = distanceOpacity * avgDepth * 0.3 * this.globalOpacity;
+            if (distance < maxLineDistance) {
+              // Opacity based on distance and depth of both particles
+              const depthNorm1 = (p1.depth + this.sphereRadius) / (this.sphereRadius * 2);
+              const depthNorm2 = (p2.depth + this.sphereRadius) / (this.sphereRadius * 2);
+              const avgDepth = (depthNorm1 + depthNorm2) / 2;
+              const distanceOpacity = 1 - (distance / maxLineDistance);
+              const opacity = distanceOpacity * avgDepth * 0.3 * this.globalOpacity;
 
-            // Warm silver tone matching Diary Edition
-            this.ctx.strokeStyle = `rgba(212, 205, 196, ${opacity})`;
-            this.ctx.beginPath();
-            this.ctx.moveTo(p1.x, p1.y);
-            this.ctx.lineTo(p2.x, p2.y);
-            this.ctx.stroke();
+              // Warm silver tone matching Diary Edition
+              this.ctx.strokeStyle = `rgba(212, 205, 196, ${opacity})`;
+              this.ctx.beginPath();
+              this.ctx.moveTo(p1.x, p1.y);
+              this.ctx.lineTo(p2.x, p2.y);
+              this.ctx.stroke();
+            }
           }
         }
       }
