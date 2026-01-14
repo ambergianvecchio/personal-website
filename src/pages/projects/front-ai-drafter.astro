@@ -74,7 +74,7 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <p>
                   Common edits include updating agent instructions/prompts, adding few-shot examples to improve agent behavior, adjusting model settings (reasoning effort, temperature, etc.), and updating guardrails configuration (PII detection, moderation, etc.). Before committing, I test changes using local test scripts like <code>replay-test-messages.ts</code> or <code>test-categorizer-failures.ts</code> to verify the agent behaves as expected with sample inputs.
                 </p>
-                <div class="workflow-image-gallery">
+                <div class="workflow-image-gallery" data-count="5">
                   <div class="workflow-image-card">
                     <img src={`${BASE_URL}images/cursor-dev-1.png`} alt="Cursor IDE workspace showing project structure" />
                   </div>
@@ -98,7 +98,7 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <p>
                   After testing locally, changes move through a structured Git workflow. I pull the latest from the main branch, install dependencies, build and verify locally, then commit changes with descriptive messages. Pull requests enable code review and automated testing through GitHub Actions, ensuring code quality before merging.
                 </p>
-                <div class="workflow-image-gallery">
+                <div class="workflow-image-gallery" data-count="3">
                   <div class="workflow-image-card">
                     <img src={`${BASE_URL}images/git-1.png`} alt="Git workflow and commits" />
                   </div>
@@ -116,7 +116,7 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <p>
                   Agent configurations are managed in OpenAI Agent Builder, allowing for easy adjustment of model settings, instructions, and guardrails. If changes were made in Agent Builder, I export updated agents or verify that code changes are reflected correctly. This ensures configuration matches for Braintrust testing and maintains consistency across the development workflow.
                 </p>
-                <div class="workflow-image-gallery">
+                <div class="workflow-image-gallery" data-count="5">
                   <div class="workflow-image-card">
                     <img src={`${BASE_URL}images/openai-builder-1.png`} alt="OpenAI Agent Builder dashboard" />
                   </div>
@@ -146,7 +146,7 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <p>
                   Based on traces, logs, and playground testing, I identify what needs improvement, determine which few-shot examples to add, refine agent instructions, and adjust categorization logic—documenting insights for the next iteration in Cursor.
                 </p>
-                <div class="workflow-image-gallery">
+                <div class="workflow-image-gallery" data-count="10">
                   <div class="workflow-image-card">
                     <img src={`${BASE_URL}images/braintrust-1.png`} alt="Braintrust monitoring logs" />
                   </div>
@@ -488,23 +488,25 @@ const BASE_URL = import.meta.env.BASE_URL;
     border: 1px solid var(--border);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    aspect-ratio: 16 / 10; /* Consistent aspect ratio */
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .workflow-image-card:hover {
-    transform: translateY(-4px) rotate(0.5deg);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-  }
-
-  .workflow-image-card:nth-child(even):hover {
-    transform: translateY(-4px) rotate(-0.5deg);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   }
 
   .workflow-image-card img {
     width: 100%;
-    height: auto;
+    height: 100%;
+    object-fit: contain; /* Fit image within card without cropping */
     display: block;
     border: none;
     margin: 0;
+    padding: 8px; /* Add padding so images don't touch edges */
   }
 
   .case-content {
@@ -736,12 +738,34 @@ const BASE_URL = import.meta.env.BASE_URL;
     margin-top: 16px;
   }
 
-  /* Image gallery for multiple screenshots */
+  /* Image gallery for multiple screenshots - more structured and cohesive */
   .workflow-image-gallery {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-    margin-top: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+    align-items: stretch; /* Make all cards same height */
+  }
+
+  /* Specific layouts for different numbers of images */
+  .workflow-image-gallery[data-count="3"] {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .workflow-image-gallery[data-count="5"] {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .workflow-image-gallery[data-count="5"] .workflow-image-card:nth-child(4),
+  .workflow-image-gallery[data-count="5"] .workflow-image-card:nth-child(5) {
+    grid-column: span 1;
+  }
+
+  .workflow-image-gallery[data-count="10"] {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   @media (max-width: 768px) {
