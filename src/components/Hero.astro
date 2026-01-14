@@ -1,10 +1,19 @@
 ---
+import HexagonalMesh from './HexagonalMesh.astro';
 
+const BASE_URL = import.meta.env.BASE_URL;
+const profileImage = BASE_URL + "images/profile.jpg";
 ---
 
 <section class="hero">
+  <HexagonalMesh />
   <div class="container">
     <div class="hero-content">
+      {profileImage && (
+        <div class="hero-image">
+          <img src={profileImage} alt="Amber Gianvecchio" />
+        </div>
+      )}
       <p class="hero-eyebrow">Customer Success & AI Operations</p>
       <h1 class="hero-title">
         Hi, I'm <span class="text-accent">Amber</span>
