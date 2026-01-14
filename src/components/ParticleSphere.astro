@@ -280,10 +280,13 @@
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < maxLineDistance) {
-            // Only draw lines between particles that are both in the back half
-            // This prevents lines from showing through front particles
-            const bothInBack = p1.depth > 0 && p2.depth > 0;
-            if (!bothInBack) continue;
+            // On mobile, only draw lines between particles in the back half
+            // (front particles have opaque backgrounds to cover lines)
+            // On desktop, draw all lines (particles drawn on top will cover them)
+            if (this.isMobile) {
+              const bothInBack = p1.depth > 0 && p2.depth > 0;
+              if (!bothInBack) continue;
+            }
 
             const depthNorm1 = (p1.depth + this.sphereRadius) / (this.sphereRadius * 2);
             const depthNorm2 = (p2.depth + this.sphereRadius) / (this.sphereRadius * 2);
