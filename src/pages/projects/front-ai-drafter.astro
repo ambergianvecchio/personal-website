@@ -263,44 +263,53 @@ const BASE_URL = import.meta.env.BASE_URL;
                     <!-- Arrows connecting steps -->
                     <defs>
                       <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-                        <polygon points="0 0, 10 3, 0 6" fill="rgba(255, 255, 255, 0.3)" />
+                        <polygon points="0 0, 10 3, 0 6" fill="rgba(255, 255, 255, 0.7)" />
                       </marker>
                     </defs>
                     
-                    <!-- Connection lines between steps -->
-                    <path class="workflow-arrow" d="M 200 50 A 150 150 0 0 1 350 200" fill="none" stroke="rgba(255, 255, 255, 0.2)" stroke-width="2" marker-end="url(#arrowhead)" />
-                    <path class="workflow-arrow" d="M 350 200 A 150 150 0 0 1 200 350" fill="none" stroke="rgba(255, 255, 255, 0.2)" stroke-width="2" marker-end="url(#arrowhead)" />
-                    <path class="workflow-arrow" d="M 200 350 A 150 150 0 0 1 50 200" fill="none" stroke="rgba(255, 255, 255, 0.2)" stroke-width="2" marker-end="url(#arrowhead)" />
-                    <path class="workflow-arrow" d="M 50 200 A 150 150 0 0 1 200 50" fill="none" stroke="rgba(255, 255, 255, 0.2)" stroke-width="2" marker-end="url(#arrowhead)" />
+                    <!-- Connection lines between steps - properly centered on circle -->
+                    <!-- Connection lines between 6 steps (60 degree intervals, properly centered) -->
+                    <!-- Step 1 (top) to Step 2 (top-right) -->
+                    <path class="workflow-arrow" d="M 200 50 A 150 150 0 0 1 329.9 125" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2.5" marker-end="url(#arrowhead)" />
+                    <!-- Step 2 to Step 3 (bottom-right) -->
+                    <path class="workflow-arrow" d="M 329.9 125 A 150 150 0 0 1 329.9 275" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2.5" marker-end="url(#arrowhead)" />
+                    <!-- Step 3 to Step 4 (bottom) -->
+                    <path class="workflow-arrow" d="M 329.9 275 A 150 150 0 0 1 200 350" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2.5" marker-end="url(#arrowhead)" />
+                    <!-- Step 4 to Step 5 (bottom-left) -->
+                    <path class="workflow-arrow" d="M 200 350 A 150 150 0 0 1 70.1 275" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2.5" marker-end="url(#arrowhead)" />
+                    <!-- Step 5 to Step 6 (top-left) -->
+                    <path class="workflow-arrow" d="M 70.1 275 A 150 150 0 0 1 70.1 125" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2.5" marker-end="url(#arrowhead)" />
+                    <!-- Step 6 back to Step 1 (completing the loop) -->
+                    <path class="workflow-arrow" d="M 70.1 125 A 150 150 0 0 1 200 50" fill="none" stroke="rgba(255, 255, 255, 0.6)" stroke-width="2.5" marker-end="url(#arrowhead)" />
                   </svg>
                   
-                  <!-- Workflow steps positioned around circle (6 steps evenly spaced) -->
-                  <div class="workflow-step-item" data-step="1" style="top: 0; left: 50%; transform: translate(-50%, -50%);">
+                  <!-- Workflow steps positioned around circle (6 steps evenly spaced at 60 degree intervals) -->
+                  <div class="workflow-step-item" data-step="1" style="top: 0; left: 50%; transform: translate(-50%, -100%);">
                     <div class="workflow-step-dot"></div>
                     <div class="workflow-step-label">Identify Issue</div>
                   </div>
                   
-                  <div class="workflow-step-item" data-step="2" style="top: 13.4%; right: 13.4%; transform: translate(50%, -50%);">
+                  <div class="workflow-step-item" data-step="2" style="top: 25%; right: 0; transform: translate(50%, -50%);">
                     <div class="workflow-step-dot"></div>
                     <div class="workflow-step-label">Edit in Cursor</div>
                   </div>
                   
-                  <div class="workflow-step-item" data-step="3" style="top: 50%; right: 0; transform: translate(50%, -50%);">
+                  <div class="workflow-step-item" data-step="3" style="bottom: 25%; right: 0; transform: translate(50%, 50%);">
                     <div class="workflow-step-dot"></div>
                     <div class="workflow-step-label">Git Workflow</div>
                   </div>
                   
-                  <div class="workflow-step-item" data-step="4" style="bottom: 0; left: 50%; transform: translate(-50%, 50%);">
+                  <div class="workflow-step-item" data-step="4" style="bottom: 0; left: 50%; transform: translate(-50%, 100%);">
                     <div class="workflow-step-dot"></div>
                     <div class="workflow-step-label">Agent Builder Sync</div>
                   </div>
                   
-                  <div class="workflow-step-item" data-step="5" style="top: 50%; left: 0; transform: translate(-50%, -50%);">
+                  <div class="workflow-step-item" data-step="5" style="bottom: 25%; left: 0; transform: translate(-50%, 50%);">
                     <div class="workflow-step-dot"></div>
                     <div class="workflow-step-label">Test in Braintrust</div>
                   </div>
                   
-                  <div class="workflow-step-item" data-step="6" style="top: 13.4%; left: 13.4%; transform: translate(-50%, -50%);">
+                  <div class="workflow-step-item" data-step="6" style="top: 25%; left: 0; transform: translate(-50%, -50%);">
                     <div class="workflow-step-dot"></div>
                     <div class="workflow-step-label">Review Results</div>
                   </div>
@@ -646,6 +655,10 @@ const BASE_URL = import.meta.env.BASE_URL;
     white-space: nowrap;
     transition: all 0.3s ease;
     font-weight: 500;
+    background-color: rgba(10, 10, 10, 0.8);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-top: 4px;
   }
 
   .workflow-cycle-description {
