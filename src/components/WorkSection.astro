@@ -1,5 +1,7 @@
 ---
 import ProjectCard from './ProjectCard.astro';
+
+const BASE_URL = import.meta.env.BASE_URL;
 ---
 
 <section id="work" class="section work-section">
@@ -14,8 +16,7 @@ import ProjectCard from './ProjectCard.astro';
         title="Front AI Drafter"
         description="Built an AI-powered customer support system using OpenAI Agents SDK that automatically categorizes incoming messages and generates contextual email draft replies. Achieved 98%+ categorization accuracy through iterative prompt engineering and evaluation workflows."
         tags={["OpenAI Agents SDK", "TypeScript", "Braintrust", "Git", "Cursor IDE"]}
-        image="/images/front-ai-drafter.png"
-        link="/projects/front-ai-drafter"
+        link={`${BASE_URL}projects/front-ai-drafter`}
         featured={true}
       />
 
@@ -23,10 +24,6 @@ import ProjectCard from './ProjectCard.astro';
         title="Customer Operations at Scale"
         description="Managed customer communication workflows handling 17,000+ messages annually. Built ticketing systems, documentation, and support processes that established a scalable foundation for client support."
         tags={["Front", "Notion", "Process Design", "Documentation"]}
-<<<<<<< HEAD
-=======
-        image="/images/operations-dashboard.png"
->>>>>>> parent of 78d304d (Add company logos to project cards)
       />
 
       <ProjectCard
