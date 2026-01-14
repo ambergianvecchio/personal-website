@@ -355,38 +355,6 @@ const BASE_URL = import.meta.env.BASE_URL;
     <img class="lightbox-image" src="" alt="" />
   </div>
 
-  <!-- Section Navigation Dots (Left Side) -->
-  <nav class="section-nav-dots" aria-label="Section navigation">
-    <a href="#overview" class="nav-dot" data-section="overview" aria-label="Overview">
-      <span class="dot"></span>
-      <span class="nav-label">Overview</span>
-    </a>
-    <a href="#challenge" class="nav-dot" data-section="challenge" aria-label="The Challenge">
-      <span class="dot"></span>
-      <span class="nav-label">Challenge</span>
-    </a>
-    <a href="#workflow" class="nav-dot" data-section="workflow" aria-label="Development Workflow">
-      <span class="dot"></span>
-      <span class="nav-label">Workflow</span>
-    </a>
-    <a href="#results" class="nav-dot" data-section="results" aria-label="Key Results">
-      <span class="dot"></span>
-      <span class="nav-label">Results</span>
-    </a>
-    <a href="#technologies" class="nav-dot" data-section="technologies" aria-label="Technologies & Tools">
-      <span class="dot"></span>
-      <span class="nav-label">Technologies</span>
-    </a>
-    <a href="#cycle" class="nav-dot" data-section="cycle" aria-label="The Complete Cycle">
-      <span class="dot"></span>
-      <span class="nav-label">Cycle</span>
-    </a>
-    <a href="#lessons" class="nav-dot" data-section="lessons" aria-label="Lessons Learned">
-      <span class="dot"></span>
-      <span class="nav-label">Lessons</span>
-    </a>
-  </nav>
-
   <!-- Floating Scroll Arrows (Right Side) -->
   <div class="scroll-arrows">
     <button class="scroll-arrow scroll-arrow-up" aria-label="Scroll to previous section or top" style="display: none;">
@@ -427,7 +395,6 @@ const BASE_URL = import.meta.env.BASE_URL;
   // Section Navigation
   document.addEventListener('DOMContentLoaded', () => {
     const sections = ['overview', 'challenge', 'workflow', 'results', 'technologies', 'cycle', 'lessons'];
-    const navDots = document.querySelectorAll('.nav-dot');
     const scrollUpBtn = document.querySelector('.scroll-arrow-up');
     const scrollDownBtn = document.querySelector('.scroll-arrow-down');
     let currentSectionIndex = 0;
@@ -444,20 +411,8 @@ const BASE_URL = import.meta.env.BASE_URL;
           behavior: 'smooth'
         });
         currentSectionIndex = index;
-        updateActiveDot();
         updateArrowVisibility();
       }
-    };
-
-    // Update active dot based on scroll position
-    const updateActiveDot = () => {
-      navDots.forEach((dot, index) => {
-        if (index === currentSectionIndex) {
-          dot.classList.add('active');
-        } else {
-          dot.classList.remove('active');
-        }
-      });
     };
 
     // Update arrow visibility
@@ -483,21 +438,12 @@ const BASE_URL = import.meta.env.BASE_URL;
           const sectionTop = section.offsetTop;
           if (scrollPosition >= sectionTop) {
             currentSectionIndex = i;
-            updateActiveDot();
             updateArrowVisibility();
             break;
           }
         }
       }
     };
-
-    // Click handlers for navigation dots
-    navDots.forEach((dot, index) => {
-      dot.addEventListener('click', (e) => {
-        e.preventDefault();
-        scrollToSection(index);
-      });
-    });
 
     // Click handlers for scroll arrows
     if (scrollUpBtn) {
@@ -1095,86 +1041,6 @@ const BASE_URL = import.meta.env.BASE_URL;
     gap: 12px;
   }
 
-  /* Section Navigation Dots (Left Side) */
-  .section-nav-dots {
-    position: fixed;
-    left: 24px;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
-    z-index: 50;
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
-  }
-
-  .section-nav-dots:hover {
-    opacity: 1;
-  }
-
-  .section-nav-dots::before {
-    content: '';
-    position: absolute;
-    left: 6px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background-color: rgba(255, 255, 255, 0.2);
-    z-index: 0;
-  }
-
-  .nav-dot {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: var(--text-secondary);
-    transition: all 0.3s ease;
-    padding: 16px 0;
-    margin: 0;
-  }
-
-  .nav-dot .dot {
-    width: 10px;
-    height: 10px;
-    background-color: rgba(255, 255, 255, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    transition: all 0.3s ease;
-    position: relative;
-    z-index: 2;
-    flex-shrink: 0;
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    box-sizing: border-box;
-    -webkit-clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  }
-
-  .nav-dot .nav-label {
-    font-size: 0.85rem;
-    font-weight: 500;
-    opacity: 0.6;
-    transition: opacity 0.3s ease, color 0.3s ease;
-    white-space: nowrap;
-  }
-
-  .nav-dot:hover .dot,
-  .nav-dot.active .dot {
-    width: 14px;
-    height: 14px;
-    background-color: var(--accent);
-    border-color: var(--accent);
-    border-width: 2px;
-    box-shadow: 0 0 8px var(--accent);
-  }
-
-  .nav-dot:hover .nav-label,
-  .nav-dot.active .nav-label {
-    opacity: 1;
-    color: var(--accent);
-  }
-
   /* Floating Scroll Arrows (Right Side) */
   .scroll-arrows {
     position: fixed;
@@ -1307,19 +1173,6 @@ const BASE_URL = import.meta.env.BASE_URL;
 
     .case-subtitle {
       font-size: 1.1rem;
-    }
-
-    .section-nav-dots {
-      left: 12px;
-      gap: 12px;
-    }
-
-    .nav-dot {
-      gap: 8px;
-    }
-
-    .nav-dot .nav-label {
-      font-size: 0.75rem;
     }
 
     .scroll-arrows {
