@@ -556,7 +556,7 @@ const BASE_URL = import.meta.env.BASE_URL;
 
   .results-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 24px;
     margin: 40px 0;
   }
@@ -578,9 +578,9 @@ const BASE_URL = import.meta.env.BASE_URL;
     color: var(--accent);
     margin-bottom: 8px;
     font-family: var(--font-display);
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    hyphens: auto;
+    white-space: nowrap; /* Keep text on one line */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add ellipsis if still too long */
   }
 
   .result-label {
