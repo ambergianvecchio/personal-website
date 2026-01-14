@@ -16,6 +16,9 @@
       this.animationId = null;
       this.rotationX = 0;
       this.rotationY = 0;
+      this.globalOpacity = 0; // Start fully transparent
+      this.fadeInStart = null;
+      this.fadeInDuration = 1500; // 1.5 second fade in
 
       // Check for mobile - disable animation on small screens
       if (window.innerWidth < 768) {
@@ -28,8 +31,28 @@
     init() {
       this.setupCanvas();
       this.createParticles();
+      this.initializePositions(); // Set initial positions to avoid bounce
       this.bindEvents();
       this.animate();
+    }
+
+    initializePositions() {
+      // Initialize particles at their correct starting positions
+      // to avoid the spring "bounce" effect on load
+      this.particles.forEach(p => {
+        const rotated = this.rotate3D(p.baseX, p.baseY, p.baseZ);
+        p.x3d = rotated.x;
+        p.y3d = rotated.y;
+        p.z3d = rotated.z;
+
+        const projected = this.project(p.x3d, p.y3d, p.z3d);
+        p.x = projected.x;
+        p.y = projected.y;
+        p.targetX = projected.x;
+        p.targetY = projected.y;
+        p.scale = projected.scale;
+        p.depth = projected.depth;
+      });
     }
 
     setupCanvas() {
@@ -85,9 +108,9 @@
           // Target position
           targetX: 0,
           targetY: 0,
-          // Individual physics properties
-          responseSpeed: 0.04 + Math.random() * 0.03,
-          damping: 0.92 + Math.random() * 0.04,
+          // Individual physics properties - fluid, settles fast, no jello
+          spring: 0.08 + Math.random() * 0.02,
+          friction: 0.75 + Math.random() * 0.05,
           // Visual properties - larger hexagons
           size: 3 + Math.random() * 2,
           depth: 0,
@@ -145,14 +168,14 @@
     }
 
     update() {
-      // Continuous rotation
-      this.rotationY += 0.002;
-      this.rotationX += 0.001;
+      // Continuous rotation (slower, more calm)
+      this.rotationY += 0.0008;
+      this.rotationX += 0.0004;
 
       const centerX = this.width / 2;
       const centerY = this.height / 2;
-      const influenceRadius = 120;
-      const repelStrength = 60;
+      const influenceRadius = 150;
+      const repelStrength = 80;
 
       this.particles.forEach(p => {
         // Rotate the base 3D position
@@ -175,22 +198,24 @@
 
         if (distance < influenceRadius && distance > 0) {
           const normalizedDist = distance / influenceRadius;
-          const force = Math.pow(1 - normalizedDist, 2);
+          // Smoother falloff curve for fluid motion
+          const force = Math.pow(1 - normalizedDist, 3);
           const angle = Math.atan2(dy, dx);
 
           p.targetX -= Math.cos(angle) * force * repelStrength;
           p.targetY -= Math.sin(angle) * force * repelStrength;
         }
 
-        // Spring physics
-        const fx = (p.targetX - p.x) * p.responseSpeed;
-        const fy = (p.targetY - p.y) * p.responseSpeed;
+        // Spring physics with low friction (like botronics)
+        // Spring force pulls toward target
+        p.vx += (p.targetX - p.x) * p.spring;
+        p.vy += (p.targetY - p.y) * p.spring;
 
-        p.vx += fx;
-        p.vy += fy;
-        p.vx *= p.damping;
-        p.vy *= p.damping;
+        // Apply friction (high value = slow decay = fluid motion)
+        p.vx *= p.friction;
+        p.vy *= p.friction;
 
+        // Update position
         p.x += p.vx;
         p.y += p.vy;
       });
@@ -204,6 +229,15 @@
 
     draw() {
       this.ctx.clearRect(0, 0, this.width, this.height);
+
+      // Handle fade-in animation
+      if (this.fadeInStart === null) {
+        this.fadeInStart = performance.now();
+      }
+      const elapsed = performance.now() - this.fadeInStart;
+      // Ease-out cubic for smooth fade
+      const progress = Math.min(elapsed / this.fadeInDuration, 1);
+      this.globalOpacity = 1 - Math.pow(1 - progress, 3);
 
       // Draw connecting lines first (behind particles)
       const maxLineDistance = 35;
@@ -223,7 +257,7 @@
             const depthNorm2 = (p2.depth + this.sphereRadius) / (this.sphereRadius * 2);
             const avgDepth = (depthNorm1 + depthNorm2) / 2;
             const distanceOpacity = 1 - (distance / maxLineDistance);
-            const opacity = distanceOpacity * avgDepth * 0.3;
+            const opacity = distanceOpacity * avgDepth * 0.3 * this.globalOpacity;
 
             // Warm silver tone matching Diary Edition
             this.ctx.strokeStyle = `rgba(212, 205, 196, ${opacity})`;
@@ -241,7 +275,7 @@
       sorted.forEach(p => {
         // Depth-based opacity (0.2 to 0.8)
         const depthNorm = (p.depth + this.sphereRadius) / (this.sphereRadius * 2);
-        const opacity = 0.15 + depthNorm * 0.5;
+        const opacity = (0.15 + depthNorm * 0.5) * this.globalOpacity;
 
         // Size based on depth and scale
         const size = p.size * p.scale * (0.5 + depthNorm * 0.5);
