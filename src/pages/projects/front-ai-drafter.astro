@@ -567,6 +567,9 @@ const BASE_URL = import.meta.env.BASE_URL;
     border-radius: var(--card-radius);
     border: 1px solid var(--border);
     text-align: center;
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .result-number {
@@ -575,6 +578,9 @@ const BASE_URL = import.meta.env.BASE_URL;
     color: var(--accent);
     margin-bottom: 8px;
     font-family: var(--font-display);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   .result-label {
@@ -582,12 +588,16 @@ const BASE_URL = import.meta.env.BASE_URL;
     font-weight: 600;
     color: var(--text-primary);
     margin-bottom: 12px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .result-card p {
     font-size: 0.9rem;
     color: var(--text-secondary);
     margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .tags-list {
