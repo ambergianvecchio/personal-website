@@ -75,9 +75,9 @@
     createParticles() {
       this.particles = [];
 
-      // Sphere radius based on viewport - smaller on mobile
+      // Sphere radius based on viewport
       const radius = this.isMobile
-        ? Math.min(this.width, this.height) * 0.35
+        ? Math.min(this.width, this.height) * 0.5
         : Math.min(this.width, this.height) * 0.42;
 
       // Fibonacci sphere distribution for even particle placement
