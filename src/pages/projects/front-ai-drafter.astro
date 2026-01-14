@@ -192,6 +192,8 @@ const BASE_URL = import.meta.env.BASE_URL;
                   <div class="result-label">Messages Processed Annually</div>
                   <p>Scalable system handling high-volume customer communication</p>
                 </div>
+              </div>
+              <div class="results-grid results-grid-single">
                 <div class="result-card">
                   <div class="result-number">Continuous</div>
                   <div class="result-label">Iterative Improvement</div>
@@ -559,6 +561,11 @@ const BASE_URL = import.meta.env.BASE_URL;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 24px;
     margin: 40px 0;
+  }
+
+  .results-grid-single {
+    justify-items: center;
+    grid-template-columns: minmax(280px, 400px); /* Center with max width */
   }
 
   .result-card {
