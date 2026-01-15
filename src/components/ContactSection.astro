@@ -1,5 +1,5 @@
 ---
-
+const BASE_URL = import.meta.env.BASE_URL;
 ---
 
 <section id="contact" class="section contact-section">
@@ -29,6 +29,9 @@
           </span>
           <span>LinkedIn</span>
         </a>
+        <a href="https://link.allup.world/user:39da2c8f-34ae-4699-87bc-2026a59326bf" target="_blank" rel="noopener noreferrer" class="contact-link contact-link-logo">
+          <img src={`${BASE_URL}images/allup-logo.svg`} alt="allUP Profile" width="60" height="24" class="allup-logo" />
+        </a>
       </div>
     </div>
   </div>
@@ -46,7 +49,7 @@
   }
 
   .contact-content {
-    max-width: 560px;
+    max-width: 800px;
   }
 
   .contact-content h2 {
@@ -60,8 +63,14 @@
 
   .contact-links {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 16px;
+  }
+
+  @media (max-width: 768px) {
+    .contact-links {
+      flex-direction: column;
+    }
   }
 
   .contact-link {
@@ -86,6 +95,17 @@
 
   .contact-icon {
     color: var(--accent);
+    display: flex;
+    align-items: center;
+  }
+
+  .allup-logo {
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+  }
+
+  .contact-link-logo {
+    padding: 16px 24px;
   }
 
   .footer {
