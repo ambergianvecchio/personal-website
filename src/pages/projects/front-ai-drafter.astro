@@ -47,8 +47,9 @@ const BASE_URL = import.meta.env.BASE_URL;
               <div class="sidebar-nav-inner">
                 <div class="sidebar-title">On This Page</div>
                 <nav class="sidebar-links">
-                  <a href="#overview" class="sidebar-link active" data-section="overview">Overview</a>
-                  <a href="#challenge" class="sidebar-link" data-section="challenge">The Challenge</a>
+                  <a href="#challenge" class="sidebar-link active" data-section="challenge">The Challenge</a>
+                  <a href="#why-custom" class="sidebar-link" data-section="why-custom">Why We Built Custom</a>
+                  <a href="#approach" class="sidebar-link" data-section="approach">Our Approach</a>
                   <a href="#workflow" class="sidebar-link" data-section="workflow">Development Workflow</a>
                   <a href="#results" class="sidebar-link" data-section="results">Key Results</a>
                   <a href="#technologies" class="sidebar-link" data-section="technologies">Technologies</a>
@@ -72,24 +73,35 @@ const BASE_URL = import.meta.env.BASE_URL;
             </aside>
 
             <div class="content-main">
-              <h2 id="overview">Overview</h2>
-              <p>
-                Built an AI-powered customer support system using OpenAI Agents SDK that automatically categorizes incoming messages and generates contextual email draft replies. The system achieved 98%+ accuracy across the categorizer, rejection response agent, and other initial agents through iterative prompt engineering and comprehensive evaluation workflows.
-              </p>
-              <p>
-                This project covers the full AI development cycle: from initial concept through iterative improvement, testing, and deployment. The workflow integrated multiple tools including Cursor IDE for development, Git for version control, OpenAI Agent Builder for configuration, and Braintrust for evaluation and testing.
-              </p>
-
               <h2 id="challenge">The Challenge</h2>
               <p>
-                Managing customer communication at scale required a system that could accurately categorize incoming messages and generate appropriate draft responses. The challenge was building an AI agent system that could:
+                allUP's ticket volume grew over 1000% in 2025, from a few hundred messages a month to 3,000+. Scaling the team to match wasn't an option.
               </p>
-              <ul>
-                <li>Accurately categorize diverse customer messages into appropriate categories</li>
-                <li>Generate contextually appropriate draft email replies</li>
-                <li>Maintain high accuracy through iterative improvement</li>
-                <li>Integrate seamlessly into existing customer support workflows</li>
-              </ul>
+              <p>
+                The complexity made it harder: our support required understanding the platform, user workflows, and internal knowledge base. We needed AI that could handle nuance, not just FAQs.
+              </p>
+
+              <h2 id="why-custom">Why We Built Custom</h2>
+              <p>
+                We tried the obvious route first: I built out a Front Knowledge Base and enabled their AI features. Two problems emerged.
+              </p>
+              <p>
+                <strong>1. No access to live data.</strong> Front AI could only pull from the KB. Anything requiring platform context or company/candidate-specific information meant wrong answers or escalation.
+              </p>
+              <p>
+                <strong>2. Generic responses.</strong> It couldn't recognize patterns in how I'd handled similar emails. Every reply felt like talking to a chatbot instead of matching our established tone and consistency.
+              </p>
+              <p>
+                At $0.70/resolution for drafts that still needed review, the math didn't work.
+              </p>
+
+              <h2 id="approach">Our Approach</h2>
+              <p>
+                We decided to build in-house. I analyzed months of support tickets to identify patterns: more than half could be solved with standard knowledge, a significant portion needed live platform data, and only a small fraction truly required manual response.
+              </p>
+              <p>
+                I built the system in two phases. Phase one: an AI agent that categorized messages and drafted personalized responses using our knowledge base and the team's voice patterns. Phase two: deeper personalization by pulling real-time candidate data, role deadlines, and interview progress via MCP integration.
+              </p>
 
               <h2 id="workflow">Development Workflow</h2>
               <p>
@@ -119,18 +131,7 @@ const BASE_URL = import.meta.env.BASE_URL;
                     <!-- Base circular path -->
                     <circle class="workflow-path" cx="200" cy="200" r="150" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="2" />
 
-                    <!-- Animated glowing trail -->
-                    <circle class="workflow-trail" cx="200" cy="200" r="150" fill="none" stroke="url(#trailGradient)" stroke-width="3" stroke-linecap="round" stroke-dasharray="120 824" filter="url(#glow)">
-                      <animateTransform
-                        attributeName="transform"
-                        type="rotate"
-                        values="0 200 200;360 200 200"
-                        dur="8s"
-                        repeatCount="indefinite"
-                      />
-                    </circle>
-
-                    <!-- Animated indicator dot with glow -->
+                    <!-- Animated indicator dot with glow - shows direction by movement -->
                     <circle class="workflow-indicator" cx="200" cy="50" r="8" fill="var(--accent)" filter="url(#glow)">
                       <animateTransform
                         attributeName="transform"
@@ -197,8 +198,8 @@ const BASE_URL = import.meta.env.BASE_URL;
                   </div>
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">Cursor IDE</span>
-                    <img src={`${BASE_URL}images/cursor-dev-3.png`} alt="Editing agent instructions" />
-                    <span class="image-caption">Editing agent instructions</span>
+                    <img src={`${BASE_URL}images/git-3.png`} alt="Creating a new branch before iterating" />
+                    <span class="image-caption">Creating new branch</span>
                   </div>
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">Cursor IDE</span>
@@ -207,8 +208,8 @@ const BASE_URL = import.meta.env.BASE_URL;
                   </div>
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">Cursor IDE</span>
-                    <img src={`${BASE_URL}images/cursor-dev-5.png`} alt="Categorizer test execution" />
-                    <span class="image-caption">Categorizer test results</span>
+                    <img src={`${BASE_URL}images/cursor-dev-5.png`} alt="Local categorizer test script" />
+                    <span class="image-caption">Local categorizer test script</span>
                   </div>
                 </div>
               </div>
@@ -221,7 +222,7 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <p>
                   When creating a pull request, Cursor IDE can generate a web link, title, and description to streamline the PR creation process. After review and approval, merging the PR triggers automated deployment via GitHub Actions.
                 </p>
-                <div class="workflow-image-gallery" data-count="3" data-tool="GitHub">
+                <div class="workflow-image-gallery" data-count="2" data-tool="GitHub">
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">GitHub</span>
                     <img src={`${BASE_URL}images/git-1.png`} alt="Git workflow and commits" />
@@ -229,13 +230,8 @@ const BASE_URL = import.meta.env.BASE_URL;
                   </div>
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">GitHub</span>
-                    <img src={`${BASE_URL}images/git-2.png`} alt="Pull request and code review" />
-                    <span class="image-caption">Pull request review</span>
-                  </div>
-                  <div class="workflow-image-card">
-                    <span class="image-tool-badge">Cursor IDE</span>
-                    <img src={`${BASE_URL}images/git-3.png`} alt="GitHub Actions automated testing" />
-                    <span class="image-caption">Automated CI/CD</span>
+                    <img src={`${BASE_URL}images/git-2.png`} alt="Pull request history" />
+                    <span class="image-caption">Pull request history</span>
                   </div>
                 </div>
               </div>
@@ -253,13 +249,13 @@ const BASE_URL = import.meta.env.BASE_URL;
                   </div>
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">OpenAI</span>
-                    <img src={`${BASE_URL}images/openai-builder-2.png`} alt="Agent configuration settings" />
-                    <span class="image-caption">Configuration settings</span>
+                    <img src={`${BASE_URL}images/openai-builder-2.png`} alt="Agent architecture map" />
+                    <span class="image-caption">Agent architecture map</span>
                   </div>
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">OpenAI</span>
-                    <img src={`${BASE_URL}images/openai-builder-3.png`} alt="Model settings and guardrails" />
-                    <span class="image-caption">Model settings</span>
+                    <img src={`${BASE_URL}images/openai-builder-3.png`} alt="Agent TypeScript code" />
+                    <span class="image-caption">Agent TypeScript code</span>
                   </div>
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">OpenAI</span>
@@ -285,16 +281,16 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <p>
                   Based on traces, logs, and playground testing, I identify what needs improvement, determine which few-shot examples to add, refine agent instructions, and adjust categorization logic—documenting insights for the next iteration in Cursor.
                 </p>
-                <div class="workflow-image-gallery" data-count="10" data-tool="Braintrust">
+                <div class="workflow-image-gallery" data-count="9" data-tool="Braintrust">
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">Braintrust</span>
-                    <img src={`${BASE_URL}images/braintrust-1.png`} alt="Braintrust monitoring logs" />
-                    <span class="image-caption">Monitoring logs</span>
+                    <img src={`${BASE_URL}images/braintrust-1.png`} alt="Rejection response agent draft quality pass/fail rate" />
+                    <span class="image-caption">Draft quality pass/fail rate</span>
                   </div>
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">Braintrust</span>
-                    <img src={`${BASE_URL}images/braintrust-2.png`} alt="Categorization test results" />
-                    <span class="image-caption">Test results</span>
+                    <img src={`${BASE_URL}images/braintrust-2.png`} alt="Categorizer agent pass/fail results for routing emails" />
+                    <span class="image-caption">Categorizer pass/fail rate</span>
                   </div>
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">Braintrust</span>
@@ -303,8 +299,8 @@ const BASE_URL = import.meta.env.BASE_URL;
                   </div>
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">Braintrust</span>
-                    <img src={`${BASE_URL}images/braintrust-4.png`} alt="Project lab overview" />
-                    <span class="image-caption">Project lab</span>
+                    <img src={`${BASE_URL}images/braintrust-4.png`} alt="Project overview in Braintrust" />
+                    <span class="image-caption">Project overview</span>
                   </div>
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">Braintrust</span>
@@ -313,28 +309,23 @@ const BASE_URL = import.meta.env.BASE_URL;
                   </div>
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">Braintrust</span>
-                    <img src={`${BASE_URL}images/braintrust-6.png`} alt="Trace view showing agent reasoning" />
-                    <span class="image-caption">Trace view</span>
+                    <img src={`${BASE_URL}images/braintrust-6.png`} alt="Categorizer logic trace showing email routing" />
+                    <span class="image-caption">Categorizer logic trace</span>
                   </div>
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">Braintrust</span>
-                    <img src={`${BASE_URL}images/braintrust-7.png`} alt="Detailed trace analysis" />
-                    <span class="image-caption">Trace analysis</span>
+                    <img src={`${BASE_URL}images/braintrust-7.png`} alt="Agent thinking thoughts when writing draft" />
+                    <span class="image-caption">Agent thinking process</span>
                   </div>
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">Braintrust</span>
-                    <img src={`${BASE_URL}images/braintrust-8.png`} alt="Batch trace review interface" />
-                    <span class="image-caption">Batch review</span>
+                    <img src={`${BASE_URL}images/braintrust-9.png`} alt="Human review process for accuracy verification" />
+                    <span class="image-caption">Human review process</span>
                   </div>
                   <div class="workflow-image-card">
                     <span class="image-tool-badge">Braintrust</span>
-                    <img src={`${BASE_URL}images/braintrust-9.png`} alt="Multiple traces for accuracy verification" />
-                    <span class="image-caption">Accuracy verification</span>
-                  </div>
-                  <div class="workflow-image-card">
-                    <span class="image-tool-badge">Braintrust</span>
-                    <img src={`${BASE_URL}images/braintrust-10.png`} alt="Draft output quality review" />
-                    <span class="image-caption">Output review</span>
+                    <img src={`${BASE_URL}images/braintrust-10.png`} alt="Agent output example" />
+                    <span class="image-caption">Agent output example</span>
                   </div>
                 </div>
               </div>
@@ -375,12 +366,12 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <div class="result-card">
                   <div class="result-number">98%+</div>
                   <div class="result-label">Agent Accuracy</div>
-                  <p>Achieved across categorizer, rejection response agent, and initial agents through iterative prompt engineering and comprehensive testing</p>
+                  <p>Achieved across categorizer, rejection response agent, and initial agents through iterative prompt engineering and testing</p>
                 </div>
                 <div class="result-card">
                   <div class="result-number">17,000+</div>
-                  <div class="result-label">Messages Processed Annually</div>
-                  <p>Scalable system handling high-volume customer communication</p>
+                  <div class="result-label">Messages/Year</div>
+                  <p>System built to handle the full volume of support tickets at scale</p>
                 </div>
               </div>
               <div class="results-grid results-grid-single">
@@ -435,7 +426,20 @@ const BASE_URL = import.meta.env.BASE_URL;
   <!-- Image Lightbox Modal -->
   <div class="image-lightbox" id="imageLightbox" style="display: none;">
     <button class="lightbox-close" aria-label="Close lightbox">&times;</button>
+    <button class="lightbox-nav lightbox-prev" aria-label="Previous image">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
     <img class="lightbox-image" src="" alt="" />
+    <button class="lightbox-nav lightbox-next" aria-label="Next image">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="lightbox-counter">
+      <span class="lightbox-current">1</span> / <span class="lightbox-total">1</span>
+    </div>
   </div>
 
   <ResumeLightbox />
@@ -463,20 +467,6 @@ const BASE_URL = import.meta.env.BASE_URL;
     let isPaused = false;
     let pausedAngle = 0;
 
-    // Pause on hover
-    workflowCycle.addEventListener('mouseenter', () => {
-      if (indicatorAnim) indicatorAnim.setAttribute('dur', '999999s');
-      if (trailAnim) trailAnim.setAttribute('dur', '999999s');
-      pausedAngle = ((performance.now() - startTime) / animDuration * 360) % 360;
-      isPaused = true;
-    });
-
-    workflowCycle.addEventListener('mouseleave', () => {
-      if (indicatorAnim) indicatorAnim.setAttribute('dur', '8s');
-      if (trailAnim) trailAnim.setAttribute('dur', '8s');
-      startTime = performance.now() - (pausedAngle / 360 * animDuration);
-      isPaused = false;
-    });
 
     function updatePulsingNodes() {
       if (!isPaused) {
@@ -523,7 +513,7 @@ const BASE_URL = import.meta.env.BASE_URL;
 
   // Sidebar Navigation
   document.addEventListener('DOMContentLoaded', () => {
-    const sections = ['overview', 'challenge', 'workflow', 'results', 'technologies', 'lessons'];
+    const sections = ['challenge', 'why-custom', 'approach', 'workflow', 'results', 'technologies', 'lessons'];
     const sidebarLinks = document.querySelectorAll('.sidebar-link');
     const scrollToTopBtn = document.getElementById('scrollToTop');
     const scrollToBottomBtn = document.getElementById('scrollToBottom');
@@ -610,36 +600,94 @@ const BASE_URL = import.meta.env.BASE_URL;
     detectCurrentSection();
   });
 
-  // Image Lightbox
+  // Image Lightbox with Slideshow Navigation
   document.addEventListener('DOMContentLoaded', () => {
     const lightbox = document.getElementById('imageLightbox');
     const lightboxImage = lightbox?.querySelector('.lightbox-image');
     const lightboxClose = lightbox?.querySelector('.lightbox-close');
-    const imageCards = document.querySelectorAll('.workflow-image-card img');
+    const lightboxPrev = lightbox?.querySelector('.lightbox-prev');
+    const lightboxNext = lightbox?.querySelector('.lightbox-next');
+    const lightboxCurrent = lightbox?.querySelector('.lightbox-current');
+    const lightboxTotal = lightbox?.querySelector('.lightbox-total');
 
     if (!lightbox || !lightboxImage) return;
 
-    // Open lightbox when clicking on an image card (works for both desktop and mobile)
-    const imageCardContainers = document.querySelectorAll('.workflow-image-card');
-    imageCardContainers.forEach((card) => {
-      card.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const img = card.querySelector('img');
-        if (img) {
-          lightboxImage.src = img.src;
-          lightboxImage.alt = img.alt || 'Screenshot';
+    // Track current gallery and index
+    let currentGallery = [];
+    let currentIndex = 0;
+
+    // Update lightbox display
+    const updateLightbox = () => {
+      if (currentGallery.length === 0) return;
+      const img = currentGallery[currentIndex];
+      lightboxImage.src = img.src;
+      lightboxImage.alt = img.alt || 'Screenshot';
+      if (lightboxCurrent) lightboxCurrent.textContent = currentIndex + 1;
+      if (lightboxTotal) lightboxTotal.textContent = currentGallery.length;
+
+      // Show/hide nav buttons based on position
+      if (lightboxPrev) lightboxPrev.style.visibility = currentIndex > 0 ? 'visible' : 'hidden';
+      if (lightboxNext) lightboxNext.style.visibility = currentIndex < currentGallery.length - 1 ? 'visible' : 'hidden';
+    };
+
+    // Navigate to previous image
+    const goToPrev = () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateLightbox();
+      }
+    };
+
+    // Navigate to next image
+    const goToNext = () => {
+      if (currentIndex < currentGallery.length - 1) {
+        currentIndex++;
+        updateLightbox();
+      }
+    };
+
+    // Open lightbox when clicking on an image card
+    const galleries = document.querySelectorAll('.workflow-image-gallery');
+    galleries.forEach((gallery) => {
+      const cards = gallery.querySelectorAll('.workflow-image-card');
+      cards.forEach((card, index) => {
+        card.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          // Get all images in this gallery
+          currentGallery = Array.from(gallery.querySelectorAll('.workflow-image-card img'));
+          currentIndex = index;
+
+          updateLightbox();
           lightbox.style.display = 'flex';
-          document.body.style.overflow = 'hidden'; // Prevent background scrolling
-        }
+          document.body.style.overflow = 'hidden';
+        });
       });
     });
 
     // Close lightbox functions
     const closeLightbox = () => {
       lightbox.style.display = 'none';
-      document.body.style.overflow = ''; // Restore scrolling
+      document.body.style.overflow = '';
+      currentGallery = [];
+      currentIndex = 0;
     };
+
+    // Navigation button clicks
+    if (lightboxPrev) {
+      lightboxPrev.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goToPrev();
+      });
+    }
+
+    if (lightboxNext) {
+      lightboxNext.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goToNext();
+      });
+    }
 
     // Close on button click
     if (lightboxClose) {
@@ -649,17 +697,23 @@ const BASE_URL = import.meta.env.BASE_URL;
       });
     }
 
-    // Close on background click
+    // Close on background click (but not on image or nav buttons)
     lightbox.addEventListener('click', (e) => {
       if (e.target === lightbox) {
         closeLightbox();
       }
     });
 
-    // Close on ESC key
+    // Keyboard navigation
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && lightbox.style.display === 'flex') {
+      if (lightbox.style.display !== 'flex') return;
+
+      if (e.key === 'Escape') {
         closeLightbox();
+      } else if (e.key === 'ArrowLeft') {
+        goToPrev();
+      } else if (e.key === 'ArrowRight') {
+        goToNext();
       }
     });
   });
@@ -1023,7 +1077,7 @@ const BASE_URL = import.meta.env.BASE_URL;
   }
 
   .workflow-cycle-container.workflow-cycle-top {
-    margin: 40px 0 60px;
+    margin: 60px 0 80px;
   }
 
   .workflow-cycle {
@@ -1108,14 +1162,6 @@ const BASE_URL = import.meta.env.BASE_URL;
     text-align: center;
   }
 
-  /* Pause animation on hover */
-  .workflow-cycle:hover .workflow-indicator {
-    animation-play-state: paused;
-  }
-
-  .workflow-cycle:hover .workflow-indicator animateTransform {
-    animation-play-state: paused;
-  }
 
   @media (max-width: 768px) {
     .workflow-cycle-container {
@@ -1214,6 +1260,10 @@ const BASE_URL = import.meta.env.BASE_URL;
   .workflow-image-gallery[data-count="5"] .workflow-image-card:nth-child(4),
   .workflow-image-gallery[data-count="5"] .workflow-image-card:nth-child(5) {
     grid-column: span 1;
+  }
+
+  .workflow-image-gallery[data-count="9"] {
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .workflow-image-gallery[data-count="10"] {
@@ -1439,6 +1489,53 @@ const BASE_URL = import.meta.env.BASE_URL;
     }
   }
 
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1001;
+    backdrop-filter: blur(10px);
+  }
+
+  .lightbox-nav:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .lightbox-prev {
+    left: 20px;
+  }
+
+  .lightbox-next {
+    right: 20px;
+  }
+
+  .lightbox-counter {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 8px 16px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+  }
+
   /* Tablet breakpoint - sidebar becomes narrower */
   @media (max-width: 1024px) {
     .content-grid {
@@ -1502,7 +1599,26 @@ const BASE_URL = import.meta.env.BASE_URL;
 
     .lightbox-image {
       max-width: 95%;
-      max-height: 95%;
+      max-height: 85%;
+    }
+
+    .lightbox-nav {
+      width: 40px;
+      height: 40px;
+    }
+
+    .lightbox-prev {
+      left: 10px;
+    }
+
+    .lightbox-next {
+      right: 10px;
+    }
+
+    .lightbox-counter {
+      bottom: 15px;
+      font-size: 0.8rem;
+      padding: 6px 12px;
     }
   }
 </style>

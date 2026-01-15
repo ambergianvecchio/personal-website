@@ -312,8 +312,8 @@
         const size = p.size * p.scale * (0.5 + depthNorm * 0.5);
 
         // Draw opaque background circle first to fully cover lines
-        // Uses page background color (#0a0a0a)
-        this.ctx.fillStyle = '#0a0a0a';
+        // Uses page background color (--bg-primary: #0d0c0b)
+        this.ctx.fillStyle = '#0d0c0b';
         this.drawParticle(p.x, p.y, size + 1); // Slightly larger to fully cover
         this.ctx.fill();
 
