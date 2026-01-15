@@ -58,6 +58,8 @@ const paragraphs = description.split('\n\n');
     border-radius: var(--card-radius);
     overflow: hidden;
     transition: all var(--transition-base);
+    display: flex;
+    flex-direction: column;
   }
 
   .project-card:hover {
@@ -94,6 +96,9 @@ const paragraphs = description.split('\n\n');
 
   .project-content {
     padding: 28px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
 
   .project-header {
@@ -139,6 +144,7 @@ const paragraphs = description.split('\n\n');
     font-size: 0.95rem;
     margin-bottom: 20px;
     line-height: 1.6;
+    flex-grow: 1;
   }
 
   .project-description p {

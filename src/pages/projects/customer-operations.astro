@@ -1,0 +1,220 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import ResumeLightbox from '../../components/ResumeLightbox.astro';
+
+const BASE_URL = import.meta.env.BASE_URL;
+---
+
+<Layout title="Customer Operations at Scale | Amber Gianvecchio">
+  <Header />
+  <main>
+    <article class="case-study">
+      <!-- Hero Section -->
+      <section class="case-hero">
+        <div class="container">
+          <a href={`${BASE_URL}`} class="back-link">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Home
+          </a>
+          <h1>Customer Operations at Scale</h1>
+          <p class="case-subtitle">Building the customer success foundation from the ground up at a fast-growing startup</p>
+          <div class="case-meta">
+            <div class="meta-item">
+              <span class="meta-label">Role</span>
+              <span class="meta-value">Customer Success Manager</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Company</span>
+              <span class="meta-value">allUP</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Scale</span>
+              <span class="meta-value">17,000+ messages/year</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Content -->
+      <section class="case-content">
+        <div class="container">
+          <div class="content-wrapper">
+            <h2>The Starting Point</h2>
+            <p>
+              When I joined allUP, there wasn't a real foundation for customer success yet. We had a few trusted templates, but when it came to actually replying to users, there wasn't anything concrete set up. It was a lot of spit-balling and brainstorming—nothing formal or structured.
+            </p>
+            <p>
+              I built the CS communication system from barely anything.
+            </p>
+
+            <h2>What I Built</h2>
+            <p>
+              I created a comprehensive template library in Notion, organizing everything by priority based on how frequently we received each type of message. This became our CS dashboard—a single source of truth for how we communicate with candidates.
+            </p>
+            <p>
+              Every template was written manually, covering FAQ responses, common questions, and edge cases. The library was accessible both in-app and via email for anyone who needed to reference it.
+            </p>
+            <p>
+              I also built out Front tags to categorize incoming messages, which eventually led to AI-powered tagging that helped me locate high-priority cases first. High-priority messages got moved into separate folders from the main inbox, making it clear at a glance whether something needed a quick template reply or manual review.
+            </p>
+
+            <h2>The Impact</h2>
+            <p>
+              We finally had one fluid knowledge base for candidate communication. Everything followed a structure.
+            </p>
+            <ul class="impact-list">
+              <li>Workflows became more organized and structured</li>
+              <li>Historical tracking made it possible to analyze patterns in the data</li>
+              <li>The team could cover for me when needed, since priority levels were clear</li>
+              <li>Tags enabled future analysis and eventually AI automation</li>
+            </ul>
+
+            <h2>Technologies</h2>
+            <div class="tech-tags">
+              <span class="tech-tag">Front</span>
+              <span class="tech-tag">Notion</span>
+              <span class="tech-tag">Customer.io</span>
+              <span class="tech-tag">Process Design</span>
+              <span class="tech-tag">Documentation</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <ResumeLightbox />
+</Layout>
+
+<style>
+  .case-study {
+    padding-top: 80px;
+  }
+
+  .case-hero {
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+    transition: color var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .case-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+  }
+
+  .case-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin-bottom: 32px;
+  }
+
+  .case-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .meta-value {
+    font-size: 1rem;
+    color: var(--text-primary);
+  }
+
+  .case-content {
+    padding: 60px 0 80px;
+  }
+
+  .content-wrapper {
+    max-width: 700px;
+  }
+
+  .content-wrapper h2 {
+    font-size: 1.5rem;
+    margin-top: 48px;
+    margin-bottom: 20px;
+  }
+
+  .content-wrapper h2:first-child {
+    margin-top: 0;
+  }
+
+  .content-wrapper p {
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+
+  .impact-list {
+    margin: 20px 0;
+    padding-left: 24px;
+  }
+
+  .impact-list li {
+    margin-bottom: 12px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .tech-tag {
+    padding: 8px 16px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .case-hero h1 {
+      font-size: 2rem;
+    }
+
+    .case-subtitle {
+      font-size: 1.1rem;
+    }
+
+    .case-meta {
+      gap: 24px;
+    }
+
+    .content-wrapper h2 {
+      font-size: 1.3rem;
+      margin-top: 40px;
+    }
+  }
+</style>

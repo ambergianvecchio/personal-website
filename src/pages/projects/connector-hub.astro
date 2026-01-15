@@ -1,0 +1,220 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import ResumeLightbox from '../../components/ResumeLightbox.astro';
+
+const BASE_URL = import.meta.env.BASE_URL;
+---
+
+<Layout title="The Connector Hub | Amber Gianvecchio">
+  <Header />
+  <main>
+    <article class="case-study">
+      <!-- Hero Section -->
+      <section class="case-hero">
+        <div class="container">
+          <a href={`${BASE_URL}`} class="back-link">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Home
+          </a>
+          <h1>The Connector Hub</h1>
+          <p class="case-subtitle">A centralized Notion workspace that eliminated cross-department bottlenecks at a remote-first company</p>
+          <div class="case-meta">
+            <div class="meta-item">
+              <span class="meta-label">Role</span>
+              <span class="meta-value">Senior Patient Onboarding Coordinator</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Company</span>
+              <span class="meta-value">Advekit</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Impact</span>
+              <span class="meta-value">Same-day response times</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Content -->
+      <section class="case-content">
+        <div class="container">
+          <div class="content-wrapper">
+            <h2>The Problem</h2>
+            <p>
+              As a remote-first company, we faced significant bottlenecks between departments. Teams were dependent on Slack responses that could take days, with Customer Success and Billing impacted the most—delays that then rippled out to engineering and product.
+            </p>
+            <p>
+              We needed client information accessible in real time: trackable, editable, and visible to all departments so everyone could work from the same data.
+            </p>
+
+            <h2>What I Built</h2>
+            <p>
+              I spotted the inefficiency and pitched a solution to my manager, who gave me the go-ahead to build it out during my spare time.
+            </p>
+            <p>
+              The Notion workspace centralized the information teams were constantly requesting from each other. It included:
+            </p>
+            <ul class="feature-list">
+              <li>Client and therapist data with status trackers</li>
+              <li>Insurance approval status (single-case agreements, authorization forms, etc.)</li>
+              <li>HIPAA-compliant secure information (DOB, address, etc.)</li>
+              <li>Direct links to client and therapist profiles</li>
+              <li>Therapist-specific data like NPI numbers, network status, and service locations</li>
+            </ul>
+
+            <h2>The Impact</h2>
+            <p>
+              Customer support messages started getting resolved within a day. Billing could access the information they needed independently, without waiting on my team.
+            </p>
+            <p>
+              The cross-department Slack back-and-forth that used to consume hours each day was eliminated. Teams could move faster when they weren't blocked waiting for data, leading to measurable improvements in client retention and sales revenue.
+            </p>
+
+            <h2>Technologies</h2>
+            <div class="tech-tags">
+              <span class="tech-tag">Notion</span>
+              <span class="tech-tag">Operations</span>
+              <span class="tech-tag">Process Design</span>
+              <span class="tech-tag">Remote Collaboration</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <ResumeLightbox />
+</Layout>
+
+<style>
+  .case-study {
+    padding-top: 80px;
+  }
+
+  .case-hero {
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+    transition: color var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .case-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+  }
+
+  .case-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin-bottom: 32px;
+  }
+
+  .case-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .meta-value {
+    font-size: 1rem;
+    color: var(--text-primary);
+  }
+
+  .case-content {
+    padding: 60px 0 80px;
+  }
+
+  .content-wrapper {
+    max-width: 700px;
+  }
+
+  .content-wrapper h2 {
+    font-size: 1.5rem;
+    margin-top: 48px;
+    margin-bottom: 20px;
+  }
+
+  .content-wrapper h2:first-child {
+    margin-top: 0;
+  }
+
+  .content-wrapper p {
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+
+  .feature-list {
+    margin: 20px 0;
+    padding-left: 24px;
+  }
+
+  .feature-list li {
+    margin-bottom: 12px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .tech-tag {
+    padding: 8px 16px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 768px) {
+    .case-hero h1 {
+      font-size: 2rem;
+    }
+
+    .case-subtitle {
+      font-size: 1.1rem;
+    }
+
+    .case-meta {
+      gap: 24px;
+    }
+
+    .content-wrapper h2 {
+      font-size: 1.3rem;
+      margin-top: 40px;
+    }
+  }
+</style>
