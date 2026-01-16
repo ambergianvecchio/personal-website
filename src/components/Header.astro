@@ -4,13 +4,11 @@ const BASE_URL = import.meta.env.BASE_URL;
 
 <header class="header">
   <nav class="nav container">
-    <div class="logo-group">
-      <a href={BASE_URL} class="logo">GIANVECCHIO</a>
-      <span class="logo-separator">|</span>
-      <a href="#" class="logo-resume" data-resume-trigger>Resume</a>
-    </div>
-    <ul class="nav-links">
+    <ul class="nav-links nav-left">
+      <li><a href="#" data-resume-trigger>Resume</a></li>
       <li><a href={`${BASE_URL}#work`}>Work</a></li>
+    </ul>
+    <ul class="nav-links nav-right">
       <li><a href={`${BASE_URL}#about`}>About</a></li>
       <li><a href={`${BASE_URL}#contact`}>Contact</a></li>
     </ul>
@@ -32,41 +30,6 @@ const BASE_URL = import.meta.env.BASE_URL;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 16px;
-  }
-
-  .logo-group {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .logo {
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    transition: opacity var(--transition-fast);
-  }
-
-  .logo:hover {
-    opacity: 0.8;
-  }
-
-  .logo-separator {
-    color: var(--text-muted);
-    font-weight: 300;
-  }
-
-  .logo-resume {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: color var(--transition-fast);
-  }
-
-  .logo-resume:hover {
-    color: var(--text-primary);
   }
 
   .nav-links {
@@ -87,40 +50,12 @@ const BASE_URL = import.meta.env.BASE_URL;
   }
 
   @media (max-width: 640px) {
-    .nav {
-      align-items: baseline;
-    }
-
-    .logo {
-      font-size: 1rem;
-    }
-
-    .logo-group {
-      align-items: baseline;
-      gap: 8px;
-    }
-
-    .logo-separator {
-      font-size: 0.8rem;
-    }
-
-    .logo-resume {
-      font-size: 0.8rem;
-    }
-
     .nav-links {
       gap: 16px;
     }
 
     .nav-links a {
       font-size: 0.8rem;
-    }
-  }
-
-  @media (max-width: 380px) {
-    .logo-separator,
-    .logo-resume {
-      display: none;
     }
   }
 </style>
