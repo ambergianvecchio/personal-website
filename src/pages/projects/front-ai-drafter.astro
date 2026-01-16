@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import ResumeLightbox from '../../components/ResumeLightbox.astro';
+import VolumeChart from '../../components/VolumeChart.astro';
 
 const BASE_URL = import.meta.env.BASE_URL;
 ---
@@ -75,8 +76,11 @@ const BASE_URL = import.meta.env.BASE_URL;
             <div class="content-main">
               <h2 id="challenge">The Challenge</h2>
               <p>
-                allUP's ticket volume grew 4x in six months, from ~750 messages in January to 3,000+ at peak. Scaling the team to match wasn't an option.
+                allUP's ticket volume grew 4x in six months, from ~750 messages in January to 3,000+ at peak. I needed a smarter solution than just adding headcount.
               </p>
+
+              <VolumeChart />
+
               <p>
                 The complexity made it harder: our support required understanding the platform, user workflows, and internal knowledge base. We needed AI that could handle nuance, not just FAQs.
               </p>
