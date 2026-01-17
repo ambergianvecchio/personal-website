@@ -25,8 +25,23 @@
         </div>
 
         <div class="skills-section">
-          <h3>Technical Skills</h3>
-          <div class="skills-grid">
+          <h3 class="skills-header-desktop">Technical Skills</h3>
+
+          <!-- Mobile toggle with preview -->
+          <button class="skills-toggle" aria-expanded="false" aria-controls="skills-content">
+            <span class="skills-toggle-text">Technical Skills</span>
+            <svg class="skills-chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="skills-preview">
+            <span class="skill-pill">OpenAI Agents SDK</span>
+            <span class="skill-pill">Claude Code</span>
+            <span class="skill-pill">Notion</span>
+            <span class="skill-pill-more">+13 more</span>
+          </div>
+
+          <div id="skills-content" class="skills-grid">
             <div class="skill-category">
               <h4>AI & Development</h4>
               <ul>
@@ -64,6 +79,21 @@
     </div>
   </div>
 </section>
+
+<script>
+  const toggle = document.querySelector('.skills-toggle');
+  const content = document.getElementById('skills-content');
+  const preview = document.querySelector('.skills-preview');
+
+  if (toggle && content && preview) {
+    toggle.addEventListener('click', () => {
+      const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', !isExpanded);
+      content.classList.toggle('skills-expanded');
+      preview.classList.toggle('skills-preview-hidden');
+    });
+  }
+</script>
 
 <style>
   .about-section {
@@ -118,9 +148,18 @@
     margin-top: 48px;
   }
 
-  .skills-section h3 {
+  .skills-header-desktop {
     margin-bottom: 24px;
     color: var(--text-primary);
+  }
+
+  /* Mobile toggle - hidden on desktop */
+  .skills-toggle {
+    display: none;
+  }
+
+  .skills-preview {
+    display: none;
   }
 
   .skills-grid {
@@ -171,8 +210,77 @@
   }
 
   @media (max-width: 480px) {
+    /* Hide desktop header, show toggle */
+    .skills-header-desktop {
+      display: none;
+    }
+
+    .skills-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 12px 16px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 12px;
+      transition: all var(--transition-base);
+    }
+
+    .skills-toggle:hover {
+      border-color: var(--accent);
+    }
+
+    .skills-toggle-text {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .skills-chevron {
+      color: var(--text-muted);
+      transition: transform 0.2s ease;
+    }
+
+    .skills-toggle[aria-expanded="true"] .skills-chevron {
+      transform: rotate(180deg);
+    }
+
+    .skills-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .skills-preview-hidden {
+      display: none;
+    }
+
+    .skill-pill {
+      padding: 4px 10px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .skill-pill-more {
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
     .skills-grid {
+      display: none;
       grid-template-columns: 1fr;
+    }
+
+    .skills-grid.skills-expanded {
+      display: grid;
     }
   }
 </style>
