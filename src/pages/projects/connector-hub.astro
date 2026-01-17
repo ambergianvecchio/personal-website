@@ -80,6 +80,13 @@ const BASE_URL = import.meta.env.BASE_URL;
               <span class="tech-tag">Process Design</span>
               <span class="tech-tag">Remote Collaboration</span>
             </div>
+
+            <a href={`${BASE_URL}`} class="back-link back-link-bottom">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Back to Home
+            </a>
           </div>
         </div>
       </section>
@@ -197,6 +204,11 @@ const BASE_URL = import.meta.env.BASE_URL;
     border-radius: 20px;
     font-size: 0.9rem;
     color: var(--text-secondary);
+  }
+
+  .back-link-bottom {
+    margin-top: 48px;
+    margin-bottom: 0;
   }
 
   @media (max-width: 768px) {
