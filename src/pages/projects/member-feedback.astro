@@ -1,0 +1,307 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import ResumeLightbox from '../../components/ResumeLightbox.astro';
+
+const BASE_URL = import.meta.env.BASE_URL;
+---
+
+<Layout title="From Feedback to Features | Amber Gianvecchio">
+  <Header />
+  <main>
+    <article class="case-study">
+      <!-- Hero Section -->
+      <section class="case-hero">
+        <div class="container">
+          <a href={`${BASE_URL}`} class="back-link">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to Home
+          </a>
+          <h1>From Feedback to Features</h1>
+          <p class="case-subtitle">Building systematic feedback infrastructure that maintained exceptional response times through 4x volume growth</p>
+          <div class="case-meta">
+            <div class="meta-item">
+              <span class="meta-label">Role</span>
+              <span class="meta-value">Customer Success Manager</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Company</span>
+              <span class="meta-value">allUP</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Scale</span>
+              <span class="meta-value">17,600+ inquiries handled</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Content -->
+      <section class="case-content">
+        <div class="container">
+          <div class="content-wrapper">
+            <h2>The Challenge</h2>
+            <p>
+              As allUP scaled its professional social network, message volume grew 4x in six months—from ~800 monthly inquiries to over 3,000 at peak. I was handling support solo, and without a system to track patterns, I was solving the same problems repeatedly without visibility into what was actually driving volume.
+            </p>
+            <p>
+              I needed a way to categorize every interaction, spot recurring issues before they snowballed, and translate member friction into actionable product feedback—all while keeping response times fast.
+            </p>
+
+            <h2>Building the Feedback System</h2>
+            <p>
+              I designed and implemented a 30+ category tracking system to classify every support interaction daily. Categories ranged from straightforward (App Submissions, Status Updates) to nuanced signals (User Confusion, Feature Requests, Data Privacy concerns).
+            </p>
+            <p>
+              Each day, I logged and categorized incoming messages, building a dataset that revealed patterns invisible in individual conversations. Over 8 months, this systematic tracking identified recurring issues and informed product priorities—turning reactive support into proactive improvement.
+            </p>
+            <p>
+              As volume scaled, I implemented Front AI tagging to automate classification, ensuring the system could grow without sacrificing accuracy. I also built triage workflows that categorized conversations by complexity (Standard vs. Escalation), enabling efficient routing and ensuring critical issues got immediate attention.
+            </p>
+
+            <h2>The Results</h2>
+            <div class="results-grid">
+              <div class="result-card">
+                <div class="result-number">17,600+</div>
+                <div class="result-label">Member Inquiries</div>
+                <p>Handled in 2025 with systematic tracking and categorization</p>
+              </div>
+              <div class="result-card">
+                <div class="result-number">&lt;16hr</div>
+                <div class="result-label">Avg Resolution</div>
+                <p>Average response time maintained through hypergrowth</p>
+              </div>
+            </div>
+            <div class="results-grid">
+              <div class="result-card">
+                <div class="result-number">4x</div>
+                <div class="result-label">Volume Growth</div>
+                <p>Scaled from ~800 to 3,000+ monthly inquiries without sacrificing quality</p>
+              </div>
+              <div class="result-card">
+                <div class="result-number">30+</div>
+                <div class="result-label">Tracking Categories</div>
+                <p>Systematic classification enabling pattern identification and product insights</p>
+              </div>
+            </div>
+
+            <h2>Product Impact</h2>
+            <p>
+              The patterns identified through systematic tracking became a direct input to product development. By quantifying feedback trends, I could advocate for specific improvements with data rather than anecdotes:
+            </p>
+            <ul class="impact-list">
+              <li><strong>Privacy controls:</strong> Spike in Data Privacy inquiries led to enhanced profile visibility settings</li>
+              <li><strong>Resume upload:</strong> Recurring "Cover Letter/Resume Upload" requests informed feature prioritization</li>
+              <li><strong>Profile visibility toggles:</strong> User Confusion patterns revealed UX friction points that product addressed</li>
+              <li><strong>Proactive FAQ content:</strong> High-frequency categories became self-service documentation, reducing repeat inquiries</li>
+            </ul>
+            <p>
+              This closed the loop between member experience and product development—feedback wasn't just resolved, it drove systematic improvements that prevented issues from recurring.
+            </p>
+
+            <h2>Technologies</h2>
+            <div class="tech-tags">
+              <span class="tech-tag">Front</span>
+              <span class="tech-tag">Front AI</span>
+              <span class="tech-tag">Notion</span>
+              <span class="tech-tag">Data Analysis</span>
+              <span class="tech-tag">Process Design</span>
+              <span class="tech-tag">Feedback Systems</span>
+            </div>
+
+            <a href={`${BASE_URL}`} class="back-link back-link-bottom">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Back to Home
+            </a>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <ResumeLightbox />
+</Layout>
+
+<style>
+  .case-study {
+    padding-top: 80px;
+  }
+
+  .case-hero {
+    padding: 60px 0 40px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+    transition: color var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .case-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 16px;
+  }
+
+  .case-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin-bottom: 32px;
+  }
+
+  .case-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .meta-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .meta-value {
+    font-size: 1rem;
+    color: var(--text-primary);
+  }
+
+  .case-content {
+    padding: 60px 0 80px;
+  }
+
+  .content-wrapper {
+    max-width: 700px;
+  }
+
+  .content-wrapper h2 {
+    font-size: 1.5rem;
+    margin-top: 48px;
+    margin-bottom: 20px;
+  }
+
+  .content-wrapper h2:first-child {
+    margin-top: 0;
+  }
+
+  .content-wrapper p {
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin: 24px 0;
+  }
+
+  .result-card {
+    padding: 24px;
+    background-color: var(--bg-card);
+    border-radius: var(--card-radius);
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .result-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--accent);
+    margin-bottom: 4px;
+    font-family: var(--font-display);
+  }
+
+  .result-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+
+  .result-card p {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .impact-list {
+    margin: 20px 0;
+    padding-left: 24px;
+  }
+
+  .impact-list li {
+    margin-bottom: 12px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .impact-list li strong {
+    color: var(--text-primary);
+  }
+
+  .tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .tech-tag {
+    padding: 8px 16px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+
+  .back-link-bottom {
+    margin-top: 48px;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 768px) {
+    .case-hero h1 {
+      font-size: 2rem;
+    }
+
+    .case-subtitle {
+      font-size: 1.1rem;
+    }
+
+    .case-meta {
+      gap: 24px;
+    }
+
+    .content-wrapper h2 {
+      font-size: 1.3rem;
+      margin-top: 40px;
+    }
+
+    .results-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
