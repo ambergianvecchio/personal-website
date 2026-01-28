@@ -11,20 +11,20 @@ const BASE_URL = import.meta.env.BASE_URL;
       <p>A few projects I'm proud of.</p>
     </div>
 
-    <div class="projects-grid">
+    <!-- allUP Case Studies - 3 equal cards showing the narrative -->
+    <div class="projects-grid-three">
       <ProjectCard
-        title="Front AI Drafter"
-        description="As support volume grew, I saw an opportunity to build. I designed an AI system that understands context the way I would, categorizing messages and drafting replies that match our voice. The key was iterative testing until it felt right."
-        tags={["OpenAI Agents SDK", "TypeScript", "Braintrust", "Git", "Cursor IDE"]}
-        link={`${BASE_URL}projects/front-ai-drafter`}
-        featured={true}
+        title="Customer Ops at Scale"
+        description="The knowledge lived in my head, which meant I was a bottleneck. I documented everything: not just answers, but the thinking behind them. Edge cases, multi-step workflows, when to escalate. These docs later became the foundation for our AI system."
+        tags={["Front", "Notion", "Customer.io", "Documentation"]}
+        link={`${BASE_URL}projects/customer-operations`}
         logo={`${BASE_URL}images/allup-logo.svg`}
         logoAlt="allUP logo"
       />
 
       <ProjectCard
         title="From Feedback to Features"
-        description="I noticed we were solving the same problems repeatedly without learning from them. So I built a system to capture and categorize every member interaction, not just to respond faster, but to surface patterns product could act on.\n\nThe goal was turning support from a cost center into a feedback loop. When I spotted recurring friction, I could bring data to product conversations instead of just anecdotes."
+        description="I noticed we were solving the same problems repeatedly without learning from them. So I built a system to capture and categorize every member interaction, not just to respond faster, but to surface patterns product could act on."
         tags={["Front", "Data Analysis", "Process Design", "Feedback Systems"]}
         link={`${BASE_URL}projects/member-feedback`}
         logo={`${BASE_URL}images/allup-logo.svg`}
@@ -32,14 +32,17 @@ const BASE_URL = import.meta.env.BASE_URL;
       />
 
       <ProjectCard
-        title="Customer Ops at Scale"
-        description="The knowledge lived in my head, which meant I was a bottleneck. I documented everything: not just answers, but the thinking behind them. Edge cases, multi-step workflows, when to escalate.\n\nThe goal was making myself replaceable in the best way: anyone could step in and maintain quality. These docs later became the foundation for our AI system."
-        tags={["Front", "Notion", "Customer.io", "Documentation"]}
-        link={`${BASE_URL}projects/customer-operations`}
+        title="Front AI Drafter"
+        description="As support volume grew, I saw an opportunity to build. I designed an AI system that understands context the way I would, categorizing messages and drafting replies that match our voice. The key was iterative testing until it felt right."
+        tags={["OpenAI Agents SDK", "TypeScript", "Braintrust", "Git", "Cursor IDE"]}
+        link={`${BASE_URL}projects/front-ai-drafter`}
         logo={`${BASE_URL}images/allup-logo.svg`}
         logoAlt="allUP logo"
       />
+    </div>
 
+    <!-- Advekit Case Study -->
+    <div class="projects-grid">
       <ProjectCard
         title="The Connector Hub"
         description="Remote teams kept waiting on each other for basic client information. The problem wasn't communication, it was that knowledge was siloed by department.\n\nI built a central Notion workspace where everyone could access and update client data in real-time. It became the single source of truth across ops, customer success, and billing."
@@ -72,11 +75,25 @@ const BASE_URL = import.meta.env.BASE_URL;
     max-width: 560px;
   }
 
+  .projects-grid-three {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    align-items: stretch;
+    margin-bottom: 24px;
+  }
+
   .projects-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
     align-items: stretch;
+  }
+
+  @media (max-width: 1024px) {
+    .projects-grid-three {
+      grid-template-columns: 1fr;
+    }
   }
 
   @media (max-width: 768px) {
