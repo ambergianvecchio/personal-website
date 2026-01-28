@@ -135,37 +135,45 @@ const profileImage = BASE_URL + "images/profile.jpg";
 
   @media (max-width: 640px) {
     .hero-content {
-      padding: 0 16px;
+      padding: 0 32px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      margin-top: -40px;
     }
 
     .hero-image {
-      margin-bottom: 16px;
-    }
-
-    .hero-eyebrow {
-      margin-bottom: 8px;
-    }
-
-    .hero-title {
-      font-size: 2rem;
+      width: 140px;
+      height: 140px;
       margin-bottom: 12px;
     }
 
+    .hero-eyebrow {
+      margin-bottom: 4px;
+      font-size: 0.8rem;
+    }
+
+    .hero-title {
+      font-size: 1.75rem;
+      margin-bottom: 8px;
+    }
+
     .hero-description {
-      font-size: 1rem;
-      margin-bottom: 24px;
+      font-size: 0.9rem;
+      margin-bottom: 16px;
+      line-height: 1.5;
     }
 
     .hero-cta {
       flex-direction: column;
       width: 100%;
+      gap: 8px;
     }
 
     .btn {
       justify-content: center;
+      padding: 12px 24px;
+      font-size: 0.9rem;
     }
   }
 </style>
