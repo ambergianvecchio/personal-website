@@ -4,6 +4,12 @@ import Header from '../../components/Header.astro';
 import ResumeLightbox from '../../components/ResumeLightbox.astro';
 
 const BASE_URL = import.meta.env.BASE_URL;
+
+// Sample categories for visual display
+const sampleCategories = [
+  "App Submissions", "Status Updates", "User Confusion", "Feature Requests",
+  "Privacy Concerns", "Technical Issues", "Will Do", "Not Interested"
+];
 ---
 
 <Layout title="From Feedback to Features | Amber Gianvecchio">
@@ -41,8 +47,37 @@ const BASE_URL = import.meta.env.BASE_URL;
       <!-- Content -->
       <section class="case-content">
         <div class="container">
-          <div class="content-wrapper">
-            <h2>The Challenge</h2>
+          <div class="content-grid">
+            <!-- Sticky Sidebar Navigation -->
+            <aside class="sidebar-nav" id="sidebarNav">
+              <div class="sidebar-nav-inner">
+                <div class="sidebar-title">On This Page</div>
+                <nav class="sidebar-links">
+                  <a href="#challenge" class="sidebar-link active" data-section="challenge">The Challenge</a>
+                  <a href="#system" class="sidebar-link" data-section="system">Building the System</a>
+                  <a href="#results" class="sidebar-link" data-section="results">The Results</a>
+                  <a href="#impact" class="sidebar-link" data-section="impact">Product Impact</a>
+                  <a href="#tech" class="sidebar-link" data-section="tech">Technologies</a>
+                </nav>
+                <div class="sidebar-actions">
+                  <button class="sidebar-action" id="scrollToTop" aria-label="Scroll to top">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 3L3 8M8 3L13 8M8 3V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Top</span>
+                  </button>
+                  <button class="sidebar-action" id="scrollToBottom" aria-label="Scroll to bottom">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 13L3 8M8 13L13 8M8 13V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Bottom</span>
+                  </button>
+                </div>
+              </div>
+            </aside>
+
+            <div class="content-main">
+            <h2 id="challenge">The Challenge</h2>
             <p>
               As allUP scaled its professional social network, message volume grew 4x in six months—from ~800 monthly inquiries to over 3,000 at peak. I was handling support solo, and without a system to track patterns, I was solving the same problems repeatedly without visibility into what was actually driving volume.
             </p>
@@ -50,18 +85,65 @@ const BASE_URL = import.meta.env.BASE_URL;
               I needed a way to categorize every interaction, spot recurring issues before they snowballed, and translate member friction into actionable product feedback—all while keeping response times fast.
             </p>
 
-            <h2>Building the Feedback System</h2>
+            <h2 id="system">Building the Feedback System</h2>
             <p>
               I designed and implemented a 30+ category tracking system to classify every support interaction daily. Categories ranged from straightforward (App Submissions, Status Updates) to nuanced signals (User Confusion, Feature Requests, Data Privacy concerns).
             </p>
+
+            <!-- Category Visual -->
+            <div class="category-visual">
+              <div class="category-tags">
+                {sampleCategories.map((cat) => (
+                  <span class="category-tag">{cat}</span>
+                ))}
+                <span class="category-tag category-more">+22 more (now AI-tagged)</span>
+              </div>
+            </div>
+
             <p>
               Each day, I logged and categorized incoming messages, building a dataset that revealed patterns invisible in individual conversations. Over 8 months, this systematic tracking identified recurring issues and informed product priorities—turning reactive support into proactive improvement.
             </p>
+
             <p>
               As volume scaled, I implemented Front AI tagging to automate classification, ensuring the system could grow without sacrificing accuracy. I also built triage workflows that categorized conversations by complexity (Standard vs. Escalation), enabling efficient routing and ensuring critical issues got immediate attention.
             </p>
 
-            <h2>The Results</h2>
+            <!-- Process Steps -->
+            <div class="process-section">
+              <h3>Daily Workflow</h3>
+              <div class="process-steps">
+                <div class="process-step">
+                  <div class="process-number">1</div>
+                  <div class="process-content">
+                    <div class="process-title">Morning Triage</div>
+                    <p>Review overnight messages, flag escalations, categorize by type and urgency</p>
+                  </div>
+                </div>
+                <div class="process-step">
+                  <div class="process-number">2</div>
+                  <div class="process-content">
+                    <div class="process-title">Respond & Tag</div>
+                    <p>Handle inquiries using templates, apply category tags for tracking</p>
+                  </div>
+                </div>
+                <div class="process-step">
+                  <div class="process-number">3</div>
+                  <div class="process-content">
+                    <div class="process-title">Pattern Review</div>
+                    <p>Weekly analysis of category trends, document recurring issues</p>
+                  </div>
+                </div>
+                <div class="process-step">
+                  <div class="process-number">4</div>
+                  <div class="process-content">
+                    <div class="process-title">Product Sync</div>
+                    <p>Share insights with product team, advocate for member-driven improvements</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h2 id="results">The Results</h2>
             <div class="results-grid">
               <div class="result-card">
                 <div class="result-number">17,600+</div>
@@ -87,24 +169,69 @@ const BASE_URL = import.meta.env.BASE_URL;
               </div>
             </div>
 
-            <h2>Product Impact</h2>
+            <h2 id="impact">Product Impact</h2>
             <p>
               The patterns identified through systematic tracking became a direct input to product development. By quantifying feedback trends, I could advocate for specific improvements with data rather than anecdotes:
             </p>
-            <ul class="impact-list">
-              <li><strong>Privacy controls:</strong> Spike in Data Privacy inquiries led to enhanced profile visibility settings</li>
-              <li><strong>Resume upload:</strong> Recurring "Cover Letter/Resume Upload" requests informed feature prioritization</li>
-              <li><strong>Profile visibility toggles:</strong> User Confusion patterns revealed UX friction points that product addressed</li>
-              <li><strong>Proactive FAQ content:</strong> High-frequency categories became self-service documentation, reducing repeat inquiries</li>
-            </ul>
+
+            <!-- Impact Cards -->
+            <div class="impact-cards">
+              <div class="impact-card">
+                <div class="impact-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div class="impact-content">
+                  <strong>Privacy controls</strong>
+                  <p>Spike in Data Privacy inquiries led to enhanced profile visibility settings</p>
+                </div>
+              </div>
+              <div class="impact-card">
+                <div class="impact-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div class="impact-content">
+                  <strong>Resume upload</strong>
+                  <p>Recurring "Cover Letter/Resume Upload" requests informed feature prioritization</p>
+                </div>
+              </div>
+              <div class="impact-card">
+                <div class="impact-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                </div>
+                <div class="impact-content">
+                  <strong>Profile visibility toggles</strong>
+                  <p>User Confusion patterns revealed UX friction points that product addressed</p>
+                </div>
+              </div>
+              <div class="impact-card">
+                <div class="impact-icon">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                    <path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div class="impact-content">
+                  <strong>Proactive FAQ content</strong>
+                  <p>High-frequency categories became self-service documentation, reducing repeat inquiries</p>
+                </div>
+              </div>
+            </div>
+
             <p>
               This closed the loop between member experience and product development—feedback wasn't just resolved, it drove systematic improvements that prevented issues from recurring.
             </p>
 
-            <h2>Technologies</h2>
+            <h2 id="tech">Technologies</h2>
             <div class="tech-tags">
               <span class="tech-tag">Front</span>
-              <span class="tech-tag">Front AI</span>
               <span class="tech-tag">Notion</span>
               <span class="tech-tag">Data Analysis</span>
               <span class="tech-tag">Process Design</span>
@@ -118,6 +245,7 @@ const BASE_URL = import.meta.env.BASE_URL;
               Back to Home
             </a>
           </div>
+          </div>
         </div>
       </section>
     </article>
@@ -125,6 +253,91 @@ const BASE_URL = import.meta.env.BASE_URL;
 
   <ResumeLightbox />
 </Layout>
+
+<script>
+  // Sidebar Navigation
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = ['challenge', 'system', 'results', 'impact', 'tech'];
+    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+    const scrollToBottomBtn = document.getElementById('scrollToBottom');
+
+    // Smooth scroll to section
+    const scrollToSection = (sectionId: string) => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        const offset = 100;
+        const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({
+          top: sectionPosition,
+          behavior: 'smooth'
+        });
+      }
+    };
+
+    // Update active sidebar link
+    const updateActiveLink = (sectionId: string) => {
+      sidebarLinks.forEach(link => {
+        link.classList.remove('active');
+        if ((link as HTMLElement).dataset.section === sectionId) {
+          link.classList.add('active');
+        }
+      });
+    };
+
+    // Detect current section on scroll
+    const detectCurrentSection = () => {
+      const scrollPosition = window.pageYOffset + window.innerHeight / 3;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section) {
+          const sectionTop = section.offsetTop;
+          if (scrollPosition >= sectionTop) {
+            updateActiveLink(sections[i]);
+            break;
+          }
+        }
+      }
+    };
+
+    // Click handlers for sidebar links
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const sectionId = (link as HTMLElement).dataset.section;
+        if (sectionId) {
+          scrollToSection(sectionId);
+          updateActiveLink(sectionId);
+        }
+      });
+    });
+
+    // Scroll to top button
+    if (scrollToTopBtn) {
+      scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    // Scroll to bottom button
+    if (scrollToBottomBtn) {
+      scrollToBottomBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    // Listen for scroll events
+    window.addEventListener('scroll', detectCurrentSection);
+    detectCurrentSection();
+  });
+</script>
 
 <style>
   .case-study {
@@ -190,25 +403,210 @@ const BASE_URL = import.meta.env.BASE_URL;
     padding: 60px 0 80px;
   }
 
-  .content-wrapper {
-    max-width: 700px;
+  .content-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 60px;
+    max-width: 1100px;
+    margin: 0 auto;
   }
 
-  .content-wrapper h2 {
+  /* Sticky Sidebar Navigation */
+  .sidebar-nav {
+    position: relative;
+  }
+
+  .sidebar-nav-inner {
+    position: sticky;
+    top: 100px;
+    padding: 20px 0;
+  }
+
+  .sidebar-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    padding-left: 12px;
+  }
+
+  .sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sidebar-link {
+    display: block;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    border-left: 2px solid transparent;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .sidebar-link:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+
+  .sidebar-link.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background-color: rgba(255, 255, 255, 0.05);
+    font-weight: 500;
+  }
+
+  .sidebar-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 24px;
+    padding-left: 12px;
+  }
+
+  .sidebar-action {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .sidebar-action:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent);
+  }
+
+  .sidebar-action svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .content-main {
+    max-width: 800px;
+  }
+
+  /* Scroll margin for anchor links */
+  h2[id] {
+    scroll-margin-top: 100px;
+  }
+
+  .content-main h2 {
     font-size: 1.5rem;
     margin-top: 48px;
     margin-bottom: 20px;
   }
 
-  .content-wrapper h2:first-child {
+  .content-main h2:first-child {
     margin-top: 0;
   }
 
-  .content-wrapper p {
+  .content-main h3 {
+    font-size: 1.1rem;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+  }
+
+  .content-main p {
     margin-bottom: 16px;
     line-height: 1.7;
   }
 
+  /* Category Visual */
+  .category-visual {
+    margin: 24px 0;
+  }
+
+  .category-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .category-tag {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    color: var(--text-secondary);
+  }
+
+  .category-more {
+    color: var(--text-muted);
+    font-style: italic;
+    border-style: dashed;
+  }
+
+  /* Process Steps */
+  .process-section {
+    margin: 32px 0;
+  }
+
+  .process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .process-step {
+    display: flex;
+    gap: 16px;
+    padding: 20px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius);
+    transition: all var(--transition-fast);
+  }
+
+  .process-step:hover {
+    border-color: var(--border-light);
+    background-color: var(--bg-card-hover);
+  }
+
+  .process-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: var(--accent);
+    color: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .process-content {
+    flex: 1;
+  }
+
+  .process-title {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .process-content p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Results Grid */
   .results-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -246,21 +644,59 @@ const BASE_URL = import.meta.env.BASE_URL;
     line-height: 1.5;
   }
 
-  .impact-list {
-    margin: 20px 0;
-    padding-left: 24px;
+  /* Impact Cards */
+  .impact-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 24px 0;
   }
 
-  .impact-list li {
-    margin-bottom: 12px;
-    line-height: 1.6;
-    color: var(--text-secondary);
+  .impact-card {
+    display: flex;
+    gap: 16px;
+    padding: 20px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius);
+    transition: all var(--transition-fast);
   }
 
-  .impact-list li strong {
+  .impact-card:hover {
+    border-color: var(--border-light);
+    background-color: var(--bg-card-hover);
+  }
+
+  .impact-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background-color: rgba(212, 175, 55, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .impact-content {
+    flex: 1;
+  }
+
+  .impact-content strong {
+    display: block;
     color: var(--text-primary);
+    margin-bottom: 4px;
   }
 
+  .impact-content p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Tech Tags */
   .tech-tags {
     display: flex;
     flex-wrap: wrap;
@@ -282,7 +718,36 @@ const BASE_URL = import.meta.env.BASE_URL;
     margin-bottom: 0;
   }
 
+  /* Tablet breakpoint - sidebar becomes narrower */
+  @media (max-width: 1024px) {
+    .content-grid {
+      grid-template-columns: 160px 1fr;
+      gap: 40px;
+    }
+
+    .sidebar-link {
+      font-size: 0.85rem;
+    }
+
+    .sidebar-action {
+      padding: 6px 10px;
+    }
+
+    .sidebar-action span {
+      display: none;
+    }
+  }
+
+  /* Hide sidebar on mobile */
   @media (max-width: 768px) {
+    .content-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar-nav {
+      display: none;
+    }
+
     .case-hero h1 {
       font-size: 2rem;
     }
@@ -295,7 +760,7 @@ const BASE_URL = import.meta.env.BASE_URL;
       gap: 24px;
     }
 
-    .content-wrapper h2 {
+    .content-main h2 {
       font-size: 1.3rem;
       margin-top: 40px;
     }
