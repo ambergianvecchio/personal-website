@@ -19,20 +19,28 @@ const BASE_URL = import.meta.env.BASE_URL;
             </svg>
             Back to Home
           </a>
-          <h1>The Connector Hub</h1>
-          <p class="case-subtitle">A centralized Notion workspace that eliminated cross-department bottlenecks at a remote-first company</p>
-          <div class="case-meta">
-            <div class="meta-item">
-              <span class="meta-label">Role</span>
-              <span class="meta-value">Senior Patient Onboarding Coordinator</span>
+          <div class="hero-layout">
+            <div class="hero-main">
+              <h1>The Connector Hub</h1>
+              <p class="case-subtitle">A centralized Notion workspace that eliminated cross-department bottlenecks at a remote-first company</p>
+              <div class="case-meta">
+                <div class="meta-item">
+                  <span class="meta-label">Role</span>
+                  <span class="meta-value">Senior Patient Onboarding Coordinator</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Company</span>
+                  <span class="meta-value">Advekit</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Impact</span>
+                  <span class="meta-value">Same-day response times</span>
+                </div>
+              </div>
             </div>
-            <div class="meta-item">
-              <span class="meta-label">Company</span>
-              <span class="meta-value">Advekit</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Impact</span>
-              <span class="meta-value">Same-day response times</span>
+            <div class="company-context-box">
+              <img src={`${BASE_URL}images/advekit-logo.svg`} alt="Advekit logo" class="context-logo" />
+              <p>Advekit makes therapy more accessible by taking insurance off people's plates. They match clients with therapists and manage all the billing, so people can focus on their mental health instead of fighting with their insurance company.</p>
             </div>
           </div>
         </div>
@@ -125,11 +133,47 @@ const BASE_URL = import.meta.env.BASE_URL;
     margin-bottom: 16px;
   }
 
-  .case-subtitle {
-    font-size: 1.2rem;
+  .hero-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 60px;
+  }
+
+  .hero-main {
+    flex: 1;
+  }
+
+  .company-context-box {
+    width: 320px;
+    padding: 24px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--text-muted);
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .context-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 16px;
+  }
+
+  .company-context-box p {
+    font-size: 0.9rem;
     color: var(--text-secondary);
-    max-width: 600px;
-    margin-bottom: 32px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .case-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 800px;
+    margin-bottom: 40px;
   }
 
   .case-meta {
@@ -212,6 +256,15 @@ const BASE_URL = import.meta.env.BASE_URL;
   }
 
   @media (max-width: 768px) {
+    .hero-layout {
+      flex-direction: column;
+    }
+
+    .company-context-box {
+      width: 100%;
+      margin-top: 24px;
+    }
+
     .case-hero h1 {
       font-size: 2rem;
     }

@@ -25,20 +25,28 @@ const sampleCategories = [
             </svg>
             Back to Home
           </a>
-          <h1>From Feedback to Features</h1>
-          <p class="case-subtitle">Building systematic feedback infrastructure that maintained exceptional response times through 4x volume growth</p>
-          <div class="case-meta">
-            <div class="meta-item">
-              <span class="meta-label">Role</span>
-              <span class="meta-value">Customer Success Manager</span>
+          <div class="hero-layout">
+            <div class="hero-main">
+              <h1>From Feedback to Features</h1>
+              <p class="case-subtitle">Building systematic feedback infrastructure that maintained exceptional response times through 4x volume growth</p>
+              <div class="case-meta">
+                <div class="meta-item">
+                  <span class="meta-label">Role</span>
+                  <span class="meta-value">Customer Success Manager</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Company</span>
+                  <span class="meta-value">allUP</span>
+                </div>
+                <div class="meta-item">
+                  <span class="meta-label">Scale</span>
+                  <span class="meta-value">17,600+ inquiries handled</span>
+                </div>
+              </div>
             </div>
-            <div class="meta-item">
-              <span class="meta-label">Company</span>
-              <span class="meta-value">allUP</span>
-            </div>
-            <div class="meta-item">
-              <span class="meta-label">Scale</span>
-              <span class="meta-value">17,600+ inquiries handled</span>
+            <div class="company-context-box">
+              <img src={`${BASE_URL}images/allup-logo.svg`} alt="allUP logo" class="context-logo" />
+              <p>A professional social network that lets people show who they actually are, beyond the resume. Who you are matters more than where you worked or went to school.</p>
             </div>
           </div>
         </div>
@@ -368,11 +376,47 @@ const sampleCategories = [
     margin-bottom: 16px;
   }
 
-  .case-subtitle {
-    font-size: 1.2rem;
+  .hero-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 60px;
+  }
+
+  .hero-main {
+    flex: 1;
+  }
+
+  .company-context-box {
+    width: 320px;
+    padding: 24px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--text-muted);
+    border-radius: 8px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .context-logo {
+    width: 80px;
+    height: auto;
+    margin-bottom: 16px;
+  }
+
+  .company-context-box p {
+    font-size: 0.9rem;
     color: var(--text-secondary);
-    max-width: 600px;
-    margin-bottom: 32px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .case-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    max-width: 800px;
+    margin-bottom: 40px;
   }
 
   .case-meta {
@@ -746,6 +790,15 @@ const sampleCategories = [
 
     .sidebar-nav {
       display: none;
+    }
+
+    .hero-layout {
+      flex-direction: column;
+    }
+
+    .company-context-box {
+      width: 100%;
+      margin-top: 24px;
     }
 
     .case-hero h1 {
