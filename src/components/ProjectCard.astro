@@ -60,6 +60,7 @@ const paragraphs = description.split('\n\n');
     transition: all var(--transition-base);
     display: flex;
     flex-direction: column;
+    height: 100%;
   }
 
   .project-card:hover {
@@ -98,7 +99,7 @@ const paragraphs = description.split('\n\n');
     padding: 28px;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    flex-grow: 1;
   }
 
   .project-header {
@@ -144,7 +145,6 @@ const paragraphs = description.split('\n\n');
     font-size: 0.95rem;
     margin-bottom: 20px;
     line-height: 1.6;
-    flex-grow: 1;
   }
 
   .project-description p {
@@ -160,6 +160,7 @@ const paragraphs = description.split('\n\n');
     flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 20px;
+    margin-top: auto;
   }
 
   .tag {
