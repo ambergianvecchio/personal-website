@@ -434,17 +434,18 @@ const BASE_URL = import.meta.env.BASE_URL;
 
     .hub-departments {
       gap: 8px;
+      grid-template-rows: auto 1fr;
     }
 
     .dept-column {
       display: grid;
-      grid-template-rows: auto 1fr;
+      grid-template-rows: subgrid;
+      grid-row: span 2;
     }
 
     .dept-header {
       font-size: 0.7rem;
       padding: 8px 6px;
-      min-height: 40px;
       display: flex;
       align-items: center;
       justify-content: center;
