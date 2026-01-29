@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 import ResumeLightbox from '../../components/ResumeLightbox.astro';
+import GrowthComparisonCharts from '../../components/GrowthComparisonCharts.astro';
 
 const BASE_URL = import.meta.env.BASE_URL;
 
@@ -181,6 +182,8 @@ const sampleCategories = [
             <p>
               The patterns identified through systematic tracking became a direct input to product development. By quantifying feedback trends, I could advocate for specific improvements with data rather than anecdotes:
             </p>
+
+            <GrowthComparisonCharts />
 
             <!-- Impact Cards -->
             <div class="impact-cards">

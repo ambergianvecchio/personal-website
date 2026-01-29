@@ -1,0 +1,403 @@
+---
+// User signups data from Hex (Jan - Sept 2025)
+const signupsData = [
+  { month: 'Jan', value: 3630 },
+  { month: 'Feb', value: 4718 },
+  { month: 'Mar', value: 7848 },
+  { month: 'Apr', value: 5679 },
+  { month: 'May', value: 4530 },
+  { month: 'Jun', value: 5362 },
+  { month: 'Jul', value: 13179 },
+  { month: 'Aug', value: 11911 },
+  { month: 'Sep', value: 12823 },
+];
+
+// Support volume data from Front (Jan-Sep 2025)
+const volumeData = [
+  { month: 'Jan', value: 737 },
+  { month: 'Feb', value: 1611 },
+  { month: 'Mar', value: 2050 },
+  { month: 'Apr', value: 791 },
+  { month: 'May', value: 994 },
+  { month: 'Jun', value: 1331 },
+  { month: 'Jul', value: 3000 },
+  { month: 'Aug', value: 1700 },
+  { month: 'Sep', value: 1300 },
+];
+
+const signupsMax = 14000;
+const volumeMax = 3200;
+
+// Trend lines
+const signupsTrendStart = 1000;
+const signupsTrendEnd = 12000;
+const volumeTrendStart = 700;
+const volumeTrendEnd = 2500;
+---
+
+<div class="comparison-charts">
+  <div class="comparison-header">
+    <h3>User Growth vs. Support Volume</h3>
+    <p>Product improvements reduced ticket volume even as user signups accelerated</p>
+  </div>
+
+  <div class="charts-container">
+    <!-- Signups Chart -->
+    <div class="chart-wrapper">
+      <div class="chart-header">
+        <span class="chart-title">User Signups</span>
+        <span class="chart-subtitle">New registrations per month</span>
+      </div>
+
+      <div class="chart-container">
+        <svg class="chart-svg" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid meet">
+          <!-- Grid lines -->
+          <g class="grid-lines">
+            <line x1="45" y1="30" x2="380" y2="30" />
+            <line x1="45" y1="75" x2="380" y2="75" />
+            <line x1="45" y1="120" x2="380" y2="120" />
+            <line x1="45" y1="165" x2="380" y2="165" />
+          </g>
+
+          <!-- Y-axis labels -->
+          <g class="y-labels">
+            <text x="40" y="34">12k</text>
+            <text x="40" y="79">8k</text>
+            <text x="40" y="124">4k</text>
+            <text x="40" y="169">0</text>
+          </g>
+
+          <!-- Trend line -->
+          <line
+            class="trend-line"
+            x1="60"
+            y1={165 - (signupsTrendStart / signupsMax) * 135}
+            x2={60 + (signupsData.length - 1) * 38}
+            y2={165 - (signupsTrendEnd / signupsMax) * 135}
+            stroke="var(--text-muted)"
+            stroke-width="2"
+            stroke-dasharray="6,4"
+            opacity="0.6"
+          />
+
+          <!-- Main line -->
+          <path class="chart-line" d={`
+            M 60 ${165 - (signupsData[0].value / signupsMax) * 135}
+            ${signupsData.map((d, i) => `L ${60 + i * 38} ${165 - (d.value / signupsMax) * 135}`).join(' ')}
+          `} fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+
+          <!-- Data points -->
+          <g class="data-points">
+            {signupsData.map((d, i) => (
+              <g class="data-point-group">
+                <circle
+                  cx={60 + i * 38}
+                  cy={165 - (d.value / signupsMax) * 135}
+                  r="4"
+                  fill="var(--bg-primary)"
+                  stroke="var(--accent)"
+                  stroke-width="2"
+                />
+                <text
+                  class="point-label"
+                  x={60 + i * 38}
+                  y={165 - (d.value / signupsMax) * 135 - 10}
+                  text-anchor="middle"
+                >
+                  {d.value.toLocaleString()}
+                </text>
+              </g>
+            ))}
+          </g>
+
+          <!-- X-axis labels -->
+          <g class="x-labels">
+            {signupsData.map((d, i) => (
+              <text x={60 + i * 38} y="185" text-anchor="middle">{d.month}</text>
+            ))}
+          </g>
+
+          <!-- Growth indicator -->
+          <text class="growth-indicator positive" x="340" y="25">3.5x growth</text>
+        </svg>
+      </div>
+
+      <div class="chart-source">Source: Hex Analytics</div>
+    </div>
+
+    <!-- Volume Chart -->
+    <div class="chart-wrapper">
+      <div class="chart-header">
+        <span class="chart-title">Support Volume</span>
+        <span class="chart-subtitle">Messages received per month</span>
+      </div>
+
+      <div class="chart-container">
+        <svg class="chart-svg" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid meet">
+          <!-- Grid lines -->
+          <g class="grid-lines">
+            <line x1="45" y1="30" x2="380" y2="30" />
+            <line x1="45" y1="75" x2="380" y2="75" />
+            <line x1="45" y1="120" x2="380" y2="120" />
+            <line x1="45" y1="165" x2="380" y2="165" />
+          </g>
+
+          <!-- Y-axis labels -->
+          <g class="y-labels">
+            <text x="40" y="34">3k</text>
+            <text x="40" y="79">2k</text>
+            <text x="40" y="124">1k</text>
+            <text x="40" y="169">0</text>
+          </g>
+
+          <!-- Trend line -->
+          <line
+            class="trend-line"
+            x1="60"
+            y1={165 - (volumeTrendStart / volumeMax) * 135}
+            x2={60 + (volumeData.length - 1) * 38}
+            y2={165 - (volumeTrendEnd / volumeMax) * 135}
+            stroke="var(--text-muted)"
+            stroke-width="2"
+            stroke-dasharray="6,4"
+            opacity="0.6"
+          />
+
+          <!-- Main line -->
+          <path class="chart-line" d={`
+            M 60 ${165 - (volumeData[0].value / volumeMax) * 135}
+            ${volumeData.map((d, i) => `L ${60 + i * 38} ${165 - (d.value / volumeMax) * 135}`).join(' ')}
+          `} fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+
+          <!-- Data points -->
+          <g class="data-points">
+            {volumeData.map((d, i) => (
+              <g class="data-point-group">
+                <circle
+                  cx={60 + i * 38}
+                  cy={165 - (d.value / volumeMax) * 135}
+                  r="4"
+                  fill="var(--bg-primary)"
+                  stroke="var(--accent)"
+                  stroke-width="2"
+                />
+                <text
+                  class="point-label"
+                  x={60 + i * 38}
+                  y={165 - (d.value / volumeMax) * 135 - 10}
+                  text-anchor="middle"
+                >
+                  {d.value.toLocaleString()}
+                </text>
+              </g>
+            ))}
+          </g>
+
+          <!-- X-axis labels -->
+          <g class="x-labels">
+            {volumeData.map((d, i) => (
+              <text x={60 + i * 38} y="185" text-anchor="middle">{d.month}</text>
+            ))}
+          </g>
+
+          <!-- Note about product improvements -->
+          <text class="growth-indicator positive" x="250" y="25">Product fixes cut volume 57%</text>
+        </svg>
+      </div>
+
+      <div class="chart-source">Source: Front Analytics</div>
+    </div>
+  </div>
+
+  <div class="chart-legend">
+    <span class="legend-item">
+      <span class="legend-line solid"></span>
+      Monthly data
+    </span>
+    <span class="legend-item">
+      <span class="legend-line dashed"></span>
+      Trend line
+    </span>
+  </div>
+</div>
+
+<style>
+  .comparison-charts {
+    margin: 32px 0;
+    padding: 24px;
+    background-color: var(--bg-card);
+    border-radius: var(--card-radius);
+    border: 1px solid var(--border);
+  }
+
+  .comparison-header {
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .comparison-header h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+
+  .comparison-header p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .charts-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .chart-wrapper {
+    padding: 16px;
+    background-color: var(--bg-secondary);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+
+  .chart-header {
+    margin-bottom: 12px;
+  }
+
+  .chart-title {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  .chart-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .chart-container {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .chart-svg {
+    width: 100%;
+    height: auto;
+  }
+
+  .grid-lines line {
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .y-labels text {
+    fill: var(--text-muted);
+    font-size: 10px;
+    text-anchor: end;
+  }
+
+  .x-labels text {
+    fill: var(--text-secondary);
+    font-size: 9px;
+    font-weight: 500;
+  }
+
+  .chart-line {
+    filter: drop-shadow(0 0 6px var(--accent));
+  }
+
+  .data-point-group circle {
+    transition: r 0.2s ease, filter 0.2s ease;
+  }
+
+  .data-point-group:hover circle {
+    r: 6;
+    filter: drop-shadow(0 0 8px var(--accent));
+  }
+
+  .point-label {
+    fill: var(--text-secondary);
+    font-size: 9px;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .data-point-group:hover .point-label {
+    opacity: 1;
+  }
+
+  .growth-indicator {
+    fill: var(--text-muted);
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .growth-indicator.positive {
+    fill: var(--accent);
+  }
+
+  .chart-source {
+    margin-top: 12px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  .chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .legend-line {
+    width: 16px;
+    height: 2px;
+  }
+
+  .legend-line.solid {
+    background-color: var(--accent);
+  }
+
+  .legend-line.dashed {
+    background: repeating-linear-gradient(
+      90deg,
+      var(--text-muted) 0,
+      var(--text-muted) 6px,
+      transparent 6px,
+      transparent 10px
+    );
+  }
+
+  @media (max-width: 768px) {
+    .comparison-charts {
+      padding: 20px;
+      margin: 24px -20px;
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+    }
+
+    .charts-container {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .chart-wrapper {
+      padding: 12px;
+    }
+  }
+</style>

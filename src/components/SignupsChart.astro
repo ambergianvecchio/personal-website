@@ -1,0 +1,256 @@
+---
+// User signups data from Hex (Dec 2024 - Sept 2025)
+const data = [
+  { month: 'Dec', value: 9 },
+  { month: 'Jan', value: 3630 },
+  { month: 'Feb', value: 4718 },
+  { month: 'Mar', value: 7848 },
+  { month: 'Apr', value: 5679 },
+  { month: 'May', value: 4530 },
+  { month: 'Jun', value: 5362 },
+  { month: 'Jul', value: 13179 },
+  { month: 'Aug', value: 11911 },
+  { month: 'Sep', value: 12823 },
+];
+
+const maxValue = 14000;
+
+// Trend line values (showing overall growth)
+const trendStart = 1000;
+const trendEnd = 12000;
+---
+
+<div class="signups-chart-wrapper">
+  <div class="chart-header">
+    <span class="chart-title">User Signups</span>
+    <span class="chart-subtitle">New user registrations per month (Dec '24–Sep '25)</span>
+  </div>
+
+  <div class="chart-container">
+    <svg class="signups-chart" viewBox="0 0 700 280" preserveAspectRatio="xMidYMid meet">
+      <!-- Grid lines -->
+      <g class="grid-lines">
+        <line x1="60" y1="40" x2="680" y2="40" />
+        <line x1="60" y1="100" x2="680" y2="100" />
+        <line x1="60" y1="160" x2="680" y2="160" />
+        <line x1="60" y1="220" x2="680" y2="220" />
+      </g>
+
+      <!-- Y-axis labels -->
+      <g class="y-labels">
+        <text x="50" y="44">12k</text>
+        <text x="50" y="104">8k</text>
+        <text x="50" y="164">4k</text>
+        <text x="50" y="224">0</text>
+      </g>
+
+      <!-- Area fill -->
+      <defs>
+        <linearGradient id="signupsAreaGradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.3" />
+          <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.02" />
+        </linearGradient>
+      </defs>
+
+      <!-- Trend line (dashed) -->
+      <line
+        class="trend-line"
+        x1="85"
+        y1={220 - (trendStart / maxValue) * 180}
+        x2={85 + (data.length - 1) * 65}
+        y2={220 - (trendEnd / maxValue) * 180}
+        stroke="var(--text-muted)"
+        stroke-width="2"
+        stroke-dasharray="6,4"
+        opacity="0.6"
+      />
+
+      <!-- Main line -->
+      <path class="chart-line" d={`
+        M 85 ${220 - (data[0].value / maxValue) * 180}
+        ${data.map((d, i) => `L ${85 + i * 65} ${220 - (d.value / maxValue) * 180}`).join(' ')}
+      `} fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+
+      <!-- Data points -->
+      <g class="data-points">
+        {data.map((d, i) => (
+          <g class="data-point-group">
+            <circle
+              cx={85 + i * 65}
+              cy={220 - (d.value / maxValue) * 180}
+              r="5"
+              fill="var(--bg-primary)"
+              stroke="var(--accent)"
+              stroke-width="2"
+            />
+            <text
+              class="point-label"
+              x={85 + i * 65}
+              y={220 - (d.value / maxValue) * 180 - 12}
+              text-anchor="middle"
+            >
+              {d.value.toLocaleString()}
+            </text>
+          </g>
+        ))}
+      </g>
+
+      <!-- X-axis labels -->
+      <g class="x-labels">
+        {data.map((d, i) => (
+          <text x={85 + i * 65} y="250" text-anchor="middle">{d.month}</text>
+        ))}
+      </g>
+    </svg>
+  </div>
+
+  <div class="chart-legend">
+    <span class="legend-item">
+      <span class="legend-line solid"></span>
+      Monthly signups
+    </span>
+    <span class="legend-item">
+      <span class="legend-line dashed"></span>
+      Growth trend
+    </span>
+  </div>
+
+  <div class="chart-source">
+    Source: Hex Analytics
+  </div>
+</div>
+
+<style>
+  .signups-chart-wrapper {
+    margin: 32px 0;
+    padding: 24px;
+    background-color: var(--bg-card);
+    border-radius: var(--card-radius);
+    border: 1px solid var(--border);
+  }
+
+  .chart-header {
+    margin-bottom: 16px;
+  }
+
+  .chart-title {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+  }
+
+  .chart-subtitle {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  .chart-container {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .signups-chart {
+    width: 100%;
+    height: auto;
+    max-height: 260px;
+  }
+
+  .grid-lines line {
+    stroke: var(--border);
+    stroke-width: 1;
+  }
+
+  .y-labels text {
+    fill: var(--text-muted);
+    font-size: 11px;
+    text-anchor: end;
+  }
+
+  .x-labels text {
+    fill: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .chart-line {
+    filter: drop-shadow(0 0 6px var(--accent));
+  }
+
+  .data-point-group circle {
+    transition: r 0.2s ease, filter 0.2s ease;
+  }
+
+  .data-point-group:hover circle {
+    r: 7;
+    filter: drop-shadow(0 0 8px var(--accent));
+  }
+
+  .point-label {
+    fill: var(--text-secondary);
+    font-size: 10px;
+    font-weight: 500;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .data-point-group:hover .point-label {
+    opacity: 1;
+  }
+
+  .chart-source {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .chart-legend {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+    margin-bottom: 4px;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  .legend-line {
+    width: 16px;
+    height: 2px;
+  }
+
+  .legend-line.solid {
+    background-color: var(--accent);
+  }
+
+  .legend-line.dashed {
+    background: repeating-linear-gradient(
+      90deg,
+      var(--text-muted) 0,
+      var(--text-muted) 6px,
+      transparent 6px,
+      transparent 10px
+    );
+  }
+
+  @media (max-width: 768px) {
+    .signups-chart-wrapper {
+      padding: 20px;
+      margin: 24px -20px;
+      border-radius: 0;
+      border-left: none;
+      border-right: none;
+    }
+
+    .signups-chart {
+      max-height: 250px;
+    }
+  }
+</style>
