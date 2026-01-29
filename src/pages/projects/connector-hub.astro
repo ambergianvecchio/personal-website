@@ -63,15 +63,51 @@ const BASE_URL = import.meta.env.BASE_URL;
               I spotted the inefficiency and pitched a solution to my manager, who gave me the go-ahead to build it out during my spare time.
             </p>
             <p>
-              The Notion workspace centralized the information teams were constantly requesting from each other. It included:
+              The Notion workspace centralized the information teams were constantly requesting from each other:
             </p>
-            <ul class="feature-list">
-              <li>Client and therapist data with status trackers</li>
-              <li>Insurance approval status (single-case agreements, authorization forms, etc.)</li>
-              <li>HIPAA-compliant secure information (DOB, address, etc.)</li>
-              <li>Direct links to client and therapist profiles</li>
-              <li>Therapist-specific data like NPI numbers, network status, and service locations</li>
-            </ul>
+
+            <!-- Hub Diagram - Sitemap Style -->
+            <div class="hub-sitemap">
+              <!-- Top: Connector Hub -->
+              <div class="hub-top">
+                <div class="hub-main">Connector Hub</div>
+              </div>
+
+              <!-- Connector lines -->
+              <div class="hub-connectors">
+                <div class="connector-line"></div>
+                <div class="connector-line"></div>
+                <div class="connector-line"></div>
+              </div>
+
+              <!-- Bottom: Three departments with their data -->
+              <div class="hub-departments">
+                <div class="dept-column">
+                  <div class="dept-header">Sales</div>
+                  <div class="dept-item">Provider profiles & IDs</div>
+                  <div class="dept-item">NPI & network status</div>
+                  <div class="dept-item">Region & clients</div>
+                  <div class="dept-item">Onboarding status</div>
+                  <div class="dept-item">Meeting notes</div>
+                </div>
+                <div class="dept-column">
+                  <div class="dept-header">Customer Success</div>
+                  <div class="dept-item">Client profiles & IDs</div>
+                  <div class="dept-item">Insurance & SCAs</div>
+                  <div class="dept-item">Provider match</div>
+                  <div class="dept-item">Benefits info</div>
+                  <div class="dept-item">HIPAA data (DOB, SSN)</div>
+                </div>
+                <div class="dept-column">
+                  <div class="dept-header">Billing</div>
+                  <div class="dept-item">Claims status</div>
+                  <div class="dept-item">SCA status</div>
+                  <div class="dept-item">Auth forms</div>
+                  <div class="dept-item">Charges & refunds</div>
+                  <div class="dept-item">Consultant notes</div>
+                </div>
+              </div>
+            </div>
 
             <h2>The Impact</h2>
             <p>
@@ -223,17 +259,6 @@ const BASE_URL = import.meta.env.BASE_URL;
     line-height: 1.7;
   }
 
-  .feature-list {
-    margin: 20px 0;
-    padding-left: 24px;
-  }
-
-  .feature-list li {
-    margin-bottom: 12px;
-    line-height: 1.6;
-    color: var(--text-secondary);
-  }
-
   .tech-tags {
     display: flex;
     flex-wrap: wrap;
@@ -253,6 +278,113 @@ const BASE_URL = import.meta.env.BASE_URL;
   .back-link-bottom {
     margin-top: 48px;
     margin-bottom: 0;
+  }
+
+  /* Hub Sitemap Styles */
+  .hub-sitemap {
+    margin: 48px auto;
+    max-width: 520px;
+  }
+
+  .hub-top {
+    display: flex;
+    justify-content: center;
+  }
+
+  .hub-main {
+    background-color: var(--bg-card);
+    border: 2px solid var(--accent);
+    border-radius: 6px;
+    padding: 12px 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .hub-connectors {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    height: 40px;
+  }
+
+  /* Vertical line from hub down */
+  .hub-connectors::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 20px;
+    background-color: var(--border);
+    transform: translateX(-50%);
+  }
+
+  /* Horizontal line across */
+  .hub-connectors::after {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 50px;
+    right: 50px;
+    height: 2px;
+    background-color: var(--border);
+  }
+
+  .connector-line {
+    position: absolute;
+    width: 2px;
+    height: 20px;
+    background-color: var(--border);
+    top: 20px;
+  }
+
+  .connector-line:nth-child(1) {
+    left: 50px;
+  }
+
+  .connector-line:nth-child(2) {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .connector-line:nth-child(3) {
+    right: 50px;
+  }
+
+  .hub-departments {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .dept-column {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  .dept-header {
+    background-color: var(--bg-secondary);
+    padding: 10px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .dept-item {
+    padding: 8px 12px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .dept-item:last-child {
+    border-bottom: none;
   }
 
   @media (max-width: 768px) {
@@ -287,6 +419,24 @@ const BASE_URL = import.meta.env.BASE_URL;
     .content-wrapper h2 {
       font-size: 1.3rem;
       margin-top: 40px;
+    }
+
+    /* Mobile hub sitemap */
+    .hub-sitemap {
+      margin: 32px auto;
+    }
+
+    .hub-connectors {
+      display: none;
+    }
+
+    .hub-departments {
+      grid-template-columns: 1fr;
+      margin-top: 16px;
+    }
+
+    .hub-main {
+      margin-bottom: 0;
     }
   }
 </style>
