@@ -40,7 +40,7 @@ const BASE_URL = import.meta.env.BASE_URL;
             </div>
             <div class="company-context-box">
               <img src={`${BASE_URL}images/allup-logo.svg`} alt="allUP logo" class="context-logo" />
-              <p>A professional social network that lets people show who they actually are, beyond the resume. Who you are matters more than where you worked or went to school.</p>
+              <p>A professional social network reimagining how companies hire. Candidates record video interviews for job applications so companies can understand who they are, not just what's on their resume.</p>
             </div>
           </div>
         </div>
@@ -49,53 +49,82 @@ const BASE_URL = import.meta.env.BASE_URL;
       <!-- Content -->
       <section class="case-content">
         <div class="container">
-          <div class="content-wrapper">
-            <h2>The Challenge</h2>
-            <p>
-              When I joined allUP, customer success was handled ad-hoc. There were a few trusted templates, but no formal system—responses were created on the fly without consistent structure. As the sole CS person, I needed systems that would let me handle growing volume efficiently while maintaining quality.
-            </p>
+          <div class="content-grid">
+            <!-- Sticky Sidebar Navigation -->
+            <aside class="sidebar-nav" id="sidebarNav">
+              <div class="sidebar-nav-inner">
+                <div class="sidebar-title">On This Page</div>
+                <nav class="sidebar-links">
+                  <a href="#challenge" class="sidebar-link active" data-section="challenge">The Challenge</a>
+                  <a href="#infrastructure" class="sidebar-link" data-section="infrastructure">Building the Infrastructure</a>
+                  <a href="#impact" class="sidebar-link" data-section="impact">The Impact</a>
+                  <a href="#tech" class="sidebar-link" data-section="tech">Technologies</a>
+                </nav>
+                <div class="sidebar-actions">
+                  <button class="sidebar-action" id="scrollToTop" aria-label="Scroll to top">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 3L3 8M8 3L13 8M8 3V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Top</span>
+                  </button>
+                  <button class="sidebar-action" id="scrollToBottom" aria-label="Scroll to bottom">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 13L3 8M8 13L13 8M8 13V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Bottom</span>
+                  </button>
+                </div>
+              </div>
+            </aside>
 
-            <h2>Building the Infrastructure</h2>
-            <p>
-              I created 80+ templates and knowledge base articles in Notion, organized by priority based on message frequency. This became our single source of truth for candidate communication. These templates then became the foundation for knowledge bases in Front and Claude, enabling fast, consistent responses across every channel.
-            </p>
-            <p>
-              Each template covered FAQ responses, common questions, and edge cases for both email and in-app replies. Responses often required pulling information from multiple sources—company admin, Customer.io, candidate profiles, Retool—so having organized, documented workflows was critical for speed and accuracy.
-            </p>
-            <p>
-              I also used Customer.io for candidate communications like status updates, data confirmations, and subscription management, enabling consistent messaging at scale rather than manual one-off responses.
-            </p>
-            <p>
-              I built Front tags to categorize incoming messages by type and urgency. High-priority cases moved into separate folders from the main inbox, making it clear at a glance whether something needed a quick template reply or manual review. This tagging system eventually became the foundation for AI-powered triage.
-            </p>
+            <div class="content-main">
+              <h2 id="challenge">The Challenge</h2>
+              <p>
+                When I joined allUP, customer success was handled ad-hoc. There were a few trusted templates, but no formal system—responses were created on the fly without consistent structure. As the sole CS person, I needed systems that would let me handle growing volume efficiently while maintaining quality.
+              </p>
 
-            <h2>The Impact</h2>
-            <p>
-              These systems let me operate as a one-person CS function handling volume that would typically require a team. But they also prepared us for growth—everything was documented so others could step in when needed.
-            </p>
-            <ul class="impact-list">
-              <li><strong>Speed and consistency:</strong> Templated workflows meant faster responses without sacrificing quality</li>
-              <li><strong>Scalability:</strong> Systems that grew with volume instead of breaking under it</li>
-              <li><strong>Coverage ready:</strong> Anyone could step in when needed, since priority levels and templates were clearly documented</li>
-              <li><strong>Foundation for automation:</strong> The tagging taxonomy I built became the basis for later AI implementation</li>
-              <li><strong>Proactive improvement:</strong> Patterns I identified in support emails informed FAQ content, working with marketing and design to address common questions before they reached the inbox</li>
-            </ul>
+              <h2 id="infrastructure">Building the Infrastructure</h2>
+              <p>
+                I created 80+ templates and knowledge base articles in Notion, organized by priority based on message frequency. This became our single source of truth for candidate communication. These templates then became the foundation for knowledge bases in Front and Claude, enabling fast, consistent responses across every channel.
+              </p>
+              <p>
+                Each template covered FAQ responses, common questions, and edge cases for both email and in-app replies. Responses often required pulling information from multiple sources—company admin, Customer.io, candidate profiles, Retool—so having organized, documented workflows was critical for speed and accuracy.
+              </p>
+              <p>
+                I also used Customer.io for candidate communications like status updates, data confirmations, and subscription management, enabling consistent messaging at scale rather than manual one-off responses.
+              </p>
+              <p>
+                I built Front tags to categorize incoming messages by type and urgency. High-priority cases moved into separate folders from the main inbox, making it clear at a glance whether something needed a quick template reply or manual review. This tagging system eventually became the foundation for AI-powered triage.
+              </p>
 
-            <h2>Technologies</h2>
-            <div class="tech-tags">
-              <span class="tech-tag">Front</span>
-              <span class="tech-tag">Notion</span>
-              <span class="tech-tag">Customer.io</span>
-              <span class="tech-tag">Process Design</span>
-              <span class="tech-tag">Documentation</span>
+              <h2 id="impact">The Impact</h2>
+              <p>
+                These systems let me operate as a one-person CS function handling volume that would typically require a team. But they also prepared us for growth—everything was documented so others could step in when needed.
+              </p>
+              <ul class="impact-list">
+                <li><strong>Speed and consistency:</strong> Templated workflows meant faster responses without sacrificing quality</li>
+                <li><strong>Scalability:</strong> Systems that grew with volume instead of breaking under it</li>
+                <li><strong>Coverage ready:</strong> Anyone could step in when needed, since priority levels and templates were clearly documented</li>
+                <li><strong>Foundation for automation:</strong> The tagging taxonomy I built became the basis for later AI implementation</li>
+                <li><strong>Proactive improvement:</strong> Patterns I identified in support emails informed FAQ content, working with marketing and design to address common questions before they reached the inbox</li>
+              </ul>
+
+              <h2 id="tech">Technologies</h2>
+              <div class="tech-tags">
+                <span class="tech-tag">Front</span>
+                <span class="tech-tag">Notion</span>
+                <span class="tech-tag">Customer.io</span>
+                <span class="tech-tag">Process Design</span>
+                <span class="tech-tag">Documentation</span>
+              </div>
+
+              <a href={`${BASE_URL}`} class="back-link back-link-bottom">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Back to Home
+              </a>
             </div>
-
-            <a href={`${BASE_URL}`} class="back-link back-link-bottom">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              Back to Home
-            </a>
           </div>
         </div>
       </section>
@@ -104,6 +133,91 @@ const BASE_URL = import.meta.env.BASE_URL;
 
   <ResumeLightbox />
 </Layout>
+
+<script>
+  // Sidebar Navigation
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = ['challenge', 'infrastructure', 'impact', 'tech'];
+    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+    const scrollToBottomBtn = document.getElementById('scrollToBottom');
+
+    // Smooth scroll to section
+    const scrollToSection = (sectionId: string) => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        const offset = 100;
+        const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({
+          top: sectionPosition,
+          behavior: 'smooth'
+        });
+      }
+    };
+
+    // Update active sidebar link
+    const updateActiveLink = (sectionId: string) => {
+      sidebarLinks.forEach(link => {
+        link.classList.remove('active');
+        if ((link as HTMLElement).dataset.section === sectionId) {
+          link.classList.add('active');
+        }
+      });
+    };
+
+    // Detect current section on scroll
+    const detectCurrentSection = () => {
+      const scrollPosition = window.pageYOffset + window.innerHeight / 3;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section) {
+          const sectionTop = section.offsetTop;
+          if (scrollPosition >= sectionTop) {
+            updateActiveLink(sections[i]);
+            break;
+          }
+        }
+      }
+    };
+
+    // Click handlers for sidebar links
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const sectionId = (link as HTMLElement).dataset.section;
+        if (sectionId) {
+          scrollToSection(sectionId);
+          updateActiveLink(sectionId);
+        }
+      });
+    });
+
+    // Scroll to top button
+    if (scrollToTopBtn) {
+      scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    // Scroll to bottom button
+    if (scrollToBottomBtn) {
+      scrollToBottomBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    // Listen for scroll events
+    window.addEventListener('scroll', detectCurrentSection);
+    detectCurrentSection();
+  });
+</script>
 
 <style>
   .case-study {
@@ -205,21 +319,116 @@ const BASE_URL = import.meta.env.BASE_URL;
     padding: 60px 0 80px;
   }
 
-  .content-wrapper {
-    max-width: 700px;
+  .content-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 60px;
+    max-width: 1100px;
+    margin: 0 auto;
   }
 
-  .content-wrapper h2 {
+  /* Sticky Sidebar Navigation */
+  .sidebar-nav {
+    position: relative;
+  }
+
+  .sidebar-nav-inner {
+    position: sticky;
+    top: 100px;
+    padding: 20px 0;
+  }
+
+  .sidebar-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    padding-left: 12px;
+  }
+
+  .sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sidebar-link {
+    display: block;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    border-left: 2px solid transparent;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .sidebar-link:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+
+  .sidebar-link.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background-color: rgba(255, 255, 255, 0.05);
+    font-weight: 500;
+  }
+
+  .sidebar-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 24px;
+    padding-left: 12px;
+  }
+
+  .sidebar-action {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .sidebar-action:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent);
+  }
+
+  .sidebar-action svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .content-main {
+    max-width: 800px;
+  }
+
+  /* Scroll margin for anchor links */
+  h2[id] {
+    scroll-margin-top: 100px;
+  }
+
+  .content-main h2 {
     font-size: 1.5rem;
     margin-top: 48px;
     margin-bottom: 20px;
   }
 
-  .content-wrapper h2:first-child {
+  .content-main h2:first-child {
     margin-top: 0;
   }
 
-  .content-wrapper p {
+  .content-main p {
     margin-bottom: 16px;
     line-height: 1.7;
   }
@@ -256,7 +465,36 @@ const BASE_URL = import.meta.env.BASE_URL;
     margin-bottom: 0;
   }
 
+  /* Tablet breakpoint - sidebar becomes narrower */
+  @media (max-width: 1024px) {
+    .content-grid {
+      grid-template-columns: 160px 1fr;
+      gap: 40px;
+    }
+
+    .sidebar-link {
+      font-size: 0.85rem;
+    }
+
+    .sidebar-action {
+      padding: 6px 10px;
+    }
+
+    .sidebar-action span {
+      display: none;
+    }
+  }
+
+  /* Hide sidebar on mobile */
   @media (max-width: 768px) {
+    .content-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar-nav {
+      display: none;
+    }
+
     .hero-layout {
       flex-direction: column;
       gap: 24px;
@@ -285,7 +523,7 @@ const BASE_URL = import.meta.env.BASE_URL;
       gap: 24px;
     }
 
-    .content-wrapper h2 {
+    .content-main h2 {
       font-size: 1.3rem;
       margin-top: 40px;
     }

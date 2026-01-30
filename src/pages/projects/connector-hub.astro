@@ -49,88 +49,117 @@ const BASE_URL = import.meta.env.BASE_URL;
       <!-- Content -->
       <section class="case-content">
         <div class="container">
-          <div class="content-wrapper">
-            <h2>The Problem</h2>
-            <p>
-              As a remote-first company, we faced significant bottlenecks between departments. Teams were dependent on Slack responses that could take days, with Customer Success and Billing impacted the most—delays that then rippled out to engineering and product.
-            </p>
-            <p>
-              We needed client information accessible in real time: trackable, editable, and visible to all departments so everyone could work from the same data.
-            </p>
-
-            <h2>What I Built</h2>
-            <p>
-              I spotted the inefficiency and pitched a solution to my manager, who gave me the go-ahead to build it out during my spare time.
-            </p>
-            <p>
-              The Notion workspace centralized the information teams were constantly requesting from each other:
-            </p>
-
-            <!-- Hub Diagram - Sitemap Style -->
-            <div class="hub-sitemap">
-              <!-- Top: Connector Hub -->
-              <div class="hub-top">
-                <div class="hub-main">Connector Hub</div>
-              </div>
-
-              <!-- Connector lines -->
-              <div class="hub-connectors">
-                <div class="connector-line"></div>
-                <div class="connector-line"></div>
-                <div class="connector-line"></div>
-              </div>
-
-              <!-- Bottom: Three departments with their data -->
-              <div class="hub-departments">
-                <div class="dept-column">
-                  <div class="dept-header">Sales</div>
-                  <div class="dept-item">Provider profiles & IDs</div>
-                  <div class="dept-item">NPI & network status</div>
-                  <div class="dept-item">Region & clients</div>
-                  <div class="dept-item">Onboarding status</div>
-                  <div class="dept-item">Meeting notes</div>
-                </div>
-                <div class="dept-column">
-                  <div class="dept-header">Customer Success</div>
-                  <div class="dept-item">Client profiles & IDs</div>
-                  <div class="dept-item">Insurance & SCAs</div>
-                  <div class="dept-item">Provider match</div>
-                  <div class="dept-item">Benefits info</div>
-                  <div class="dept-item">HIPAA data (DOB, SSN)</div>
-                </div>
-                <div class="dept-column">
-                  <div class="dept-header">Billing</div>
-                  <div class="dept-item">Claims status</div>
-                  <div class="dept-item">SCA status</div>
-                  <div class="dept-item">Auth forms</div>
-                  <div class="dept-item">Charges & refunds</div>
-                  <div class="dept-item">Consultant notes</div>
+          <div class="content-grid">
+            <!-- Sticky Sidebar Navigation -->
+            <aside class="sidebar-nav" id="sidebarNav">
+              <div class="sidebar-nav-inner">
+                <div class="sidebar-title">On This Page</div>
+                <nav class="sidebar-links">
+                  <a href="#problem" class="sidebar-link active" data-section="problem">The Problem</a>
+                  <a href="#built" class="sidebar-link" data-section="built">What I Built</a>
+                  <a href="#impact" class="sidebar-link" data-section="impact">The Impact</a>
+                  <a href="#tech" class="sidebar-link" data-section="tech">Technologies</a>
+                </nav>
+                <div class="sidebar-actions">
+                  <button class="sidebar-action" id="scrollToTop" aria-label="Scroll to top">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 3L3 8M8 3L13 8M8 3V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Top</span>
+                  </button>
+                  <button class="sidebar-action" id="scrollToBottom" aria-label="Scroll to bottom">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8 13L3 8M8 13L13 8M8 13V3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Bottom</span>
+                  </button>
                 </div>
               </div>
+            </aside>
+
+            <div class="content-main">
+              <h2 id="problem">The Problem</h2>
+              <p>
+                As a remote-first company, we faced significant bottlenecks between departments. Teams were dependent on Slack responses that could take days, with Customer Success and Billing impacted the most—delays that then rippled out to engineering and product.
+              </p>
+              <p>
+                We needed client information accessible in real time: trackable, editable, and visible to all departments so everyone could work from the same data.
+              </p>
+
+              <h2 id="built">What I Built</h2>
+              <p>
+                I spotted the inefficiency and pitched a solution to my manager, who gave me the go-ahead to build it out during my spare time.
+              </p>
+              <p>
+                The Notion workspace centralized the information teams were constantly requesting from each other:
+              </p>
+
+              <!-- Hub Diagram - Sitemap Style -->
+              <div class="hub-sitemap">
+                <!-- Top: Connector Hub -->
+                <div class="hub-top">
+                  <div class="hub-main">Connector Hub</div>
+                </div>
+
+                <!-- Connector lines -->
+                <div class="hub-connectors">
+                  <div class="connector-line"></div>
+                  <div class="connector-line"></div>
+                  <div class="connector-line"></div>
+                </div>
+
+                <!-- Bottom: Three departments with their data -->
+                <div class="hub-departments">
+                  <div class="dept-column">
+                    <div class="dept-header">Sales</div>
+                    <div class="dept-item">Provider profiles & IDs</div>
+                    <div class="dept-item">NPI & network status</div>
+                    <div class="dept-item">Region & clients</div>
+                    <div class="dept-item">Onboarding status</div>
+                    <div class="dept-item">Meeting notes</div>
+                  </div>
+                  <div class="dept-column">
+                    <div class="dept-header">Customer Success</div>
+                    <div class="dept-item">Client profiles & IDs</div>
+                    <div class="dept-item">Insurance & SCAs</div>
+                    <div class="dept-item">Provider match</div>
+                    <div class="dept-item">Benefits info</div>
+                    <div class="dept-item">HIPAA data (DOB, SSN)</div>
+                  </div>
+                  <div class="dept-column">
+                    <div class="dept-header">Billing</div>
+                    <div class="dept-item">Claims status</div>
+                    <div class="dept-item">SCA status</div>
+                    <div class="dept-item">Auth forms</div>
+                    <div class="dept-item">Charges & refunds</div>
+                    <div class="dept-item">Consultant notes</div>
+                  </div>
+                </div>
+              </div>
+
+              <h2 id="impact">The Impact</h2>
+              <p>
+                Customer support messages started getting resolved within a day. Billing could access the information they needed independently, without waiting on my team.
+              </p>
+              <p>
+                The cross-department Slack back-and-forth that used to consume hours each day was eliminated. Teams could move faster when they weren't blocked waiting for data, leading to measurable improvements in client retention and sales revenue.
+              </p>
+
+              <h2 id="tech">Technologies</h2>
+              <div class="tech-tags">
+                <span class="tech-tag">Notion</span>
+                <span class="tech-tag">Operations</span>
+                <span class="tech-tag">Process Design</span>
+                <span class="tech-tag">Remote Collaboration</span>
+              </div>
+
+              <a href={`${BASE_URL}`} class="back-link back-link-bottom">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Back to Home
+              </a>
             </div>
-
-            <h2>The Impact</h2>
-            <p>
-              Customer support messages started getting resolved within a day. Billing could access the information they needed independently, without waiting on my team.
-            </p>
-            <p>
-              The cross-department Slack back-and-forth that used to consume hours each day was eliminated. Teams could move faster when they weren't blocked waiting for data, leading to measurable improvements in client retention and sales revenue.
-            </p>
-
-            <h2>Technologies</h2>
-            <div class="tech-tags">
-              <span class="tech-tag">Notion</span>
-              <span class="tech-tag">Operations</span>
-              <span class="tech-tag">Process Design</span>
-              <span class="tech-tag">Remote Collaboration</span>
-            </div>
-
-            <a href={`${BASE_URL}`} class="back-link back-link-bottom">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-              Back to Home
-            </a>
           </div>
         </div>
       </section>
@@ -139,6 +168,91 @@ const BASE_URL = import.meta.env.BASE_URL;
 
   <ResumeLightbox />
 </Layout>
+
+<script>
+  // Sidebar Navigation
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = ['problem', 'built', 'impact', 'tech'];
+    const sidebarLinks = document.querySelectorAll('.sidebar-link');
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+    const scrollToBottomBtn = document.getElementById('scrollToBottom');
+
+    // Smooth scroll to section
+    const scrollToSection = (sectionId: string) => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        const offset = 100;
+        const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset - offset;
+        window.scrollTo({
+          top: sectionPosition,
+          behavior: 'smooth'
+        });
+      }
+    };
+
+    // Update active sidebar link
+    const updateActiveLink = (sectionId: string) => {
+      sidebarLinks.forEach(link => {
+        link.classList.remove('active');
+        if ((link as HTMLElement).dataset.section === sectionId) {
+          link.classList.add('active');
+        }
+      });
+    };
+
+    // Detect current section on scroll
+    const detectCurrentSection = () => {
+      const scrollPosition = window.pageYOffset + window.innerHeight / 3;
+
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = document.getElementById(sections[i]);
+        if (section) {
+          const sectionTop = section.offsetTop;
+          if (scrollPosition >= sectionTop) {
+            updateActiveLink(sections[i]);
+            break;
+          }
+        }
+      }
+    };
+
+    // Click handlers for sidebar links
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const sectionId = (link as HTMLElement).dataset.section;
+        if (sectionId) {
+          scrollToSection(sectionId);
+          updateActiveLink(sectionId);
+        }
+      });
+    });
+
+    // Scroll to top button
+    if (scrollToTopBtn) {
+      scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    // Scroll to bottom button
+    if (scrollToBottomBtn) {
+      scrollToBottomBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    // Listen for scroll events
+    window.addEventListener('scroll', detectCurrentSection);
+    detectCurrentSection();
+  });
+</script>
 
 <style>
   .case-study {
@@ -240,21 +354,116 @@ const BASE_URL = import.meta.env.BASE_URL;
     padding: 60px 0 80px;
   }
 
-  .content-wrapper {
-    max-width: 700px;
+  .content-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 60px;
+    max-width: 1100px;
+    margin: 0 auto;
   }
 
-  .content-wrapper h2 {
+  /* Sticky Sidebar Navigation */
+  .sidebar-nav {
+    position: relative;
+  }
+
+  .sidebar-nav-inner {
+    position: sticky;
+    top: 100px;
+    padding: 20px 0;
+  }
+
+  .sidebar-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    padding-left: 12px;
+  }
+
+  .sidebar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sidebar-link {
+    display: block;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    border-left: 2px solid transparent;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .sidebar-link:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.03);
+  }
+
+  .sidebar-link.active {
+    color: var(--accent);
+    border-left-color: var(--accent);
+    background-color: rgba(255, 255, 255, 0.05);
+    font-weight: 500;
+  }
+
+  .sidebar-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 24px;
+    padding-left: 12px;
+  }
+
+  .sidebar-action {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .sidebar-action:hover {
+    color: var(--text-primary);
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent);
+  }
+
+  .sidebar-action svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .content-main {
+    max-width: 800px;
+  }
+
+  /* Scroll margin for anchor links */
+  h2[id] {
+    scroll-margin-top: 100px;
+  }
+
+  .content-main h2 {
     font-size: 1.5rem;
     margin-top: 48px;
     margin-bottom: 20px;
   }
 
-  .content-wrapper h2:first-child {
+  .content-main h2:first-child {
     margin-top: 0;
   }
 
-  .content-wrapper p {
+  .content-main p {
     margin-bottom: 16px;
     line-height: 1.7;
   }
@@ -387,7 +596,36 @@ const BASE_URL = import.meta.env.BASE_URL;
     border-bottom: none;
   }
 
+  /* Tablet breakpoint - sidebar becomes narrower */
+  @media (max-width: 1024px) {
+    .content-grid {
+      grid-template-columns: 160px 1fr;
+      gap: 40px;
+    }
+
+    .sidebar-link {
+      font-size: 0.85rem;
+    }
+
+    .sidebar-action {
+      padding: 6px 10px;
+    }
+
+    .sidebar-action span {
+      display: none;
+    }
+  }
+
+  /* Hide sidebar on mobile */
   @media (max-width: 768px) {
+    .content-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .sidebar-nav {
+      display: none;
+    }
+
     .hero-layout {
       flex-direction: column;
       gap: 24px;
@@ -416,7 +654,7 @@ const BASE_URL = import.meta.env.BASE_URL;
       gap: 24px;
     }
 
-    .content-wrapper h2 {
+    .content-main h2 {
       font-size: 1.3rem;
       margin-top: 40px;
     }
