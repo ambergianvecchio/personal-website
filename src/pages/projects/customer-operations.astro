@@ -118,6 +118,10 @@ const BASE_URL = import.meta.env.BASE_URL;
                 <span class="tech-tag">Documentation</span>
               </div>
 
+              <p class="next-study">
+                These systems gave me visibility into what users were struggling with. <a href="member-feedback">Next, I turned those patterns into product improvements →</a>
+              </p>
+
               <a href={`${BASE_URL}`} class="back-link back-link-bottom">
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -463,6 +467,25 @@ const BASE_URL = import.meta.env.BASE_URL;
   .back-link-bottom {
     margin-top: 48px;
     margin-bottom: 0;
+  }
+
+  .next-study {
+    margin-top: 48px;
+    padding: 20px 24px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+  }
+
+  .next-study a {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .next-study a:hover {
+    text-decoration: underline;
   }
 
   /* Tablet breakpoint - sidebar becomes narrower */
