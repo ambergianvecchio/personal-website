@@ -14,6 +14,7 @@ const basePath = `${BASE_URL}after-hours/tuna-supply`;
 
 <section id="after-hours" class="section after-hours-section">
   <div class="container">
+    <hr class="section-divider" />
     <div class="section-header">
       <h2>After Hours</h2>
       <p>Side quests.</p>
@@ -230,9 +231,19 @@ const basePath = `${BASE_URL}after-hours/tuna-supply`;
 </script>
 
 <style>
-  .after-hours-section { background-color: var(--bg-secondary); }
+  .after-hours-section {
+    background-color: var(--bg-secondary);
+    padding-top: 0;
+  }
 
-  .section-header { margin-bottom: 48px; }
+  .section-divider {
+    border: none;
+    border-top: 1px solid var(--border-light);
+    margin: 0;
+    padding-bottom: var(--section-padding);
+  }
+
+  .after-hours-section .section-header { margin-bottom: 48px; }
   .section-header h2 { margin-bottom: 12px; }
   .section-header p { font-size: 1.1rem; max-width: 560px; }
 
