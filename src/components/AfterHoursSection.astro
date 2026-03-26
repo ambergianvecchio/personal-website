@@ -511,7 +511,7 @@ const basePath = `${BASE_URL}after-hours/tuna-supply`;
     border: 1px solid var(--border);
     border-radius: var(--card-radius);
     background-color: var(--bg-card);
-    display: flex;
+    display: none;
     flex-direction: column;
     opacity: 0;
     transform: translateX(-10px);
@@ -522,6 +522,7 @@ const basePath = `${BASE_URL}after-hours/tuna-supply`;
   }
 
   .revealed .caption-box {
+    display: flex;
     opacity: 1;
     transform: translateX(0);
     pointer-events: auto;
@@ -541,6 +542,9 @@ const basePath = `${BASE_URL}after-hours/tuna-supply`;
 
   /* ─── Responsive ─── */
   @media (max-width: 768px) {
+    .after-hours-section {
+      padding-bottom: 32px;
+    }
     .app-layout {
       flex-direction: column;
     }
