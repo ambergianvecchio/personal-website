@@ -1,0 +1,549 @@
+---
+const BASE_URL = import.meta.env.BASE_URL;
+
+const videos = [
+  { id: 'diet', title: 'Diet Tracking', file: 'FoodDietTab.mp4', description: 'Track daily food intake with multiple food types and AI-powered calorie estimation.' },
+  { id: 'label', title: 'Label Checker', file: 'LabelChecker.mp4', description: 'Scan or paste cat food ingredients for instant AI analysis and ratings.' },
+  { id: 'safety', title: 'Safety Checker', file: 'SafetyChecker.mp4', description: 'Check if any plant, food, or household item is safe for cats.' },
+  { id: 'records', title: 'Medical Records', file: 'MedicalRecords.mp4', description: 'PIN-protected vet records with document scanning and auto-extraction.' },
+  { id: 'journal', title: 'Symptom Journal', file: 'symptomjournal.mp4', description: 'Log symptoms with photos and get AI triage advice.' },
+];
+
+const basePath = `${BASE_URL}after-hours/tuna-supply`;
+---
+
+<section id="after-hours" class="section after-hours-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>After Hours</h2>
+      <p>Side quests.</p>
+    </div>
+
+    <div class="app-layout" id="appLayout">
+    <div class="app-card" id="tunaCard">
+      <!-- Media area: screenshot + video overlay -->
+      <div class="card-media" id="cardMedia">
+        <!-- Screenshot (always present, cropped when collapsed) -->
+        <div class="media-window" id="mediaWindow">
+          <img src={`${basePath}/app-screenshot.jpg`} alt="Tuna Supply" class="media-img" id="mediaImg" />
+          <!-- First video overlaid on top, hidden until play -->
+          <video
+            id="overlayVideo"
+            playsinline
+            controls
+            preload="metadata"
+            poster={`${basePath}/app-screenshot.jpg`}
+            src={`${basePath}/${videos[0].file}`}
+            class="overlay-video"
+          ></video>
+        </div>
+        <!-- Navigation arrows (visible when expanded) -->
+        <button class="nav-arrow nav-prev" id="navPrev" aria-label="Previous">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="nav-arrow nav-next" id="navNext" aria-label="Next">
+          <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="peek-fade" id="peekFade"></div>
+      </div>
+
+      <!-- Below-video content -->
+      <div class="card-body" id="cardBody">
+        <!-- Carousel -->
+        <div class="carousel">
+          <div class="carousel-viewport" id="carouselViewport">
+            <div class="carousel-track" id="carouselTrack">
+              {videos.map((v, i) => (
+                <div class="carousel-slide" data-index={i}>
+                  <video
+                    playsinline
+                    controls
+                    muted
+                    preload={i === 0 ? 'metadata' : 'none'}
+                    poster={`${basePath}/app-screenshot.jpg`}
+                    src={`${basePath}/${v.file}`}
+                    class="slide-video"
+                    data-index={i}
+                  ></video>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Nav arrows -->
+          <button class="carousel-arrow arrow-left" id="arrowLeft" aria-label="Previous">
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8L10 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="carousel-arrow arrow-right" id="arrowRight" aria-label="Next">
+            <svg width="20" height="20" viewBox="0 0 16 16" fill="none"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Caption box: sits to the right of the card -->
+    <div class="caption-box" id="captionBox">
+      <div class="step-label">
+        <span class="step-title" id="stepTitle">{videos[0].title}</span>
+        <span class="step-count" id="stepCount">1 / {videos.length}</span>
+      </div>
+      <p class="step-description" id="stepDescription">{videos[0].description}</p>
+
+      <div class="step-dots" id="stepDots">
+        {videos.map((_, i) => (
+          <button class:list={["dot", { active: i === 0 }]} data-index={i} aria-label={`Go to slide ${i + 1}`}></button>
+        ))}
+      </div>
+
+      <div class="panel-footer">
+        <div class="app-tags">
+          <span class="tag">Next.js</span>
+          <span class="tag">Supabase</span>
+          <span class="tag">Claude AI</span>
+          <span class="tag">Tailwind</span>
+          <span class="tag">PWA</span>
+        </div>
+        <div class="app-links">
+          <a href="https://tuna-supply.vercel.app" target="_blank" rel="noopener noreferrer" class="app-link">
+            Try it live →
+          </a>
+          <a href="https://github.com/ambergianvecchio/tuna-supply" target="_blank" rel="noopener noreferrer" class="app-link muted">
+            GitHub →
+          </a>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const videos = [
+      { id: 'diet', title: 'Diet Tracking', description: 'Track daily food intake with multiple food types and AI-powered calorie estimation.' },
+      { id: 'label', title: 'Label Checker', description: 'Scan or paste cat food ingredients for instant AI analysis and ratings.' },
+      { id: 'safety', title: 'Safety Checker', description: 'Check if any plant, food, or household item is safe for cats.' },
+      { id: 'records', title: 'Medical Records', description: 'PIN-protected vet records with document scanning and auto-extraction.' },
+      { id: 'journal', title: 'Symptom Journal', description: 'Log symptoms with photos and get AI triage advice.' },
+    ];
+    const layout = document.getElementById('appLayout');
+    const card = document.getElementById('tunaCard');
+    const media = document.getElementById('cardMedia');
+    const body = document.getElementById('cardBody');
+    const overlayVideo = document.getElementById('overlayVideo');
+    const track = document.getElementById('carouselTrack');
+    const arrowL = document.getElementById('arrowLeft');
+    const arrowR = document.getElementById('arrowRight');
+    const dots = document.querySelectorAll('.dot');
+    const stepTitle = document.getElementById('stepTitle');
+    const stepCount = document.getElementById('stepCount');
+    const stepDesc = document.getElementById('stepDescription');
+    const carouselVideos = document.querySelectorAll('.slide-video');
+
+    let current = 0;
+    let isOpen = false;
+
+    function goTo(index) {
+      // Pause overlay and all carousel videos
+      overlayVideo.pause();
+      carouselVideos.forEach(v => v.pause());
+
+      current = Math.max(0, Math.min(index, videos.length - 1));
+      track.style.transform = `translateX(-${current * 100}%)`;
+
+      // Update dots
+      dots.forEach((d, i) => d.classList.toggle('active', i === current));
+
+      // Update info
+      stepTitle.textContent = videos[current].title;
+      stepCount.textContent = `${current + 1} / ${videos.length}`;
+      stepDesc.textContent = videos[current].description;
+
+      // Update arrows
+      const prevOp = current === 0 ? '0.3' : '1';
+      const nextOp = current === videos.length - 1 ? '0.3' : '1';
+      arrowL.style.opacity = prevOp;
+      arrowR.style.opacity = nextOp;
+      navPrev.style.opacity = prevOp;
+      navNext.style.opacity = nextOp;
+
+      // Switch overlay video source and play
+      overlayVideo.src = `/after-hours/tuna-supply/${['FoodDietTab.mp4','LabelChecker.mp4','SafetyChecker.mp4','MedicalRecords.mp4','symptomjournal.mp4'][current]}`;
+      overlayVideo.muted = true;
+      overlayVideo.playbackRate = 1.5;
+      overlayVideo.play().then(() => {
+        overlayVideo.muted = false;
+      }).catch(() => {});
+    }
+
+    function expand(fromClick) {
+      if (isOpen) return;
+      isOpen = true;
+      // Phase 1: Expand screenshot
+      card.classList.add('open');
+      // Phase 2: After expand, play video over screenshot
+      setTimeout(() => {
+        card.classList.add('playing');
+        if (fromClick) {
+          // Direct click — browsers allow autoplay with sound
+          overlayVideo.playbackRate = 1.5;
+          overlayVideo.play().catch(() => {});
+        } else {
+          // Hover — must be muted to autoplay
+          overlayVideo.muted = true;
+          overlayVideo.playbackRate = 1.5;
+          overlayVideo.play().catch(() => {});
+        }
+        // Show the rest of the card
+        setTimeout(() => {
+          card.classList.add('show-body');
+          layout.classList.add('revealed');
+          body.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 300);
+      }, 900);
+    }
+
+    // Hover (with delay) or click to expand
+    let hoverTimer;
+    media.addEventListener('mouseenter', () => {
+      if (!isOpen) hoverTimer = setTimeout(() => expand(false), 600);
+    });
+    media.addEventListener('mouseleave', () => { clearTimeout(hoverTimer); });
+    media.addEventListener('click', (e) => {
+      if (e.target.closest('.overlay-video') && isOpen) return;
+      clearTimeout(hoverTimer);
+      if (!isOpen) expand(true);
+    });
+
+    const navPrev = document.getElementById('navPrev');
+    const navNext = document.getElementById('navNext');
+
+    arrowL.addEventListener('click', (e) => { e.stopPropagation(); goTo(current - 1); });
+    arrowR.addEventListener('click', (e) => { e.stopPropagation(); goTo(current + 1); });
+    navPrev.addEventListener('click', (e) => { e.stopPropagation(); goTo(current - 1); });
+    navNext.addEventListener('click', (e) => { e.stopPropagation(); goTo(current + 1); });
+    dots.forEach((dot) => {
+      dot.addEventListener('click', (e) => { e.stopPropagation(); goTo(parseInt(dot.dataset.index)); });
+    });
+  });
+</script>
+
+<style>
+  .after-hours-section { background-color: var(--bg-primary); }
+
+  .section-header { margin-bottom: 48px; }
+  .section-header h2 { margin-bottom: 12px; }
+  .section-header p { font-size: 1.1rem; max-width: 560px; }
+
+  /* ─── Card ─── */
+  .app-card {
+    max-width: 400px;
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius);
+    background-color: var(--bg-card);
+    overflow: hidden;
+    transition: all 0.4s ease;
+  }
+
+  .app-card:hover:not(.open) {
+    border-color: var(--border-light);
+    transform: translateY(-2px);
+    cursor: pointer;
+  }
+
+  /* ─── Media Area ─── */
+  .card-media { position: relative; cursor: pointer; }
+
+  .media-window {
+    position: relative;
+    max-height: 160px;
+    overflow: hidden;
+    transition: max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .open .media-window {
+    max-height: 1200px;
+  }
+
+  .media-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .app-card:hover:not(.open) .media-img { transform: scale(1.01); }
+
+  /* Video overlaid exactly on top of screenshot */
+  .overlay-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+  }
+
+  .playing .overlay-video {
+    opacity: 1;
+  }
+
+  /* When showing carousel for other videos, hide overlay */
+  .show-carousel .overlay-video {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .peek-fade {
+    display: none;
+  }
+
+  /* ─── Navigation Arrows ─── */
+  .nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.55);
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none;
+    transition: all var(--transition-fast);
+  }
+
+  .nav-arrow:hover { background: rgba(0, 0, 0, 0.8); }
+
+  .playing .nav-arrow {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .nav-prev { left: 8px; }
+  .nav-next { right: 8px; }
+
+
+  /* ─── Expanded Body ─── */
+  .card-body {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s ease 0.1s;
+  }
+
+  .show-body .card-body {
+    max-height: 1200px;
+    opacity: 1;
+  }
+
+  /* ─── Carousel (hidden until navigating to video 2+) ─── */
+  .carousel {
+    position: relative;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+  }
+
+  .show-carousel .carousel {
+    max-height: 600px;
+    opacity: 1;
+  }
+
+  .carousel-viewport { overflow: hidden; }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .carousel-slide {
+    min-width: 100%;
+    background: #FFF8F0;
+  }
+
+  .slide-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    z-index: 2;
+  }
+
+  .carousel-arrow:hover { background: rgba(0, 0, 0, 0.8); }
+  .arrow-left { left: 8px; }
+  .arrow-right { right: 8px; }
+
+  /* ─── Step Info ─── */
+  .step-dots {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: var(--border-light);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    padding: 0;
+  }
+
+  .dot.active {
+    background: var(--accent);
+    width: 20px;
+    border-radius: 4px;
+  }
+
+  .step-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+
+  .step-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+  }
+
+  .step-count {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .step-description {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+
+  /* ─── Tags & Links ─── */
+  .app-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .tag {
+    padding: 3px 10px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background-color: var(--bg-secondary);
+    border-radius: 20px;
+  }
+
+  .app-links {
+    display: flex;
+    gap: 16px;
+  }
+
+  .app-link {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--accent);
+    transition: color var(--transition-fast);
+  }
+
+  .app-link:hover { color: var(--accent-hover); }
+  .app-link.muted { color: var(--text-muted); }
+  .app-link.muted:hover { color: var(--text-secondary); }
+
+  /* ─── Layout: Card + Caption side by side ─── */
+  .app-layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  /* ─── Caption Box ─── */
+  .caption-box {
+    width: 400px;
+    flex-shrink: 0;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--card-radius);
+    background-color: var(--bg-card);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s;
+    pointer-events: none;
+    position: sticky;
+    top: 100px;
+  }
+
+  .revealed .caption-box {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .step-description {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    flex-grow: 1;
+  }
+
+  .panel-footer {
+    margin-top: auto;
+  }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 768px) {
+    .app-layout {
+      flex-direction: column;
+    }
+    .caption-box {
+      width: 100%;
+      position: static;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .app-card { max-width: 100%; }
+    .peek-bar { padding: 8px 14px 10px; }
+    .peek-name { font-size: 0.9rem; }
+    .carousel-arrow { width: 30px; height: 30px; }
+    .slide-video { object-fit: cover; }
+  }
+</style>
